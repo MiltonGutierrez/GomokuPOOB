@@ -770,7 +770,7 @@ public class GomokuGUI extends JFrame{
         int buttonPosition = getComponentNumber(dimension, xPos, yPos);
         buttonPosition--;
         JButton boton = (JButton) game.getComponent(buttonPosition);
-        boton.setBackground(Gomoku.getGomoku().getToken(xPos, yPos).getColor());
+        boton.setBackground(Gomoku.getGomoku().getLastColor());
         setButtonBackground(boton, xPos, yPos);
         game.remove(buttonPosition);
         game.add(boton, buttonPosition);

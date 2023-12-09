@@ -32,7 +32,7 @@ public class Gomoku {
     private int tokensPercentage = 30; // by default
     private int boxesPercentage = 30; //by default
     private ArrayList<int[]> lastPositionTokens; //Calculates the token positions to change in the gui.
-    
+    private String lastTurn;
     
     /**
      * Creates an instansce of Gomoku
@@ -137,6 +137,7 @@ public class Gomoku {
         try {
             lastPositionTokens = null;
             String playerName = getTurn();
+            lastTurn = playerName;
             updateTicks();
             calculateLastPositionTokens(xPos, yPos);
             updateTokens();
@@ -477,7 +478,7 @@ public class Gomoku {
      * Updates (verifies if deletion should be done) the tokens 
      * @throws GomokuException
      */
-    private void updateTokens() throws GomokuException{
+    private void updateTokens(){
         Iterator<Token> iterador = tokens.iterator();
         while (iterador.hasNext()) {
             Token t = iterador.next();
@@ -627,4 +628,16 @@ public class Gomoku {
 			throw new GomokuException(GomokuException.PLAYER_NOT_FOUND);
 		}
 	}
+	
+	public Color getLastColor(){
+		try {
+			return loadPlayer(lastTurn).getColor();
+		} catch (GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+        	return null;
+		}
+	}
+	
+	
 }
