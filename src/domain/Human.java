@@ -61,7 +61,7 @@ public class Human implements Player {
         tiempoInicio = System.currentTimeMillis();
     }
 
-    public void endTime(){
+    public void stopTime(){
         tiempoFinal = System.currentTimeMillis();
         calculateTotalTime();
     }

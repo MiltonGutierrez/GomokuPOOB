@@ -270,7 +270,7 @@ public class GomokuGUI extends JFrame{
         gameOptions.add(logoPanel, BorderLayout.CENTER);
         boardGame.remove(tokenInformation);
         tokenInformation = prepareTokenInformation();
-        Gomoku.getGomoku().startPlayerTimer();
+        Gomoku.getGomoku().startPlayerTimer(Gomoku.getGomoku().getTurn());
         this.revalidate();
         this.repaint();
         validateWinCondition();
@@ -280,7 +280,7 @@ public class GomokuGUI extends JFrame{
      */
     public void validateWinCondition(){
         if(Gomoku.getGomoku().getGomokuFinished()){ 
-            JOptionPane.showMessageDialog(this, "Juego Terminado\n" + Gomoku.getGomoku().returnWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Juego Terminado\n" + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -363,7 +363,7 @@ public class GomokuGUI extends JFrame{
     public JPanel createInformationPanelGameOptions(){
         informationPanel = new JPanel(new GridBagLayout());
         Font arial = new Font("italic", 1, 18);
-        turno = new JLabel("Siguiente en jugar: " + Gomoku.getGomoku().returnTurn());
+        turno = new JLabel("Siguiente en jugar: " + Gomoku.getGomoku().getTurn());
         nombreP1 = new JLabel("P1: " + p1Name);
         nombreP2 = new JLabel("P2: " + p2Name);
         colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(p1Name));
@@ -805,19 +805,14 @@ public class GomokuGUI extends JFrame{
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                try {
-                    if(Gomoku.getGomoku().validPlay(fila, columna)){
-                        Gomoku.getGomoku().play(fila, columna);
-                        updateTokensOnBoard();
-                        refreshInformationPanel();
-                        refreshTokens();
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                } catch (InvocationTargetException e1) {
-                    Log.record(e1);
-                    e1.printStackTrace();
+                if(Gomoku.getGomoku().validPlay(fila, columna)){
+                	Gomoku.getGomoku().play(fila, columna);
+                    updateTokensOnBoard();
+                    refreshInformationPanel();
+                    refreshTokens();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }); 

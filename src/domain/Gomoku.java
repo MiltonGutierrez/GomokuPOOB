@@ -29,7 +29,10 @@ public class Gomoku {
     //Nuevos atributos
     private ArrayList<String> typeOfTokens = new ArrayList<>(); 
     private GomokuVerifier verifier = new GomokuVerifier(this);
-    private int percentage = 20; // por default
+    private int tokensPercentage = 30; // by default
+    private int boxesPercentage = 30; //by default
+    private ArrayList<int[]> lastPositionTokens; //Calculates the token positions to change in the gui.
+    
     
     /**
      * Creates an instansce of Gomoku
@@ -37,7 +40,11 @@ public class Gomoku {
     private Gomoku() {
         this.players = new HashMap<>();
     }
-
+    
+    /**
+     * Returns a Gomoku instance if it hasn't been created
+     * @return Gomoku instance
+     */
     public static Gomoku getGomoku() {
         if (board == null) {
             board = new Gomoku(); // Crea la instancia solo si no existe
@@ -45,43 +52,78 @@ public class Gomoku {
         return board;
     }
     
-    
+    /**
+     * Returns true if valid play, false otherwise
+     * @param xPos
+     * @param yPos
+     * @return validPlay
+     */
     public boolean validPlay(int xPos, int yPos) {
     	return verifier.validPlay(xPos, yPos);
     }
     
-    
+    /**
+     * Sets the dimension of Gomoku
+     * @param dimension
+     */
     public void setDimension(int dimension){
         this.dimension = dimension;
     }
     
     /**
-     * 
+     * Returns a new Token matrix
+     * @return tokenMatrix
      */
-    public void createBoards(){
-        tokenMatrix = new Token[dimension][dimension];
-        boxMatrix = new Box[dimension][dimension];
+    private Token[][] createTokenMatrix(){
+        Token[][] tokenMatrix = new Token[dimension][dimension];
         for(int i = 0; i < dimension; i++){
             for(int j = 0; j < dimension; j++){
                 tokenMatrix[i][j] = null;
+            }
+        }
+        return tokenMatrix;
+    }
+    
+    /**
+     * Returns a new Box matrix
+     * @return boxMatrix
+     */
+    private Box[][] createBoxMatrix(){
+        Box[][] boxMatrix = new Box[dimension][dimension];
+        for(int i = 0; i < dimension; i++){
+            for(int j = 0; j < dimension; j++){
                 boxMatrix[i][j] = null;
             }
         }
+        return boxMatrix;
+    	
+    }
+    
+    /**
+     * Creates the tokensBoards for Gomoku and players 
+     * @throws GomokuException 
+     */
+    public void createBoards(){
+        tokenMatrix = createTokenMatrix();
+        boxMatrix = createBoxMatrix();
         setPlayerTokenMatrix(nameP1);
         setPlayerTokenMatrix(nameP2);
     }
-
+    
+    /**
+     * Creates and sets the tokenMatrix for a player.
+     * @param playerName
+     * @throws GomokuException 
+     */
     public void setPlayerTokenMatrix(String playerName){
-        Token[][] tokens = new Token[dimension][dimension];
-        for(int i = 0; i < dimension; i++){
-            for(int j = 0; j < dimension; j++){
-                tokens[i][j] = null;
-                tokens[i][j] = null;
-            }
+    	try {
+    		loadPlayer(playerName).setTokenMatrix(createTokenMatrix());
+    	}
+        catch(GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
         }
-        players.get(playerName).setTokenMatrix(tokens);
     }
-
 
     /**
      * 
@@ -89,27 +131,43 @@ public class Gomoku {
      * @param placeToY
      * @param tokenType
      * @throws InvocationTargetException
+     * @throws GomokuException 
      */
-    public void play(int placeToX, int placeToY) throws InvocationTargetException{
-        lastPositionTokens = null;
-        String playerName = returnTurn();
-        updateTicks();
-        calculateLastPositionTokens(placeToX, placeToY);
-        updateTokens();
-        addToken(getTokenType(), playerName, new int[]{placeToX, placeToY});
-        stopPlayerTimer();
-        verifier.winner(placeToX, placeToY, dimension, players.get(turn).returnTokenMatrix());
-        if(!verifier.getGomokuFinished()){
-            nextTurn();
-            startPlayerTimer();
-            cellsMissing--;
+    public void play(int xPos, int yPos){
+        try {
+            lastPositionTokens = null;
+            String playerName = getTurn();
+            updateTicks();
+            calculateLastPositionTokens(xPos, yPos);
+            updateTokens();
+            addToken(getTokenType(), playerName, new int[]{xPos, yPos});
+            stopPlayerTimer(playerName);
+            winner(xPos, yPos, dimension, loadPlayer(playerName).returnTokenMatrix());
+            if(!verifier.getGomokuFinished()){
+                nextTurn();
+                startPlayerTimer(getTurn());
+                cellsMissing--;
+            }
+        }
+        catch(GomokuException e){
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
         }
     }
-
     
+    /**
+     * 
+     * @return
+     */
+    public String getTurn() {
+		return turn;
+	}
 
-
-	public String returnWinner(){
+	/**
+     * Returns the winner of gomoku if gomokuFinished.
+     * @return
+     */
+	public String getWinner(){
         String result = "";
         boolean gomokuFinished = verifier.getGomokuFinished();
         if(gomokuFinished){
@@ -129,30 +187,51 @@ public class Gomoku {
         return verifier.getGomokuFinished();
     }
 
-    
-
 
     /**
      * Starts the player's timer.
+     * @throws GomokuException 
      */
-    public void startPlayerTimer(){
-        players.get(turn).startTime();
+    public void startPlayerTimer(String playerName){
+    	try {
+    		loadPlayer(playerName).startTime();
+    	}
+        catch(GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+        }
     }
     
     /**
      * Stops the player's timer
+     * @throws GomokuException 
      */
-    public void stopPlayerTimer(){
-        players.get(turn).endTime();
+    public void stopPlayerTimer(String playerName){
+    	try {
+    		loadPlayer(playerName).stopTime();
+    	}
+        catch(GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+        }
     }
 
     /**
      * Returns the total time of a player.
      * @param playerName
      * @return
+     * @throws GomokuException 
      */
     public int getPlayerTotalTime(String playerName){
-        return players.get(playerName).getTotalTime();
+    	try {
+    		return loadPlayer(playerName).getTotalTime();
+    	}
+    	catch(GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+        	return 0;
+    	}
+        
     }
 
     /**
@@ -168,33 +247,24 @@ public class Gomoku {
     }
 
     /**
-     * Returns the name of the player's that has the turn to play.
-     * @return
-     */
-    public String returnTurn(){
-        return turn;
-    }
-
-    private Color lastColor;
-
-    /**
      * Creates a new instance of Machine
      * @param type
      * @return
      * @throws java.lang.reflect.InvocationTargetException
      */
-    public void addToken(String tokenType, String playerName, int[] position) throws java.lang.reflect.InvocationTargetException{
+    public void addToken(String tokenType, String playerName, int[] position){
         try{
             Class<?> tokenChilds = Class.forName("domain."+tokenType+"Token");
             Constructor<?> constructorTokenChilds = tokenChilds.getConstructor(Color.class, int[].class, Player.class, Gomoku.class);
             Player player = players.get(playerName);
             Token token = (Token) constructorTokenChilds.newInstance(player.getColor(), position, player, Gomoku.getGomoku());
-            lastColor = player.getColor();
+            Color lastColor = player.getColor();
             player.setToken(token, position[0], position[1], tokenType);
             tokenMatrix[position[0]][position[1]] = token;
             tokens.add(token);
-        } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException e){
-            Log.record(e);
+        } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
         }
     }
 
@@ -258,7 +328,7 @@ public class Gomoku {
      * Create the instances of players
      * @throws InvocationTargetException
      */
-    public void createRivals() throws InvocationTargetException{
+    public void createRivals(){
         if(opponent == "pvp"){
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
             players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
@@ -275,13 +345,13 @@ public class Gomoku {
      * @return
      * @throws java.lang.reflect.InvocationTargetException
      */
-    public Machine createMachine(String type) throws java.lang.reflect.InvocationTargetException{
+    public Machine createMachine(String type){
         Machine machine;
         try{
             Class<?> machineChilds = Class.forName("domain."+type+"Machine");
             Constructor<?> constructorMachineChilds = machineChilds.getConstructor();
             machine = (Machine) constructorMachineChilds.newInstance();
-        } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException e){
+        } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
             Log.record(e);
             return null;
         }
@@ -295,12 +365,14 @@ public class Gomoku {
      * @param color
      * @throws GomokuException
      */
-    public void setColor(String jugador, Color color) throws GomokuException{
-        Player player = players.get(jugador);
-        if(player != null){
-            player.setColor(color);
-        }else{
-           throw new GomokuException(GomokuException.PLAYER_NOT_FOUND);
+    public void setColor(String jugador, Color color){
+        try {
+	    	Player player = loadPlayer(jugador);
+	        player.setColor(color);
+        }
+        catch(GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
         }
     }
 
@@ -308,23 +380,22 @@ public class Gomoku {
      * Return the player's color.
      * @param jugador
      * @return colorString
+     * @throws GomokuException 
      */
     public String getColor(String jugador){
-        Player player = players.get(jugador);
-        Color color = player.getColor();
-        String colorString = String.format("#%06X", (0xFFFFFF & color.getRGB()));
-        return colorString;
+    	try {
+            Player player = loadPlayer(jugador);
+            Color color = player.getColor();
+            String colorString = String.format("#%06X", (0xFFFFFF & color.getRGB()));
+            return colorString;
+    	}
+        catch(GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+        	return null;
+        }
     }
     
-
-    /**
-     * Reuturn the last color used.
-     * @return
-     */
-    public Color getColor(){
-        return lastColor;
-    }
-
     /**
      * Return the HashMap of players.
      * @return players.
@@ -350,11 +421,8 @@ public class Gomoku {
         return time;
     }
     
-
     //Nuevos metodos.
 
- 
-    private ArrayList<int[]> lastPositionTokens;
 
     /**
      * Returns the position of the last placed token.
@@ -369,9 +437,9 @@ public class Gomoku {
      * @param placeToX
      * @param placeToY
      */ 
-    public void calculateLastPositionTokens(int placeToX, int placeToY){
+    public void calculateLastPositionTokens(int xPos, int yPos){
         ArrayList<int[]> positionOfTokens = new ArrayList<>();
-        positionOfTokens.add(new int[]{placeToX, placeToY});
+        positionOfTokens.add(new int[]{xPos, yPos});
         for(Token t: tokens){
             if(t.getIdentifier() == 'D'){
                 positionOfTokens.add(t.getPosition());
@@ -379,26 +447,37 @@ public class Gomoku {
         }
         this.lastPositionTokens = positionOfTokens;
     }
-    
-
+   
     /**
-     * 
+     * Updates the ticks of the tokens.
      */
     public void updateTicks(){
         for(Token t: tokens){
-            if(t instanceof TemporalToken){
-                ((TemporalToken)t).updateTicks();
-            }
+              t.updateTicks();
         }
     }
-
-    private void deleteToken(Token token){
+    
+    /**
+     * Deletes the token in the tokenMatrix of both players and Gomoku
+     * @param token
+     * @throws GomokuException
+     */
+    private void deleteToken(Token token) {
         int[] position = token.getPosition();
         this.tokenMatrix[position[0]][position[1]] = null;
-        players.get(token.getNameOfPlayer()).deleteToken(position[0], position[1]);
+        try {
+			loadPlayer(token.getNameOfPlayer()).deleteToken(position[0], position[1]);
+		} catch (GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+		}
     }
-
-    private void updateTokens(){
+    
+    /**
+     * Updates (verifies if deletion should be done) the tokens 
+     * @throws GomokuException
+     */
+    private void updateTokens() throws GomokuException{
         Iterator<Token> iterador = tokens.iterator();
         while (iterador.hasNext()) {
             Token t = iterador.next();
@@ -409,32 +488,52 @@ public class Gomoku {
         }
     }
 
-
+    
+    /**
+     * Returns the token in the position xPos, yPos of the tokenMatrix
+     * @param xPos
+     * @param yPos
+     * @return token
+     */
     public Token getToken(int xPos, int yPos){
         return tokenMatrix[xPos][yPos];
     }
     
+    /**
+     * Return the dimension of Gomoku
+     * @return dimension
+     */
     public int getDimension() {
     	return dimension;
     }
-
+    
+    /**
+     * Returns the tokenMatrix of Gomoku
+     * @return
+     */
 	public Token[][] getTokenMatrix() {
-
 		return tokenMatrix;
 	}
 	
-	
+	/**
+	 * Adds the type of tokens used in gomolu
+	 */
     public void setTypeOfTokens() {
     	this.typeOfTokens.add("Normal");
     	this.typeOfTokens.add("Heavy");
     	this.typeOfTokens.add("Temporal");
     }
     
-    public void createTokensToUse(String playerName) {
+    /**
+     * Creates the tokens kList the players are gona use when playing.
+     * @param playerName
+     * @throws GomokuException 
+     */
+    public void createTokensToUse(String playerName){
     	Random random = new Random();
     	ArrayList<String> tokens = new ArrayList<>(); 
     	if(gameMode.equals("normal") || gameMode.equals("quicktime")) {
-    		createTokensToUse(playerName, percentage, random, tokens);
+    		createTokensToUse(playerName, tokensPercentage, random, tokens);
     	}
     	else if(gameMode.equals("piedrasLimitadas")) {
     		createTokensToUse(playerName, tokens);
@@ -444,51 +543,88 @@ public class Gomoku {
     	}
     }
     
-    public void createTokensToUse(String playerName, ArrayList<String> tokens) {
+    /**
+     * Creates the token to use when the gameMode is Normal.
+     * @param playerName
+     * @param tokens
+     * @throws GomokuException 
+     */
+    public void createTokensToUse(String playerName, ArrayList<String> tokens){
 		int quantityOfTokens = (dimension * dimension) / 2;
 		for(int i = 0; i < quantityOfTokens; i++) {
 			tokens.add(typeOfTokens.get(0));
 		}
-		players.get(playerName).setTokensToUse(tokens);
+		try {
+			loadPlayer(playerName).setTokensToUse(tokens);
+		}
+		catch(GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+		}
     	
     }
-    
-    public void createTokensToUse(String playerName, int percentage, Random random, ArrayList<String> tokens) {
+    /**
+     * 
+     * @param playerName
+     * @param tokensPercentage
+     * @param random
+     * @param tokens
+     */
+    public void createTokensToUse(String playerName, int tokensPercentage, Random random, ArrayList<String> tokens) {
 		int quantityOfTokens = (dimension * dimension) / 2;
-		for(int i = 0; i < quantityOfTokens - percentage; i++) {
+		for(int i = 0; i < quantityOfTokens - tokensPercentage; i++) {
 			tokens.add(typeOfTokens.get(0));
 		}
-		for(int i = quantityOfTokens - percentage; i < quantityOfTokens; i++) {
+		for(int i = quantityOfTokens - tokensPercentage; i < quantityOfTokens; i++) {
 			tokens.add(typeOfTokens.get(random.nextInt(2) + 1));
 		}
 		Collections.shuffle(tokens);
-		players.get(playerName).setTokensToUse(tokens);
+		try {
+			loadPlayer(playerName).setTokensToUse(tokens);
+		} catch (GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+		}
     	
     }
     
 
     /**
      * Creates the important elements of the game and starts the first player timer.
+     * @throws GomokuException 
      */
-    public void startGame(){
+    public void startGame() throws GomokuException{
         turn = nameP1;
         createBoards();
-        startPlayerTimer();
+        startPlayerTimer(getTurn());
         setTypeOfTokens();
         createTokensToUse(nameP1);
         createTokensToUse(nameP2);
     }
     
-	public String getTokenType() {
-		return players.get(turn).getTokenToUse();
+	public String getTokenType() throws GomokuException {
+		return loadPlayer(turn).getTokenToUse();
 	}
 	
 	public int getPercentage(){
-		return this.percentage;
+		return this.tokensPercentage;
 	}
 	
 	public void setPercentage(int percentage) {
-		this.percentage = percentage;
+		this.tokensPercentage = percentage;
 	}
-
+	
+	public void winner(int xPos, int yPos, int dimension, Token[][] matrix){
+		this.verifier.winner(xPos, yPos, dimension, matrix);
+	}
+	
+	public Player loadPlayer(String playerName) throws GomokuException{
+		Player p = players.get(playerName);
+		if(p != null) {
+			return p;
+		}
+		else {
+			throw new GomokuException(GomokuException.PLAYER_NOT_FOUND);
+		}
+	}
 }

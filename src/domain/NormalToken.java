@@ -9,4 +9,11 @@ public class NormalToken extends Token {
     }
     //Nuevos metodos.
 
+	/**
+	 * 
+	 */
+	public void updateTicks() {
+		super.ticksOnBoard++;
+	}
+
 }

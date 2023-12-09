@@ -10,5 +10,8 @@ public class HeavyToken extends Token {
 
     }
     //Nuevos metodos.
+	public void updateTicks() {
+		super.ticksOnBoard++;
+	}
 
 }

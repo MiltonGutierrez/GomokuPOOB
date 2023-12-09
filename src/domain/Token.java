@@ -8,12 +8,14 @@ public abstract class Token{
     //Nuevos metodos.
     protected Gomoku gomoku;
     protected char identifier;
+    protected int ticksOnBoard;
 
     public Token(Color color, int[] position, Player player, Gomoku gomoku){
         this.color = color;
         this.position = position;
         this.player = player;
         this.gomoku = gomoku;
+        this.ticksOnBoard = 0;
     }
 
     /**
@@ -45,4 +47,6 @@ public abstract class Token{
     public Color getColor(){
         return color;
     }
+    
+    public abstract void updateTicks();
 }

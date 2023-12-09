@@ -1,7 +1,6 @@
 package domain;
 import java.awt.Color;
 public class TemporalToken extends Token{
-    private int ticksOnBoard;
     /**
      * 
      * @param color
@@ -13,7 +12,6 @@ public class TemporalToken extends Token{
         this.value = 1;
         //Nuevos metodos.
         super.identifier = 'T';
-        ticksOnBoard = 0;
     }
 
     /**

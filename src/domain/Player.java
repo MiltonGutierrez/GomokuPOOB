@@ -8,7 +8,7 @@ public interface Player {
     Color getColor();
     void setToken(Token token, int xPos, int yPos, String tokenType);
     void startTime();
-    void endTime();
+    void stopTime();
     void calculateTotalTime();
     int getTotalTime();    
     void setTokenMatrix(Token[][] matrix);

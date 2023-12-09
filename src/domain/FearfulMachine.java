@@ -23,7 +23,7 @@ public class FearfulMachine extends Machine {
 	}
 
 	@Override
-	public void endTime() {
+	public void stopTime() {
 		// TODO Auto-generated method stub
 		
 	}

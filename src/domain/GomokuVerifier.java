@@ -35,7 +35,23 @@ public class GomokuVerifier {
 	public boolean getGomokuFinished() {
 		return gomokuFinished;
 	}
+	
 
+    /**
+     * 
+     * @param xPos
+     * @param yPos
+     * @param dimension
+     * @param matrix
+     */
+    public void  winner(int xPos, int yPos, int dimension, Token[][] matrix){
+        int[] calculations = calculationsForWinnerValidations(xPos, yPos, dimension);
+        winnerValidationOnTheXCoordinate(calculations[2], calculations[3], xPos, matrix);
+        winnerValidationOnTheYCoordinate(calculations[0], calculations[1],yPos, matrix);
+        winnerValidationOnTheDiagonal1(xPos, yPos, dimension, matrix);
+        winnerValidationOnTheDiagonal2(xPos, yPos, dimension, matrix);
+    }
+    
     /**
      * 
      * @param xPos
@@ -186,21 +202,40 @@ public class GomokuVerifier {
 
     }
 
+    
     /**
-     * 
+     * Returns the values to validate if there's a winner on the diagonal1
+     * @param xPos
+     * @param yPos
+     * @return
+     */
+    public int[] getStartingNumberDiagonalWinner1(int xPos, int yPos){
+        int cont = 0;
+        while (xPos > 0 && yPos> 0 && cont < 4 ) {
+            xPos--;
+            yPos--;
+            cont++;
+        }
+        return new int[]{xPos, yPos};
+    }
+
+    /**
+     * Returns the values to validate if there's a winner on the diagonal1
      * @param xPos
      * @param yPos
      * @param dimension
-     * @param matrix
+     * @return
      */
-    public void  winner(int xPos, int yPos, int dimension, Token[][] matrix){
-        int[] calculations = calculationsForWinnerValidations(xPos, yPos, dimension);
-        winnerValidationOnTheXCoordinate(calculations[2], calculations[3], xPos, matrix);
-        winnerValidationOnTheYCoordinate(calculations[0], calculations[1],yPos, matrix);
-        winnerValidationOnTheDiagonal1(xPos, yPos, dimension, matrix);
-        winnerValidationOnTheDiagonal2(xPos, yPos, dimension, matrix);
+    public static int getLastNumberDiagonalWinner1(int xPos, int yPos, int dimension){
+        int cont = 0;
+        while(xPos < dimension && yPos < dimension && cont < 4){
+            xPos++;
+            yPos++;
+            cont++;
+        }
+        return yPos;
     }
-
+    
     /**
      * Returns the values to validate if there's a winner on the diagonal2
      * @param xPos
@@ -242,36 +277,4 @@ public class GomokuVerifier {
         return new int[]{xPos, yPos};
     }
 
-    /**
-     * Returns the values to validate if there's a winner on the diagonal1
-     * @param xPos
-     * @param yPos
-     * @return
-     */
-    public int[] getStartingNumberDiagonalWinner1(int xPos, int yPos){
-        int cont = 0;
-        while (xPos > 0 && yPos> 0 && cont < 4 ) {
-            xPos--;
-            yPos--;
-            cont++;
-        }
-        return new int[]{xPos, yPos};
-    }
-
-    /**
-     * Returns the values to validate if there's a winner on the diagonal1
-     * @param xPos
-     * @param yPos
-     * @param dimension
-     * @return
-     */
-    public static int getLastNumberDiagonalWinner1(int xPos, int yPos, int dimension){
-        int cont = 0;
-        while(xPos < dimension && yPos < dimension && cont < 4){
-            xPos++;
-            yPos++;
-            cont++;
-        }
-        return yPos;
-    }
 }
