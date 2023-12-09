@@ -13,12 +13,9 @@ public interface Player {
     int getTotalTime();    
     void setTokenMatrix(Token[][] matrix);
     Token[][] returnTokenMatrix();
-    void changeToken(String token);
-    String getToken();
-    void setQuantityTokens(int quantity);
-    int getTokensLeft(String typeOfToken);
     //Nuevos metodos.
     String getName();
     void deleteToken(int xPos, int yPos);
 	void setTokensToUse(ArrayList<String> tokens);
+	String getTokenToUse();
 }

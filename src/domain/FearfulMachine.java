@@ -52,29 +52,6 @@ public class FearfulMachine extends Machine {
 		return null;
 	}
 
-	@Override
-	public void changeToken(String token) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getToken() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setQuantityTokens(int quantity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getTokensLeft(String typeOfToken) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public String getName() {
@@ -92,6 +69,12 @@ public class FearfulMachine extends Machine {
 	public void setTokensToUse(ArrayList<String> tokens) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getTokenToUse() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

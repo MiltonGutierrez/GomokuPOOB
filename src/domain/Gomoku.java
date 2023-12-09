@@ -25,10 +25,11 @@ public class Gomoku {
     private int timeLimit;
     private int cellsMissing;
     private int ticks = 0;
-    
+
     //Nuevos atributos
     private ArrayList<String> typeOfTokens = new ArrayList<>(); 
     private GomokuVerifier verifier = new GomokuVerifier(this);
+    private int percentage = 20; // por default
     
     /**
      * Creates an instansce of Gomoku
@@ -53,7 +54,7 @@ public class Gomoku {
     public void setDimension(int dimension){
         this.dimension = dimension;
     }
-
+    
     /**
      * 
      */
@@ -89,13 +90,13 @@ public class Gomoku {
      * @param tokenType
      * @throws InvocationTargetException
      */
-    public void play(int placeToX, int placeToY, String tokenType) throws InvocationTargetException{
+    public void play(int placeToX, int placeToY) throws InvocationTargetException{
         lastPositionTokens = null;
         String playerName = returnTurn();
         updateTicks();
         calculateLastPositionTokens(placeToX, placeToY);
         updateTokens();
-        addToken(tokenType, playerName, new int[]{placeToX, placeToY});
+        addToken(getTokenType(), playerName, new int[]{placeToX, placeToY});
         stopPlayerTimer();
         verifier.winner(placeToX, placeToY, dimension, players.get(turn).returnTokenMatrix());
         if(!verifier.getGomokuFinished()){
@@ -105,6 +106,7 @@ public class Gomoku {
         }
     }
 
+    
 
 
 	public String returnWinner(){
@@ -186,7 +188,7 @@ public class Gomoku {
             Class<?> tokenChilds = Class.forName("domain."+tokenType+"Token");
             Constructor<?> constructorTokenChilds = tokenChilds.getConstructor(Color.class, int[].class, Player.class, Gomoku.class);
             Player player = players.get(playerName);
-            Token token = (Token) constructorTokenChilds.newInstance(player.getColor(), position, player, this);
+            Token token = (Token) constructorTokenChilds.newInstance(player.getColor(), position, player, Gomoku.getGomoku());
             lastColor = player.getColor();
             player.setToken(token, position[0], position[1], tokenType);
             tokenMatrix[position[0]][position[1]] = token;
@@ -258,12 +260,10 @@ public class Gomoku {
      */
     public void createRivals() throws InvocationTargetException{
         if(opponent == "pvp"){
-            players.put(nameP1, new Human(nameP1));
-            players.put(nameP2, new Human(nameP2));
-            players.get(nameP1).setQuantityTokens(dimension * dimension);
-            players.get(nameP2).setQuantityTokens(dimension * dimension);
+            players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
+            players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
         }else if(gameMode == "pve"){ 
-            players.put(nameP1, new Human(nameP1));
+            players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
             players.put(nameP2, createMachine(machineType));
         }
         turn = nameP1;
@@ -350,40 +350,10 @@ public class Gomoku {
         return time;
     }
     
-    /**
-     * Changes the type of token that's being used, based on the players desition.
-     * @param typeOfToken
-     */
-    public void changeTypeOfToken(String typeOfToken){
-        players.get(turn).changeToken(typeOfToken);
-    }
-
-    /**
-     * Returns the selected token of the player on turn.
-     * @return
-     */
-    public String getCurrentToken(){
-        return players.get(turn).getToken();
-    }
-
-    /**
-     * Returns the quantity of tokens left.
-     * @param player
-     * @param typeOfToken
-     * @return
-     */
-    public int getTokensLeft(String player, String typeOfToken){
-        int cantidad = players.get(player).getTokensLeft(typeOfToken);
-        return cantidad;
-    }
 
     //Nuevos metodos.
 
-    public int getTicks(){
-        return ticks;
-    }
-
-    
+ 
     private ArrayList<int[]> lastPositionTokens;
 
     /**
@@ -408,12 +378,6 @@ public class Gomoku {
             }
         }
         this.lastPositionTokens = positionOfTokens;
-        for(int[] l: lastPositionTokens) {
-        	for(int i: l) {
-        		System.out.print(i + " ");
-        	}
-        	System.out.println();
-        }
     }
     
 
@@ -469,7 +433,6 @@ public class Gomoku {
     public void createTokensToUse(String playerName) {
     	Random random = new Random();
     	ArrayList<String> tokens = new ArrayList<>(); 
-    	int percentage = random.nextInt(11) + 20;
     	if(gameMode.equals("normal") || gameMode.equals("quicktime")) {
     		createTokensToUse(playerName, percentage, random, tokens);
     	}
@@ -515,4 +478,17 @@ public class Gomoku {
         createTokensToUse(nameP1);
         createTokensToUse(nameP2);
     }
+    
+	public String getTokenType() {
+		return players.get(turn).getTokenToUse();
+	}
+	
+	public int getPercentage(){
+		return this.percentage;
+	}
+	
+	public void setPercentage(int percentage) {
+		this.percentage = percentage;
+	}
+
 }
