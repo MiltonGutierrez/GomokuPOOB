@@ -397,7 +397,6 @@ public class PvpNormal extends JPanel {
             logo = new ImageIcon(url);
             logoLabel.setIcon(new ImageIcon(logo.getImage().getScaledInstance(logoLabel.getWidth(), logoLabel.getHeight(), Image.SCALE_SMOOTH)));
         }
-        System.out.println("Hola");
         return logoPanel;
     }
     
