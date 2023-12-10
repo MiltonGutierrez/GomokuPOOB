@@ -18,8 +18,8 @@ public class Gomoku {
     private Box[][] boxMatrix;
     private String gameMode;
     private String opponent; //"pvp" "pve"
-    private String nameP1;
-    private String nameP2 = "machine";
+    private static String nameP1;
+    private static String nameP2 = "machine";
     private String turn;
     private String machineType;
     private int timeLimit;
@@ -286,7 +286,7 @@ public class Gomoku {
     }
 
     /**
-     * Returns the gameMode of gomoku
+     * Returns the opponent of gomoku
      * @return gameMode
      */
     public String getOpponent(){
@@ -294,7 +294,7 @@ public class Gomoku {
     }
 
     /**
-     * Sets the gameMode of Gomoku
+     * Sets the opponent of Gomoku
      * @param gameMode
      */
     public void setOpponent(String oponente){
@@ -308,6 +308,7 @@ public class Gomoku {
     public void setNameP1(String nombre){
         this.nameP1 = nombre;
     }
+    
 
     /**
      * Set the name of the player 2
@@ -333,7 +334,7 @@ public class Gomoku {
         if(opponent == "pvp"){
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
             players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
-        }else if(gameMode == "pve"){ 
+        }else if(opponent == "pve"){ 
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
             players.put(nameP2, createMachine(machineType));
         }
@@ -594,7 +595,7 @@ public class Gomoku {
      * Creates the important elements of the game and starts the first player timer.
      * @throws GomokuException 
      */
-    public void startGame() throws GomokuException{
+    public void startGame(){
         turn = nameP1;
         createBoards();
         startPlayerTimer(getTurn());
@@ -603,22 +604,54 @@ public class Gomoku {
         createTokensToUse(nameP2);
     }
     
-	public String getTokenType() throws GomokuException {
-		return loadPlayer(turn).getTokenToUse();
+    /**
+     * Restuns the token a player is next to use
+     * @return
+     * @throws GomokuException
+     */
+	public String getTokenType(){
+		try {
+			return loadPlayer(turn).getTokenToUse();
+		} catch (GomokuException e) {
+        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        	Log.record(e);
+        	return null;
+		}
 	}
 	
-	public int getPercentage(){
+	/**
+	 * Returns the tokens percentage the players have.
+	 * @return
+	 */
+	public int getTokensPercentage(){
 		return this.tokensPercentage;
 	}
 	
-	public void setPercentage(int percentage) {
+	/**
+	 * Sets the tokens percentage.
+	 * @param percentage
+	 */
+	public void setTokensPercentage(int percentage) {
 		this.tokensPercentage = percentage;
 	}
 	
+	/**
+	 * Makes the validations to verify if there's a winner.
+	 * @param xPos
+	 * @param yPos
+	 * @param dimension
+	 * @param matrix
+	 */
 	public void winner(int xPos, int yPos, int dimension, Token[][] matrix){
 		this.verifier.winner(xPos, yPos, dimension, matrix);
 	}
 	
+	/**
+	 * Returns the Player.
+	 * @param playerName
+	 * @return Player
+	 * @throws GomokuException
+	 */
 	public Player loadPlayer(String playerName) throws GomokuException{
 		Player p = players.get(playerName);
 		if(p != null) {
@@ -629,6 +662,10 @@ public class Gomoku {
 		}
 	}
 	
+	/**
+	 * Returns the color of the player that played in the last turn.
+	 * @return Color.
+	 */
 	public Color getLastColor(){
 		try {
 			return loadPlayer(lastTurn).getColor();
@@ -638,6 +675,25 @@ public class Gomoku {
         	return null;
 		}
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String returnP1() {
+		// TODO Auto-generated method stub
+		return nameP1;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static String returnP2() {
+		// TODO Auto-generated method stub
+		return nameP2;
+	}
+	
 	
 	
 }
