@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/presentation/resources/fondoPrincipal.png</name>
-			<type>1</type>
-			<location>C:/Users/Andres Gutierrez/Desktop/Proyecto GOMOKU/Proyecto GOMOKU/GomokuPOOB/src/presentation/resources/fondoPrincipal.png</location>
-		</link>
-	</linkedResources>
 </projectDescription>

@@ -16,7 +16,7 @@ public class PvpNormal extends JPanel {
     private static PvpNormal pvpNormal = null;
 
     /**
-     * Creates an instansce of Gomoku
+     * Creates an instance of Gomoku
      */
     private PvpNormal() {
         this.setOpaque(true);
@@ -78,59 +78,31 @@ public class PvpNormal extends JPanel {
     public void prepareElementsGame() {
         boardGame.setLayout(new BorderLayout());
         boardGame.setSize(this.getWidth() - gameOptions.getWidth(), this.getHeight());
-        boardGame.setBackground(new Color(113, 197, 232));
+        boardGame.setBackground(new Color(113, 197, 232,128));
     
         game = createBoardGame();
-        information = createBoardInformation();
-        tokensLeft = createBoardTokenInformation();
     
         // Create a panel to hold the game component in the center
         JPanel gameWrapper = new JPanel();
         gameWrapper.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 30));
-        gameWrapper.setBackground(new Color(113, 197, 232));
+        gameWrapper.setBackground(new Color(113, 197, 232,128));
         gameWrapper.add(game);
 
-        tokenInformation = prepareTokenInformation();
         boardGame.add(gameWrapper, BorderLayout.CENTER);
-        boardGame.add(tokenInformation, BorderLayout.EAST);
         
         boardGame.validate();
         boardGame.repaint();
-    }
-
-    private JButton selectNormal;
-    private JButton selectHeavy;
-    private JButton selectTemporal;
-
-
-    public JPanel createBoardInformation() {
-        information = new JPanel();
-        information.setLayout(new GridBagLayout());
-        information.setBackground(new Color(166, 220, 242));
-        return information;
     }
 
 
     public JPanel createBoardTokenInformation() {
         tokensLeft = new JPanel();
         tokensLeft.setLayout(new GridBagLayout());
-        tokensLeft.setBackground(new Color(166, 220, 242));
+        tokensLeft.setBackground(new Color(166, 220, 242,128));
         tokensLeft.setPreferredSize(new Dimension(200, 200));
         return tokensLeft;
     }
 
-    private JPanel tokenInformation;
-
-    public JPanel prepareTokenInformation(){
-        tokenInformation = new JPanel();
-        tokenInformation.setLayout(new BoxLayout(tokenInformation, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS to arrange components vertically
-        tokenInformation.setBackground(new Color(113, 197, 232));
-            tokenInformation.setPreferredSize(new Dimension(400, 400));
-        tokenInformation.add(information);
-        tokenInformation.add(Box.createVerticalStrut(10)); // Add vertical spacing between components
-        tokenInformation.add(tokensLeft);
-        return tokenInformation;
-    }
 
     /*
      * Creates the board of Gomoku
@@ -237,12 +209,6 @@ public class PvpNormal extends JPanel {
     }
 
     public void refreshTokens(){
-        tokenInformation.removeAll();
-        boardGame.remove(tokenInformation);
-        information = createBoardInformation();
-        tokensLeft = createBoardTokenInformation();
-        tokenInformation = prepareTokenInformation();
-        boardGame.add(tokenInformation, BorderLayout.EAST);
         boardGame.validate();
         boardGame.repaint();
     }
@@ -254,8 +220,6 @@ public class PvpNormal extends JPanel {
         gameOptions.add(optionsPanel, BorderLayout.EAST);
         gameOptions.add(informationPanel, BorderLayout.WEST);
         gameOptions.add(logoPanel, BorderLayout.CENTER);
-        boardGame.remove(tokenInformation);
-        tokenInformation = prepareTokenInformation();
         Gomoku.getGomoku().startPlayerTimer(Gomoku.getGomoku().getTurn());;
         this.revalidate();
         this.repaint();
@@ -331,7 +295,7 @@ public class PvpNormal extends JPanel {
      */
     private JPanel createOptionsPanelGameOptions() {
         optionsPanel = new JPanel(new GridBagLayout());
-        optionsPanel.setBackground(new Color(224,62,82));
+        optionsPanel.setBackground(new Color(224,62,82,128));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
@@ -426,7 +390,7 @@ public class PvpNormal extends JPanel {
         JLabel logoLabel = new JLabel();
         logoLabel.setBounds(10, 80, 150, 150);
         logoPanel = new JPanel();
-        logoPanel.setBackground(new Color(224,62,82));
+        logoPanel.setBackground(new Color(224,62,82,128));
         logoPanel.add(logoLabel, BorderLayout.CENTER);
         URL url = getClass().getResource("/presentation/resources/logo.png");
         if(url != null){
