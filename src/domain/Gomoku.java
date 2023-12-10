@@ -336,6 +336,7 @@ public class Gomoku {
             players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
         }else if(opponent == "pve"){ 
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
+            setNameP2("machine");
             players.put(nameP2, createMachine(machineType));
         }
         turn = nameP1;
@@ -351,8 +352,8 @@ public class Gomoku {
         Machine machine;
         try{
             Class<?> machineChilds = Class.forName("domain."+type+"Machine");
-            Constructor<?> constructorMachineChilds = machineChilds.getConstructor();
-            machine = (Machine) constructorMachineChilds.newInstance();
+            Constructor<?> constructorMachineChilds = machineChilds.getConstructor(String.class);
+            machine = (Machine) constructorMachineChilds.newInstance(nameP2);
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
             Log.record(e);
             return null;
