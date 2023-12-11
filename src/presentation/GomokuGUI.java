@@ -140,6 +140,7 @@ public class GomokuGUI extends JFrame{
                 }
             }
         }
+        
     }
 
     public void askForTypeOfMachine() throws InvocationTargetException{
@@ -189,7 +190,19 @@ public class GomokuGUI extends JFrame{
      * Asks for the time limit of the game
      */
     public static void askForTime(){
-        Gomoku.getGomoku().setTime(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tiempo limite (En minutos)")));
+    	boolean flag = false;
+    	int totalTime = 0;
+    	while(!flag) {
+    		try {
+                totalTime = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tiempo limite (En segundos)"));
+                if (totalTime > 10) {
+                    flag = true;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "El tiempo limite debe ser un numero entero.");
+            }
+    	}
+        Gomoku.getGomoku().setTime(totalTime);
     }
 
     /**

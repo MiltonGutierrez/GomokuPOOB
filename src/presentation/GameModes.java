@@ -99,6 +99,7 @@ public class GameModes extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e){
             	try {
+            		GomokuGUI.askForTime();
 					GomokuGUI.changeColor();
 					Gomoku.getGomoku().setGameMode("normal");
 	                Gomoku.getGomoku().startGame();

@@ -72,7 +72,6 @@ public class PvpNormal extends JPanel{
 
     protected JPanel game;
     protected JPanel information;
-    protected JPanel tokensLeft;
     /**
      * Prepares the elements of the game
      * 
@@ -304,7 +303,7 @@ public class PvpNormal extends JPanel{
         return optionsPanel;
     }
 
-    private JPanel informationPanel;
+    protected JPanel informationPanel;
     private JLabel turno;
     private JLabel nombreP1;
     private JLabel nombreP2;
@@ -312,8 +311,8 @@ public class PvpNormal extends JPanel{
     private JLabel colorP2;
     private JLabel tiempoP1;
     private JLabel tiempoP2;
-    private JLabel puntuacionJugador1;
-    private JLabel puntuacionJugador2;
+    protected JLabel puntuacionJugador1;
+    protected JLabel puntuacionJugador2;
     /**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
