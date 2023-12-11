@@ -9,7 +9,14 @@ public abstract class Token{
     protected Gomoku gomoku;
     protected char identifier;
     protected int ticksOnBoard;
-
+    
+    /**
+     * Basic constructor of token used by its sub-clases
+     * @param color
+     * @param position
+     * @param player
+     * @param gomoku
+     */
     public Token(Color color, int[] position, Player player, Gomoku gomoku){
         this.color = color;
         this.position = position;
@@ -19,7 +26,7 @@ public abstract class Token{
     }
 
     /**
-     * 
+     * Returns the array containing the position of the token.
      * @return position
      */
     public int[] getPosition(){
@@ -27,19 +34,27 @@ public abstract class Token{
     }
 
     /**
-     * 
-     * @return
+     * Returns the value of the token.
+     * @return value
      */
     public int getValue(){
         return value;
     }
 
     //nuevos metodos
-
+    
+    /**
+     * Returns the char identfier of the token
+     * @return identifier
+     */
     public char getIdentifier(){
         return identifier;
     }
-
+    
+    /**
+     * Returns the name of the player the token belongs to.
+     * @return
+     */
     public String getNameOfPlayer(){
         return player.getName();
     }
