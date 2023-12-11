@@ -79,6 +79,8 @@ public class PvpQuick extends PvpNormal {
     	timeInformation.removeAll();
         gameWrapper.remove(timeInformation);
         timeInformation = createBoardTokenInformation();
+        informationPanel.remove(puntuacionJugador1);
+        informationPanel.remove(puntuacionJugador2);
         gameWrapper.add(timeInformation);
         boardGame.validate();
         boardGame.repaint();
