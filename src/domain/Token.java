@@ -49,4 +49,8 @@ public abstract class Token{
     }
     
     public abstract void updateTicks();
+    
+    public void setIdentifier(char i) {
+    	this.identifier = i;
+    }
 }
