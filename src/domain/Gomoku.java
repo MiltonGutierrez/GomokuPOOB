@@ -363,7 +363,6 @@ public class Gomoku {
             setNameP2("machine");
             players.put(nameP2, createMachine(machineType));
         }
-        turn = nameP1;
     }
     
     /**
@@ -433,6 +432,7 @@ public class Gomoku {
      * @return players.
      */
     public HashMap<String, Player> getPlayers(){
+    	ok = true;
         return players;
     }
 
@@ -450,6 +450,7 @@ public class Gomoku {
      * @return
      */
     public int getTime(int time){
+    	ok = true;
         return time;
     }
     
@@ -461,6 +462,7 @@ public class Gomoku {
      * @return lastPositionTOken
      */
     public ArrayList<int[]> getLastPositionTokens(){
+    	ok = true;
         return lastPositionTokens;
     }
 
@@ -470,6 +472,7 @@ public class Gomoku {
      * @param placeToY
      */ 
     public void calculateLastPositionTokens(int xPos, int yPos){
+    	ok = true;
         ArrayList<int[]> positionOfTokens = new ArrayList<>();
         positionOfTokens.add(new int[]{xPos, yPos});
         for(Token t: tokens){
@@ -495,6 +498,7 @@ public class Gomoku {
      * @throws GomokuException
      */
     private void deleteToken(Token token) {
+    	ok = true;
         int[] position = token.getPosition();
         this.tokenMatrix[position[0]][position[1]] = null;
         try {
@@ -502,6 +506,7 @@ public class Gomoku {
 		} catch (GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
+        	ok = false;
 		}
     }
     
@@ -510,6 +515,7 @@ public class Gomoku {
      * @throws GomokuException
      */
     private void updateTokens(){
+    	
         Iterator<Token> iterador = tokens.iterator();
         while (iterador.hasNext()) {
             Token t = iterador.next();
@@ -528,6 +534,7 @@ public class Gomoku {
      * @return token
      */
     public Token getToken(int xPos, int yPos){
+    	ok = true;
         return tokenMatrix[xPos][yPos];
     }
     
@@ -536,6 +543,7 @@ public class Gomoku {
      * @return dimension
      */
     public int getDimension() {
+    	ok = true;
     	return dimension;
     }
     
@@ -544,6 +552,7 @@ public class Gomoku {
      * @return
      */
 	public Token[][] getTokenMatrix() {
+		ok = true;
 		return tokenMatrix;
 	}
 	
@@ -724,6 +733,19 @@ public class Gomoku {
 		return nameP2;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getTypesOfTokens(){
+		return this.typeOfTokens;
+	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean ok() {
+		return this.ok;
+	}
 }

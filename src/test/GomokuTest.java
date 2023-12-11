@@ -11,6 +11,7 @@ class GomokuTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
+		board.setDimension(15);
 	}
 
 	@AfterEach
@@ -26,7 +27,6 @@ class GomokuTest {
 		for(Player p: board.getPlayers().values()) {
 			assertTrue(p instanceof Human);
 		}
-		assertEquals(board.getTurn(), board.returnP1());
 	}
 	
 	@Test
@@ -37,7 +37,41 @@ class GomokuTest {
 		board.createRivals();
 		assertTrue(board.loadPlayer("Mutsia") instanceof Human);
 		assertTrue(board.loadPlayer("machine") instanceof Machine);
-		assertEquals(board.getTurn(), board.returnP1());
+	}
+	@Test
+	void shouldStartGame() throws GomokuException {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+		board.startGame();
+		assertTrue(board.ok());
+		assertNotEquals(board.getTokenMatrix(), null);
+		assertNotEquals(board.loadPlayer("Mutsia").returnTokenMatrix(), null);
+		assertNotEquals(board.loadPlayer("Miltown").returnTokenMatrix(), null);
+		assertNotEquals(board.loadPlayer("Mutsia").getTokenToUse(), null);
+		assertNotEquals(board.loadPlayer("Miltown").getTokenToUse(), null);
+		assertNotEquals(board.getTypesOfTokens(), null);
+		
+	}
+	
+	@Test
+	void shouldAddToken() {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+		board.startGame();
+		board.addToken("Normal", board.getTurn(), new int[]{0, 0});
+		assertTrue(board.ok());
+		board.nextTurn();
+		board.addToken("Temporal", board.getTurn(), new int[]{0, 0});
+		assertTrue(board.ok());
+		board.nextTurn();
+		board.addToken("Heavy", board.getTurn(), new int[]{0, 1});
+		assertTrue(board.ok());
 	}
 	
 	

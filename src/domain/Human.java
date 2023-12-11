@@ -86,19 +86,25 @@ public class Human implements Player {
         return name;
     }
     
-    @Override
+    /**
+     * 
+     */
     public void deleteToken(int xPos, int yPos){
         tokenMatrix[xPos][yPos] = null;
     }
 
 
-	@Override
+	/**
+	 * 
+	 */
 	public void setTokensToUse(ArrayList<String> tokens) {
 		tokensToUse = tokens;
 	}
 
 
-	@Override
+	/**
+	 * 
+	 */
 	public String getTokenToUse() {
 		String tokenType = tokensToUse.get(0);
 		if(tokensToUse.size() > 0 ){
@@ -107,8 +113,15 @@ public class Human implements Player {
 		else {
 			gomoku.createTokensToUse(this.name); // evitamos que se quede sin fichas.
 		}
-		System.out.println(name + tokenType);
 		return tokenType;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getTokensToUse(){
+		return this.tokensToUse;
 	}
 
 }
