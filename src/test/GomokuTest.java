@@ -77,7 +77,14 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldYes() {
+	void shouldValidPlay() {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+		board.startGame();
+		assertTrue(board.validPlay(0, 0));
 		
 	}
 }
