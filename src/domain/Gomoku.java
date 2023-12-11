@@ -33,6 +33,7 @@ public class Gomoku {
     private int boxesPercentage = 30; //by default
     private ArrayList<int[]> lastPositionTokens; //Calculates the token positions to change in the gui.
     private String lastTurn;
+    private boolean ok;
     
     /**
      * Creates an instansce of Gomoku
@@ -118,10 +119,12 @@ public class Gomoku {
     public void setPlayerTokenMatrix(String playerName){
     	try {
     		loadPlayer(playerName).setTokenMatrix(createTokenMatrix());
+    		ok = true;
     	}
         catch(GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
+        	ok = false;
         }
     }
 
@@ -134,6 +137,7 @@ public class Gomoku {
      * @throws GomokuException 
      */
     public void play(int xPos, int yPos){
+    	ok = true;
         try {
             lastPositionTokens = null;
             String playerName = getTurn();
@@ -153,6 +157,7 @@ public class Gomoku {
         catch(GomokuException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
+        	ok = false;
         }
     }
     
@@ -161,6 +166,7 @@ public class Gomoku {
      * @return
      */
     public String getTurn() {
+    	ok = true;
 		return turn;
 	}
 
@@ -169,6 +175,7 @@ public class Gomoku {
      * @return
      */
 	public String getWinner(){
+		ok = true;
         String result = "";
         boolean gomokuFinished = verifier.getGomokuFinished();
         if(gomokuFinished){
@@ -185,6 +192,7 @@ public class Gomoku {
      * @return  gomokuFinshed
      */
     public boolean getGomokuFinished(){
+    	ok = true;
         return verifier.getGomokuFinished();
     }
 
@@ -194,12 +202,14 @@ public class Gomoku {
      * @throws GomokuException 
      */
     public void startPlayerTimer(String playerName){
+    	ok = true;
     	try {
     		loadPlayer(playerName).startTime();
     	}
         catch(GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
+        	ok = false;
         }
     }
     
@@ -208,12 +218,14 @@ public class Gomoku {
      * @throws GomokuException 
      */
     public void stopPlayerTimer(String playerName){
+    	ok = true;
     	try {
     		loadPlayer(playerName).stopTime();
     	}
         catch(GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
+        	ok = false;
         }
     }
 
@@ -224,6 +236,7 @@ public class Gomoku {
      * @throws GomokuException 
      */
     public int getPlayerTotalTime(String playerName){
+    	ok = true;
     	try {
     		return loadPlayer(playerName).getTotalTime();
     	}
@@ -239,6 +252,7 @@ public class Gomoku {
      * Changes the turn.
      */
     public void nextTurn(){
+    	ok = true;
         if(turn.equals(nameP1)){
             this.turn = nameP2;
         }
@@ -254,6 +268,7 @@ public class Gomoku {
      * @throws java.lang.reflect.InvocationTargetException
      */
     public void addToken(String tokenType, String playerName, int[] position){
+    	ok = true;
         try{
             Class<?> tokenChilds = Class.forName("domain."+tokenType+"Token");
             Constructor<?> constructorTokenChilds = tokenChilds.getConstructor(Color.class, int[].class, Player.class, Gomoku.class);
@@ -266,6 +281,7 @@ public class Gomoku {
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
+        	ok = true;
         }
     }
 
@@ -274,6 +290,7 @@ public class Gomoku {
      * @return gameMode
      */
     public String getGameMode(){
+    	ok = true;
         return gameMode;
     }
 
@@ -282,6 +299,7 @@ public class Gomoku {
      * @param gameMode
      */
     public void setGameMode(String gameMode){
+    	ok = true;
         this.gameMode = gameMode;
     }
 
@@ -290,6 +308,7 @@ public class Gomoku {
      * @return gameMode
      */
     public String getOpponent(){
+    	ok = true;
         return opponent;
     }
 
@@ -298,6 +317,7 @@ public class Gomoku {
      * @param gameMode
      */
     public void setOpponent(String oponente){
+    	ok = true;
         this.opponent = oponente;
     }
 
@@ -306,6 +326,7 @@ public class Gomoku {
      * @param nombre
      */
     public void setNameP1(String nombre){
+    	ok = true;
         this.nameP1 = nombre;
     }
     
@@ -315,6 +336,7 @@ public class Gomoku {
      * @param nombre
      */
     public void setNameP2(String nombre){
+    	ok = true;
         this.nameP2 = nombre;
     }
 
@@ -322,6 +344,7 @@ public class Gomoku {
      * Set the type of machine
      */
     public void setMachineType(String type){
+    	ok = true;
         machineType = type;
     }
 
@@ -331,14 +354,15 @@ public class Gomoku {
      * @throws InvocationTargetException
      */
     public void createRivals(){
+    	ok = true;
         if(opponent == "pvp"){
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
             players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
         }else if(opponent == "pve"){ 
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
+            setNameP2("machine");
             players.put(nameP2, createMachine(machineType));
         }
-        turn = nameP1;
     }
     
     /**
@@ -348,16 +372,18 @@ public class Gomoku {
      * @throws java.lang.reflect.InvocationTargetException
      */
     public Machine createMachine(String type){
-        Machine machine;
+    	ok = true;
+        Machine machine = null;
         try{
             Class<?> machineChilds = Class.forName("domain."+type+"Machine");
-            Constructor<?> constructorMachineChilds = machineChilds.getConstructor();
-            machine = (Machine) constructorMachineChilds.newInstance();
+            Constructor<?> constructorMachineChilds = machineChilds.getConstructor(String.class);
+            machine = (Machine) constructorMachineChilds.newInstance(nameP2);
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
             Log.record(e);
-            return null;
+            ok = false;
+            return machine;
         }
-        return machine;
+		return machine;
     }
 
 
@@ -368,6 +394,7 @@ public class Gomoku {
      * @throws GomokuException
      */
     public void setColor(String jugador, Color color){
+    	ok = true;
         try {
 	    	Player player = loadPlayer(jugador);
 	        player.setColor(color);
@@ -375,6 +402,7 @@ public class Gomoku {
         catch(GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
+        	ok = false;
         }
     }
 
@@ -385,6 +413,7 @@ public class Gomoku {
      * @throws GomokuException 
      */
     public String getColor(String jugador){
+    	ok = true;
     	try {
             Player player = loadPlayer(jugador);
             Color color = player.getColor();
@@ -403,6 +432,7 @@ public class Gomoku {
      * @return players.
      */
     public HashMap<String, Player> getPlayers(){
+    	ok = true;
         return players;
     }
 
@@ -420,6 +450,7 @@ public class Gomoku {
      * @return
      */
     public int getTime(int time){
+    	ok = true;
         return time;
     }
     
@@ -431,6 +462,7 @@ public class Gomoku {
      * @return lastPositionTOken
      */
     public ArrayList<int[]> getLastPositionTokens(){
+    	ok = true;
         return lastPositionTokens;
     }
 
@@ -440,6 +472,7 @@ public class Gomoku {
      * @param placeToY
      */ 
     public void calculateLastPositionTokens(int xPos, int yPos){
+    	ok = true;
         ArrayList<int[]> positionOfTokens = new ArrayList<>();
         positionOfTokens.add(new int[]{xPos, yPos});
         for(Token t: tokens){
@@ -465,6 +498,7 @@ public class Gomoku {
      * @throws GomokuException
      */
     private void deleteToken(Token token) {
+    	ok = true;
         int[] position = token.getPosition();
         this.tokenMatrix[position[0]][position[1]] = null;
         try {
@@ -472,6 +506,7 @@ public class Gomoku {
 		} catch (GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
+        	ok = false;
 		}
     }
     
@@ -480,6 +515,7 @@ public class Gomoku {
      * @throws GomokuException
      */
     private void updateTokens(){
+    	
         Iterator<Token> iterador = tokens.iterator();
         while (iterador.hasNext()) {
             Token t = iterador.next();
@@ -498,6 +534,7 @@ public class Gomoku {
      * @return token
      */
     public Token getToken(int xPos, int yPos){
+    	ok = true;
         return tokenMatrix[xPos][yPos];
     }
     
@@ -506,6 +543,7 @@ public class Gomoku {
      * @return dimension
      */
     public int getDimension() {
+    	ok = true;
     	return dimension;
     }
     
@@ -514,6 +552,7 @@ public class Gomoku {
      * @return
      */
 	public Token[][] getTokenMatrix() {
+		ok = true;
 		return tokenMatrix;
 	}
 	
@@ -694,6 +733,27 @@ public class Gomoku {
 		return nameP2;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getTypesOfTokens(){
+		return this.typeOfTokens;
+	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean ok() {
+		return this.ok;
+	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Token> getTokens(){
+		return this.tokens;
+	}
 }

@@ -25,6 +25,8 @@ public class GomokuGUI extends JFrame{
         exit();
         prepareElements();
     }
+    
+    
 
     
     /**
