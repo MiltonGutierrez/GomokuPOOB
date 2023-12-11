@@ -143,7 +143,7 @@ public class PvpNormal extends JPanel {
                     refreshTokens();
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Informaciï¿½n", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }); 
@@ -230,7 +230,7 @@ public class PvpNormal extends JPanel {
      */
     public void validateWinCondition(){
         if(Gomoku.getGomoku().getGomokuFinished()){ 
-            JOptionPane.showMessageDialog(this, "Juego Terminado\n" + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Juego Terminado\n" + Gomoku.getGomoku().getWinner(), "Informaciï¿½n", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -397,6 +397,7 @@ public class PvpNormal extends JPanel {
             logo = new ImageIcon(url);
             logoLabel.setIcon(new ImageIcon(logo.getImage().getScaledInstance(logoLabel.getWidth(), logoLabel.getHeight(), Image.SCALE_SMOOTH)));
         }
+        System.out.println("hola mundo");
         return logoPanel;
     }
     
