@@ -3,6 +3,8 @@
  */
 package domain;
 
+import java.util.HashMap;
+
 /**
  * 
  */
@@ -50,6 +52,9 @@ public class GomokuVerifier {
         winnerValidationOnTheYCoordinate(calculations[0], calculations[1],yPos, matrix);
         winnerValidationOnTheDiagonal1(xPos, yPos, dimension, matrix);
         winnerValidationOnTheDiagonal2(xPos, yPos, dimension, matrix);
+        if(gomoku.getGameMode() == "quicktime") {
+        	timeValidation();
+        }
     }
     
     /**
@@ -276,5 +281,15 @@ public class GomokuVerifier {
         }
         return new int[]{xPos, yPos};
     }
+    
+    public void timeValidation() {
+    	HashMap<String, Player> players = gomoku.getPlayers();
+    	for(Player p: players.values()) {
+    		if(p.validateTime() <= 0) {
+    			gomokuFinished = true;
+    		}
+    	}
+    }
+    
 
 }

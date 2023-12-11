@@ -123,5 +123,16 @@ public class Human implements Player {
 	public ArrayList<String> getTokensToUse(){
 		return this.tokensToUse;
 	}
+	
+	private int timeLeft;
+	
+	public void setTime(int time) {
+		timeLeft = time;
+	}
+	
+	public int validateTime() {
+		return (timeLeft - time);
+	}
+	
 
 }

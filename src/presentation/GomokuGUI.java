@@ -238,6 +238,22 @@ public class GomokuGUI extends JFrame{
         JPanel panel = generalPanel(PvpQuick.getPvpNormal());
         principal.add(panel, BorderLayout.CENTER);
     }
+    
+    /**
+     * Returns the time left for player 1
+     * @return
+     */
+    public static int returnTimeLeftP1() {
+    	return Gomoku.getGomoku().returnTimeLeftP1();
+    }
+    
+    /**
+     * Returns the time left for player 2
+     * @return
+     */
+    public static int returnTimeLeftP2() {
+    	return Gomoku.getGomoku().returnTimeLeftP2();
+    }
 
     //////////////////////////////////////////////////////////////////////////
     /**

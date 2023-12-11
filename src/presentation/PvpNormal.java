@@ -131,7 +131,7 @@ public class PvpNormal extends JPanel{
                 	Gomoku.getGomoku().play(fila, columna);
                     updateTokensOnBoard();
                     refreshInformationPanel();
-                    refreshTokens();
+                    refreshTime();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -199,7 +199,7 @@ public class PvpNormal extends JPanel{
         return  x * dimension + y + 1;
     }
 
-    public void refreshTokens(){
+    public void refreshTime(){
         boardGame.validate();
         boardGame.repaint();
     }

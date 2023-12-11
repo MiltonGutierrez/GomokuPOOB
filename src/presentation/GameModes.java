@@ -101,7 +101,7 @@ public class GameModes extends JPanel{
             	try {
             		GomokuGUI.askForTime();
 					GomokuGUI.changeColor();
-					Gomoku.getGomoku().setGameMode("normal");
+					Gomoku.getGomoku().setGameMode("quicktime");
 	                Gomoku.getGomoku().startGame();
 	                GomokuGUI.quickTimeGameSelected();
 				} catch (GomokuException e1) {

@@ -77,5 +77,17 @@ public class FearfulMachine extends Machine {
 		return null;
 	}
 
+	@Override
+	public void setTime(int time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int validateTime() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
 

@@ -9,7 +9,6 @@ import domain.Gomoku;
 public class PvpQuick extends PvpNormal {
 	private static PvpQuick pvpQuick = null;
 
-	
 	private PvpQuick() {
 		this.setOpaque(true);
 	}
@@ -23,6 +22,7 @@ public class PvpQuick extends PvpNormal {
     }
 	
 	private JPanel timeInformation;
+	private JPanel gameWrapper;
 	
 	/**
      * Prepares the elements of the board
@@ -37,7 +37,7 @@ public class PvpQuick extends PvpNormal {
         game = createBoardGame();
         timeInformation = createBoardTokenInformation();
         // Create a panel to hold the game component in the center
-        JPanel gameWrapper = new JPanel();
+        gameWrapper = new JPanel();
         gameWrapper.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 30));
         gameWrapper.setBackground(new Color(113, 197, 232,128));
         gameWrapper.add(game);
@@ -62,16 +62,25 @@ public class PvpQuick extends PvpNormal {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(0, 10, 0, 0);
         Font arial = new Font("italic", 1, 14);
-        JLabel tiempoRestanteP1 = new JLabel("Tiempo restante " + GomokuGUI.returnP1() + ": " );
+        JLabel tiempoRestanteP1 = new JLabel("Tiempo restante " + GomokuGUI.returnP1() + ": " + GomokuGUI.returnTimeLeftP1());
         tiempoRestanteP1.setFont(arial);
         timeLeft.add(tiempoRestanteP1, gbc);
         gbc.gridy = 1;
         timeLeft.add(Box.createVerticalStrut(5), gbc);
         gbc.gridy = 6;
-        JLabel tiempoRestanteP2 = new JLabel("Tiempo restante " + GomokuGUI.returnP2() + ": ");
+        JLabel tiempoRestanteP2 = new JLabel("Tiempo restante " + GomokuGUI.returnP2() + ": " + GomokuGUI.returnTimeLeftP2());
         tiempoRestanteP2.setFont(arial);
         timeLeft.add(tiempoRestanteP2, gbc);
-        
         return timeLeft;
+    }
+    
+    @Override
+    public void refreshTime(){
+    	timeInformation.removeAll();
+        gameWrapper.remove(timeInformation);
+        timeInformation = createBoardTokenInformation();
+        gameWrapper.add(timeInformation);
+        boardGame.validate();
+        boardGame.repaint();
     }
 }

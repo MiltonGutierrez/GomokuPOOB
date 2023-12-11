@@ -18,4 +18,6 @@ public interface Player {
     void deleteToken(int xPos, int yPos);
 	void setTokensToUse(ArrayList<String> tokens);
 	String getTokenToUse();
+	void setTime(int time);
+	int validateTime();
 }

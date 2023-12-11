@@ -298,6 +298,15 @@ public class Gomoku {
 		ok = true;
         String result = "";
         boolean gomokuFinished = verifier.getGomokuFinished();
+        if(gameMode == "quicktime" && gomokuFinished) {
+        	if(players.get(turn).validateTime() <= 0) {
+        		if(turn == nameP1) {
+        			return nameP2;
+        		}else {
+        			return nameP1;
+        		}
+        	}
+        }
         if(gomokuFinished){
             return turn;
         }
@@ -485,17 +494,12 @@ public class Gomoku {
      */
     public void setTime(int time){
         this.timeLimit = time;
+        int timeForPlayers = (int)(time / 2);
+        for(Player p: players.values()) {
+        	p.setTime(timeForPlayers);
+        }
     }
 
-    /**
-     * Returns the time when the quick mode is used.
-     * @param time
-     * @return
-     */
-    public int getTime(int time){
-    	ok = true;
-        return time;
-    }
     
     //Nuevos metodos.
     
@@ -746,4 +750,11 @@ public class Gomoku {
 		return this.ok;
 	}
 	
+	public int returnTimeLeftP1() {
+		return players.get(nameP1).validateTime();
+	}
+	
+	public int returnTimeLeftP2() {
+		return players.get(nameP2).validateTime();
+	}
 }
