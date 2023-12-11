@@ -9,16 +9,17 @@ import javax.swing.*;
 import domain.Gomoku;
 import domain.Log;
 
-public class PvpNormal extends JPanel {
-    private JPanel gameOptions;
-    private JPanel boardGame;
+public class PvpNormal extends JPanel{
+   
+	protected JPanel gameOptions;
+    protected JPanel boardGame;
 
     private static PvpNormal pvpNormal = null;
 
     /**
      * Creates an instance of Gomoku
      */
-    private PvpNormal() {
+    public PvpNormal() {
         this.setOpaque(true);
        
     }
@@ -69,12 +70,13 @@ public class PvpNormal extends JPanel {
         gameOptions.add(logoPanel, BorderLayout.CENTER);
     }
 
-    private JPanel game;
-    private JPanel information;
-    private JPanel tokensLeft;
+    protected JPanel game;
+    protected JPanel information;
+    protected JPanel tokensLeft;
     /**
      * Prepares the elements of the game
-     *  */
+     * 
+     */
     public void prepareElementsGame() {
         boardGame.setLayout(new BorderLayout());
         boardGame.setSize(this.getWidth() - gameOptions.getWidth(), this.getHeight());
@@ -94,20 +96,10 @@ public class PvpNormal extends JPanel {
         boardGame.repaint();
     }
 
-
-    public JPanel createBoardTokenInformation() {
-        tokensLeft = new JPanel();
-        tokensLeft.setLayout(new GridBagLayout());
-        tokensLeft.setBackground(new Color(166, 220, 242,128));
-        tokensLeft.setPreferredSize(new Dimension(200, 200));
-        return tokensLeft;
-    }
-
-
     /*
      * Creates the board of Gomoku
      *  */
-    private JPanel createBoardGame(){
+    public JPanel createBoardGame(){
         game = new JPanel();
         game.setBackground(Color.WHITE);
         game.setLayout(new GridLayout(GomokuGUI.returnDimension(), GomokuGUI.returnDimension()));

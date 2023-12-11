@@ -73,7 +73,7 @@ class GomokuTest {
 		board.nextTurn();
 		board.addToken("Heavy", board.getTurn(), new int[]{0, 1});
 		assertTrue(board.ok());
-		assertEquals(board.getTokens().size(), 3);
+		assertEquals(board.getTokens().size(), 4); //Son 4 más la adición del metodo CalculateLastPositions
 	}
 	
 	@Test
@@ -88,14 +88,17 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldValidPlay1() {
+	void shouldCalculateLastPositions() {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
 		board.setGameMode("normal");
 		board.createRivals();
 		board.startGame();
-		assertTrue(board.validPlay(0, 0));
+		board.addToken("Normal", board.getTurn(),new int[] {0, 1});
+		board.getToken(0, 1).setIdentifier('D');
+		board.calculateLastPositionTokens(0, 0);
+		assertEquals(board.getLastPositionTokens().size(), 2);
 	}
 }
 

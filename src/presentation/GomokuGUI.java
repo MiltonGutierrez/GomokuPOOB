@@ -216,6 +216,15 @@ public class GomokuGUI extends JFrame{
                 System.exit(0);
             }
     }
+    
+    /**
+     * Selects the gameMode QuickTime
+     */
+    public static void quickTimeGameSelected(){
+        GameModes.getGameModes().setInvisible();
+        JPanel panel = generalPanel(PvpQuick.getPvpNormal());
+        principal.add(panel, BorderLayout.CENTER);
+    }
 
     //////////////////////////////////////////////////////////////////////////
     /**

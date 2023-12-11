@@ -98,6 +98,15 @@ public class GameModes extends JPanel{
         quickTime.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+            	try {
+					GomokuGUI.changeColor();
+					Gomoku.getGomoku().setGameMode("normal");
+	                Gomoku.getGomoku().startGame();
+	                GomokuGUI.quickTimeGameSelected();
+				} catch (GomokuException e1) {
+					// TODO Auto-generated catch block
+					Log.record(e1);
+				}
                 
             }});
 
