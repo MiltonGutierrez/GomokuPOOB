@@ -53,6 +53,7 @@ class GomokuTest {
 		assertNotEquals(board.loadPlayer("Mutsia").getTokenToUse(), null);
 		assertNotEquals(board.loadPlayer("Miltown").getTokenToUse(), null);
 		assertNotEquals(board.getTypesOfTokens(), null);
+		assertEquals(board.getTurn(), "Mutsia");
 		
 	}
 	
@@ -72,7 +73,12 @@ class GomokuTest {
 		board.nextTurn();
 		board.addToken("Heavy", board.getTurn(), new int[]{0, 1});
 		assertTrue(board.ok());
+		assertEquals(board.getTokens().size(), 3);
 	}
 	
-	
+	@Test
+	void shouldYes() {
+		
+	}
 }
+

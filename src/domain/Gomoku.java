@@ -748,4 +748,12 @@ public class Gomoku {
 	public boolean ok() {
 		return this.ok;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Token> getTokens(){
+		return this.tokens;
+	}
 }
