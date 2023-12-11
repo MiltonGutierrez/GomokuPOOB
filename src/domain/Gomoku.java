@@ -32,7 +32,7 @@ public class Gomoku {
     private int tokensPercentage = 30; // by default
     private int boxesPercentage = 30; //by default
     private ArrayList<int[]> lastPositionTokens; //Calculates the token positions to change in the gui.
-    private String lastTurn;
+    private Color lastColor;
     private boolean ok;
     
     /**
@@ -63,14 +63,7 @@ public class Gomoku {
     	return verifier.validPlay(xPos, yPos);
     }
     
-    /**
-     * Sets the dimension of Gomoku
-     * @param dimension
-     */
-    public void setDimension(int dimension){
-        this.dimension = dimension;
-    }
-    
+  
     /**
      * Returns a new Token matrix
      * @return tokenMatrix
@@ -141,7 +134,6 @@ public class Gomoku {
         try {
             lastPositionTokens = null;
             String playerName = getTurn();
-            lastTurn = playerName;
             updateTicks();
             calculateLastPositionTokens(xPos, yPos);
             updateTokens();
@@ -160,42 +152,6 @@ public class Gomoku {
         	ok = false;
         }
     }
-    
-    /**
-     * 
-     * @return
-     */
-    public String getTurn() {
-    	ok = true;
-		return turn;
-	}
-
-	/**
-     * Returns the winner of gomoku if gomokuFinished.
-     * @return
-     */
-	public String getWinner(){
-		ok = true;
-        String result = "";
-        boolean gomokuFinished = verifier.getGomokuFinished();
-        if(gomokuFinished){
-            return turn;
-        }
-        else if(!gomokuFinished && cellsMissing == 0){
-            return result + "Empate";
-        }
-        return result;
-    }
-
-    /**
-     * Returns the value of gomokuFinished.
-     * @return  gomokuFinshed
-     */
-    public boolean getGomokuFinished(){
-    	ok = true;
-        return verifier.getGomokuFinished();
-    }
-
 
     /**
      * Starts the player's timer.
@@ -247,7 +203,6 @@ public class Gomoku {
     	}
         
     }
-
     /**
      * Changes the turn.
      */
@@ -260,6 +215,36 @@ public class Gomoku {
             this.turn = nameP1;
         }
     }
+    
+    /**
+     * Create the instances of players
+     * @throws InvocationTargetException
+     */
+    public void createRivals(){
+    	ok = true;
+        if(opponent == "pvp"){
+            players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
+            players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
+        }else if(opponent == "pve"){ 
+            players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
+            setNameP2("machine");
+            players.put(nameP2, createMachine(machineType));
+        }
+    }
+    
+    /**
+     * Creates the important elements of the game and starts the first player timer.
+     * @throws GomokuException 
+     */
+    public void startGame(){
+        turn = nameP1;
+        createBoards();
+        startPlayerTimer(getTurn());
+        setTypeOfTokens();
+        createTokensToUse(nameP1);
+        createTokensToUse(nameP2);
+    }
+    
 
     /**
      * Creates a new instance of Machine
@@ -274,7 +259,7 @@ public class Gomoku {
             Constructor<?> constructorTokenChilds = tokenChilds.getConstructor(Color.class, int[].class, Player.class, Gomoku.class);
             Player player = players.get(playerName);
             Token token = (Token) constructorTokenChilds.newInstance(player.getColor(), position, player, Gomoku.getGomoku());
-            Color lastColor = player.getColor();
+            lastColor = player.getColor();
             player.setToken(token, position[0], position[1], tokenType);
             tokenMatrix[position[0]][position[1]] = token;
             tokens.add(token);
@@ -282,86 +267,6 @@ public class Gomoku {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
         	ok = true;
-        }
-    }
-
-    /**
-     * Returns the gameMode of gomoku
-     * @return gameMode
-     */
-    public String getGameMode(){
-    	ok = true;
-        return gameMode;
-    }
-
-    /**
-     * Sets the gameMode of Gomoku
-     * @param gameMode
-     */
-    public void setGameMode(String gameMode){
-    	ok = true;
-        this.gameMode = gameMode;
-    }
-
-    /**
-     * Returns the opponent of gomoku
-     * @return gameMode
-     */
-    public String getOpponent(){
-    	ok = true;
-        return opponent;
-    }
-
-    /**
-     * Sets the opponent of Gomoku
-     * @param gameMode
-     */
-    public void setOpponent(String oponente){
-    	ok = true;
-        this.opponent = oponente;
-    }
-
-    /**
-     * Set the name of the player 1
-     * @param nombre
-     */
-    public void setNameP1(String nombre){
-    	ok = true;
-        this.nameP1 = nombre;
-    }
-    
-
-    /**
-     * Set the name of the player 2
-     * @param nombre
-     */
-    public void setNameP2(String nombre){
-    	ok = true;
-        this.nameP2 = nombre;
-    }
-
-    /**
-     * Set the type of machine
-     */
-    public void setMachineType(String type){
-    	ok = true;
-        machineType = type;
-    }
-
-
-    /**
-     * Create the instances of players
-     * @throws InvocationTargetException
-     */
-    public void createRivals(){
-    	ok = true;
-        if(opponent == "pvp"){
-            players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
-            players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
-        }else if(opponent == "pve"){ 
-            players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
-            setNameP2("machine");
-            players.put(nameP2, createMachine(machineType));
         }
     }
     
@@ -384,6 +289,135 @@ public class Gomoku {
             return machine;
         }
 		return machine;
+    }
+	/**
+     * Returns the winner of gomoku if gomokuFinished.
+     * @return
+     */
+	public String getWinner(){
+		ok = true;
+        String result = "";
+        boolean gomokuFinished = verifier.getGomokuFinished();
+        if(gomokuFinished){
+            return turn;
+        }
+        else if(!gomokuFinished && cellsMissing == 0){
+            return result + "Empate";
+        }
+        return result;
+    }
+	
+    /**
+     * 
+     * @return
+     */
+    public String getTurn() {
+    	ok = true;
+		return turn;
+	}
+
+    
+    /**
+     * Returns the value of gomokuFinished.
+     * @return  gomokuFinshed
+     */
+    public boolean getGomokuFinished(){
+    	ok = true;
+        return verifier.getGomokuFinished();
+    }
+
+    
+    /**
+     * Sets the dimension of Gomoku
+     * @param dimension
+     */
+    public void setDimension(int dimension){
+        this.dimension = dimension;
+    }
+    
+    /**
+     * Return the dimension of Gomoku
+     * @return dimension
+     */
+    public int getDimension() {
+    	ok = true;
+    	return dimension;
+    }
+    
+
+    /**
+     * Sets the gameMode of Gomoku
+     * @param gameMode
+     */
+    public void setGameMode(String gameMode){
+    	ok = true;
+        this.gameMode = gameMode;
+    }
+    /**
+     * Returns the gameMode of gomoku
+     * @return gameMode
+     */
+    public String getGameMode(){
+    	ok = true;
+        return gameMode;
+    }
+    /**
+     * Sets the opponent of Gomoku
+     * @param gameMode
+     */
+    public void setOpponent(String oponente){
+    	ok = true;
+        this.opponent = oponente;
+    }
+
+    /**
+     * Returns the opponent of gomoku
+     * @return gameMode
+     */
+    public String getOpponent(){
+    	ok = true;
+        return opponent;
+    }
+
+    /**
+     * Set the name of the player 1
+     * @param nombre
+     */
+    public void setNameP1(String nombre){
+    	ok = true;
+        this.nameP1 = nombre;
+    }
+    
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getP1() {
+		return nameP1;
+	}
+	
+    /**
+     * Set the name of the player 2
+     * @param nombre
+     */
+    public void setNameP2(String nombre){
+    	ok = true;
+        this.nameP2 = nombre;
+    }
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getP2() {
+		return nameP2;
+	}
+
+    /**
+     * Set the type of machine
+     */
+    public void setMachineType(String type){
+    	ok = true;
+        machineType = type;
     }
 
 
@@ -427,6 +461,15 @@ public class Gomoku {
         }
     }
     
+	/**
+	 * Returns the color of the player that played in the last turn.
+	 * @return Color.
+	 */
+	public Color getLastColor(){
+		return lastColor;
+	}
+	
+    
     /**
      * Return the HashMap of players.
      * @return players.
@@ -455,17 +498,7 @@ public class Gomoku {
     }
     
     //Nuevos metodos.
-
-
-    /**
-     * Returns the position of the last placed token.
-     * @return lastPositionTOken
-     */
-    public ArrayList<int[]> getLastPositionTokens(){
-    	ok = true;
-        return lastPositionTokens;
-    }
-
+    
     /**
      * 
      * @param placeToX
@@ -482,6 +515,16 @@ public class Gomoku {
         }
         this.lastPositionTokens = positionOfTokens;
     }
+
+    /**
+     * Returns the position of the last placed token.
+     * @return lastPositionTOken
+     */
+    public ArrayList<int[]> getLastPositionTokens(){
+    	ok = true;
+        return lastPositionTokens;
+    }
+
    
     /**
      * Updates the ticks of the tokens.
@@ -515,7 +558,6 @@ public class Gomoku {
      * @throws GomokuException
      */
     private void updateTokens(){
-    	
         Iterator<Token> iterador = tokens.iterator();
         while (iterador.hasNext()) {
             Token t = iterador.next();
@@ -538,14 +580,6 @@ public class Gomoku {
         return tokenMatrix[xPos][yPos];
     }
     
-    /**
-     * Return the dimension of Gomoku
-     * @return dimension
-     */
-    public int getDimension() {
-    	ok = true;
-    	return dimension;
-    }
     
     /**
      * Returns the tokenMatrix of Gomoku
@@ -629,19 +663,6 @@ public class Gomoku {
     	
     }
     
-
-    /**
-     * Creates the important elements of the game and starts the first player timer.
-     * @throws GomokuException 
-     */
-    public void startGame(){
-        turn = nameP1;
-        createBoards();
-        startPlayerTimer(getTurn());
-        setTypeOfTokens();
-        createTokensToUse(nameP1);
-        createTokensToUse(nameP2);
-    }
     
     /**
      * Restuns the token a player is next to use
@@ -659,6 +680,15 @@ public class Gomoku {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getTypesOfTokens(){
+		return this.typeOfTokens;
+	}
+	
+	
+	/**
 	 * Returns the tokens percentage the players have.
 	 * @return
 	 */
@@ -672,6 +702,13 @@ public class Gomoku {
 	 */
 	public void setTokensPercentage(int percentage) {
 		this.tokensPercentage = percentage;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Token> getTokens(){
+		return this.tokens;
 	}
 	
 	/**
@@ -702,46 +739,6 @@ public class Gomoku {
 	}
 	
 	/**
-	 * Returns the color of the player that played in the last turn.
-	 * @return Color.
-	 */
-	public Color getLastColor(){
-		try {
-			return loadPlayer(lastTurn).getColor();
-		} catch (GomokuException e) {
-        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-        	Log.record(e);
-        	return null;
-		}
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static String returnP1() {
-		// TODO Auto-generated method stub
-		return nameP1;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public static String returnP2() {
-		// TODO Auto-generated method stub
-		return nameP2;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<String> getTypesOfTokens(){
-		return this.typeOfTokens;
-	}
-	
-	/**
 	 * 
 	 * @return
 	 */
@@ -749,11 +746,4 @@ public class Gomoku {
 		return this.ok;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<Token> getTokens(){
-		return this.tokens;
-	}
 }
