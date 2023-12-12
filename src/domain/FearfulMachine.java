@@ -1,6 +1,8 @@
 package domain;
 import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 public class FearfulMachine extends Machine {
 
     private String name;
@@ -93,6 +95,12 @@ public class FearfulMachine extends Machine {
 	public int getTokensLeft() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Timer getTimer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

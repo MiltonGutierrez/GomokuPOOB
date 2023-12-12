@@ -3,6 +3,8 @@ package domain;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import javax.swing.Timer;
+
 public interface Player {
     void setColor(Color color);
     Color getColor();
@@ -21,5 +23,6 @@ public interface Player {
 	void setTime(int time);
 	int validateTime();
 	int getTokensLeft();
+	javax.swing.Timer getTimer();
 	
 }

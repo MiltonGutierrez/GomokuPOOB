@@ -4,18 +4,24 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 public class Human implements Player {
     private String name;
     private Color color;
     private ArrayList<Token> tokens = new ArrayList<>();
     private Token[][] tokenMatrix;
-    private int time;
     private ArrayList<String> tokensToUse = new ArrayList<>();
     private Gomoku gomoku;
 	private int timeLeft;
-    private long tiempoInicio = 0;
-    private long tiempoFinal = 0;
-
+	private Timer timer;
+	private int time;
+    
     /**
      * Creates an instance of Human.
      * @param name
@@ -23,7 +29,21 @@ public class Human implements Player {
     public Human(String name, Gomoku gomoku){
         this.name = name;
         this.gomoku = gomoku;
-        time = 0;  
+        this.time = 0;
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarTiempo();
+            }
+
+			private void actualizarTiempo() {
+				
+			}
+        });
+    }
+    
+    public javax.swing.Timer getTimer() {
+    	return this.timer;
     }
     
     /**
@@ -67,36 +87,22 @@ public class Human implements Player {
      * Starts the time the player takes to play
      */
     public void startTime(){
-        tiempoInicio = System.currentTimeMillis();
+        if (!timer.isRunning()) {
+            timer.start();
+            
+        }
     }
     
     /**
-     * Stops the time of the player.
+     * Stops the time the player takes to play
      */
-    public void stopTime(){
-        tiempoFinal = System.currentTimeMillis();
-        calculateTotalTime();
-    }
-
-    /**
-     * Calculates the time the player's spent.
-     */
-    public void calculateTotalTime(){
-        int inicial = (int)(tiempoInicio * Math.pow(1000,-1));
-        int finaltime = (int)(tiempoFinal * Math.pow(1000,-1));
-        long segundos = (long) ((tiempoFinal-tiempoInicio) * Math.pow(1000,-1));
-        time += Math.abs(segundos);
-        tiempoInicio = 0;
-        tiempoFinal = 0;
+    public void stopTime() {
+        if (timer.isRunning()) {
+            timer.stop();
+            
+        }
     }
     
-    /**
-     * Returns the total time the player's spent.
-     */
-    public int getTotalTime(){
-        return time;
-    }
-
     /**
      * Return the name of the player.
      */
@@ -171,6 +177,19 @@ public class Human implements Player {
 	 */
 	public int getTokensLeft() {
 		return this.tokensToUse.size();
+	}
+
+
+	@Override
+	public void calculateTotalTime() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getTotalTime() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 

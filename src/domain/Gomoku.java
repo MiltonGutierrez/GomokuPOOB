@@ -763,4 +763,14 @@ public class Gomoku {
 	public int returnTimeLeftP2() {
 		return players.get(nameP2).validateTime();
 	}
+	
+	public javax.swing.Timer getTimer(String playerName) {
+		try {
+			return loadPlayer(playerName).getTimer();
+		} catch (GomokuException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

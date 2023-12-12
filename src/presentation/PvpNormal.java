@@ -131,7 +131,7 @@ public class PvpNormal extends JPanel{
                 	Gomoku.getGomoku().play(fila, columna);
                     updateTokensOnBoard();
                     refreshInformationPanel();
-                    refreshTime();
+                    //refreshTime();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -309,8 +309,8 @@ public class PvpNormal extends JPanel{
     private JLabel nombreP2;
     private JLabel colorP1;
     private JLabel colorP2;
-    private JLabel tiempoP1;
-    private JLabel tiempoP2;
+    private JPanel tiempoP1 = new RelojPanel(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1()));
+    private JPanel tiempoP2 = new RelojPanel(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2()));
     protected JLabel puntuacionJugador1;
     protected JLabel puntuacionJugador2;
     /**
@@ -325,8 +325,6 @@ public class PvpNormal extends JPanel{
         nombreP2 = new JLabel("P2: " + GomokuGUI.returnP2());
         colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP1()));
         colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP2()));
-        tiempoP1 = new JLabel("Tiempo " + GomokuGUI.returnP1() +": " + Gomoku.getGomoku().getPlayerTotalTime(GomokuGUI.returnP1()) + " " + "Segundos.");
-        tiempoP2 = new JLabel("Tiempo "+ GomokuGUI.returnP2() +": " + Gomoku.getGomoku().getPlayerTotalTime(GomokuGUI.returnP2()) + " " + "Segundos.");
         puntuacionJugador1 = new JLabel("Score P1: " + "Pendiente");
         puntuacionJugador2 = new JLabel("Score P2: " + "Pendiente");
         turno.setFont(arial);
