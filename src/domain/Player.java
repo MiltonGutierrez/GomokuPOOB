@@ -20,4 +20,6 @@ public interface Player {
 	String getTokenToUse();
 	void setTime(int time);
 	int validateTime();
+	int getTokensLeft();
+	
 }

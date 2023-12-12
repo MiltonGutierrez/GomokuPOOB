@@ -102,5 +102,11 @@ public class AgressiveMachine extends Machine {
 		return 0;
 	}
 
+	@Override
+	public int getTokensLeft() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }

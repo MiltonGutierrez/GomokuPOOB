@@ -612,7 +612,7 @@ public class Gomoku {
     	if(gameMode.equals("normal") || gameMode.equals("quicktime")) {
     		createTokensToUse(playerName, tokensPercentage, random, tokens);
     	}
-    	else if(gameMode.equals("piedrasLimitadas")) {
+    	else if(gameMode.equals("limited")) {
     		createTokensToUse(playerName, tokens);
     	}
     	else {
