@@ -13,7 +13,7 @@ public class PvpQuick extends PvpNormal {
 		this.setOpaque(true);
 	}
 	
-	public static PvpNormal getPvpNormal() {
+	public static PvpQuick getPvpQuick() {
         if (pvpQuick == null) {
             pvpQuick = new PvpQuick();
             pvpQuick.prepareElementsGameBoardPVP();

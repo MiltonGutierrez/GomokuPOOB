@@ -235,7 +235,7 @@ public class GomokuGUI extends JFrame{
      */
     public static void quickTimeGameSelected(){
         GameModes.getGameModes().setInvisible();
-        JPanel panel = generalPanel(PvpQuick.getPvpNormal());
+        JPanel panel = generalPanel(PvpQuick.getPvpQuick());
         principal.add(panel, BorderLayout.CENTER);
     }
     
