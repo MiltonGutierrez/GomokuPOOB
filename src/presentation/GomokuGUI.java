@@ -244,7 +244,7 @@ public class GomokuGUI extends JFrame{
      * @return
      */
     public static int returnTimeLeftP1() {
-    	return Gomoku.getGomoku().returnTimeLeftP1();
+    	return Gomoku.getGomoku().getTimeLeftP1();
     }
     
     /**
@@ -252,7 +252,7 @@ public class GomokuGUI extends JFrame{
      * @return
      */
     public static int returnTimeLeftP2() {
-    	return Gomoku.getGomoku().returnTimeLeftP2();
+    	return Gomoku.getGomoku().getTimeLeftP2();
     }
     
     public static void limitedGameSelected() {

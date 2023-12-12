@@ -211,10 +211,8 @@ public class PvpNormal extends JPanel{
         gameOptions.add(optionsPanel, BorderLayout.EAST);
         gameOptions.add(informationPanel, BorderLayout.WEST);
         gameOptions.add(logoPanel, BorderLayout.CENTER);
-        Gomoku.getGomoku().startPlayerTimer(Gomoku.getGomoku().getTurn());;
         this.revalidate();
         this.repaint();
-        validateWinCondition();
     }
     /**
      * Validates if there is a winner
@@ -304,13 +302,13 @@ public class PvpNormal extends JPanel{
     }
 
     protected JPanel informationPanel;
-    private JLabel turno;
-    private JLabel nombreP1;
-    private JLabel nombreP2;
-    private JLabel colorP1;
-    private JLabel colorP2;
-    private JPanel tiempoP1 = new RelojPanel(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1()));
-    private JPanel tiempoP2 = new RelojPanel(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2()));
+    protected JLabel turno;
+    protected JLabel nombreP1;
+    protected JLabel nombreP2;
+    protected JLabel colorP1;
+    protected JLabel colorP2;
+    protected JPanel tiempoP1 = new RelojPanel(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1()), "normal");
+    protected JPanel tiempoP2 = new RelojPanel(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2()), "normal");
     protected JLabel puntuacionJugador1;
     protected JLabel puntuacionJugador2;
     /**

@@ -99,9 +99,9 @@ public class AgressiveMachine extends Machine {
 	}
 
 	@Override
-	public int validateTime() {
+	public boolean validateTime() {
 		// TODO Auto-generated method stub
-		return 0;
+		return true;
 	}
 
 	@Override

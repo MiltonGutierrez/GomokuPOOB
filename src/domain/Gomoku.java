@@ -145,6 +145,9 @@ public class Gomoku {
                 startPlayerTimer(getTurn());
                 cellsMissing--;
             }
+            else {
+            	stopGame();
+            }
         }
         catch(GomokuException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
@@ -152,7 +155,7 @@ public class Gomoku {
         	ok = false;
         }
     }
-
+    
     /**
      * Starts the player's timer.
      * @throws GomokuException 
@@ -298,7 +301,7 @@ public class Gomoku {
         String result = "";
         boolean gomokuFinished = verifier.getGomokuFinished();
         if(gameMode == "quicktime" && gomokuFinished) {
-        	if(players.get(turn).validateTime() <= 0) {
+        	if(players.get(turn).validateTime() == false) {
         		if(turn == nameP1) {
         			return nameP2;
         		}else {
@@ -752,16 +755,16 @@ public class Gomoku {
 	 * Returns the time left for the player 1 (quicktime mode)
 	 * @return is the time left for the player 1
 	 */
-	public int returnTimeLeftP1() {
-		return players.get(nameP1).validateTime();
+	public int getTimeLeftP1() {
+		return players.get(nameP1).getTimeLeft();
 	}
 	
 	/**
 	 * Returns the time left for the player 2 (quicktime mode)
 	 * @return is the time left for the player 2
 	 */
-	public int returnTimeLeftP2() {
-		return players.get(nameP2).validateTime();
+	public int getTimeLeftP2() {
+		return players.get(nameP2).getTimeLeft();
 	}
 	
 	public javax.swing.Timer getTimer(String playerName) {
@@ -772,5 +775,13 @@ public class Gomoku {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	/**
+	 * Stops the timer of the player when the game is finished.
+	 */
+	public void stopGame(){
+		this.stopPlayerTimer(nameP1);
+		this.stopPlayerTimer(nameP2);
 	}
 }

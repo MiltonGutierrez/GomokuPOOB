@@ -18,9 +18,8 @@ public class Human implements Player {
     private Token[][] tokenMatrix;
     private ArrayList<String> tokensToUse = new ArrayList<>();
     private Gomoku gomoku;
-	private int timeLeft;
+	private Integer timeLeft;
 	private Timer timer;
-	private int time;
     
     /**
      * Creates an instance of Human.
@@ -29,13 +28,12 @@ public class Human implements Player {
     public Human(String name, Gomoku gomoku){
         this.name = name;
         this.gomoku = gomoku;
-        this.time = 0;
+        this.timeLeft = 0;
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 actualizarTiempo();
             }
-
 			private void actualizarTiempo() {
 				
 			}
@@ -160,19 +158,22 @@ public class Human implements Player {
 	/**
 	 * Sets the time left
 	 */
-	public void setTime(int time) {
+	public void setTime(Integer time) {
 		timeLeft = time;
 	}
 	
 	/**
 	 * Validates the time left
 	 */
-	public int validateTime() {
-		return (timeLeft - time);
+	public boolean validateTime() {
+		return timeLeft <= 0;
+	}
+	
+	public Integer getTimeLeft() {
+		return timeLeft;
 	}
 
-
-	/**
+	/**W
 	 * Returns the tokens left to use by the player.
 	 */
 	public int getTokensLeft() {
@@ -180,17 +181,15 @@ public class Human implements Player {
 	}
 
 
-	@Override
 	public void calculateTotalTime() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public int getTotalTime() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 
 }

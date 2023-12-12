@@ -7,12 +7,34 @@ import java.util.Date;
 
 public class RelojPanel extends JPanel {
     private JLabel tiempoLabel;
-    private int segundosTranscurridos;
+    private Integer segundosTranscurridos;
     private Timer timer;
     private boolean enPausa;
+    private String gameMode;
 
-    public RelojPanel(Timer timer) {
+    public RelojPanel(Timer timer, String gameMode, Integer time) {
+        System.out.println(time);
+        tiempoLabel = new JLabel();
+        this.gameMode = gameMode;
+        add(tiempoLabel);
+
+        // Inicializar la variable de segundos
+        segundosTranscurridos = time;
+
+        enPausa = false;
+
+        // Configuración del temporizador para actualizar cada segundo
+        timer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarTiempo();
+            }
+        });
+    }
+
+    public RelojPanel(Timer timer, String gameMode) {
         this.timer = timer;
+        this.gameMode = gameMode;
         tiempoLabel = new JLabel();
         add(tiempoLabel);
 
@@ -30,16 +52,18 @@ public class RelojPanel extends JPanel {
     }
 
     private void actualizarTiempo() {
-    	if(timer.isRunning()) {
-    		enPausa = false;
-    	}
-    	else {
-    		enPausa = true;
-    	}
-    	
         if (!enPausa) {
-            // Incrementar la variable de segundos solo si no está en pausa
-            segundosTranscurridos++;
+            if (gameMode.equals("quicktime")) {
+                System.out.println("si");
+                if (segundosTranscurridos > 0) {
+                    segundosTranscurridos--;
+                } else {
+                    // Si el contador llega a cero, detener el temporizador
+                    timer.stop();
+                }
+            } else {
+                segundosTranscurridos++;
+            }
 
             // Crear un objeto Date basado en los segundos transcurridos
             Date tiempo = new Date(segundosTranscurridos * 1000);
@@ -78,52 +102,8 @@ public class RelojPanel extends JPanel {
         if (timer.isRunning()) {
             timer.stop();
         }
-        enPausa = true;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame("Reloj");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(200, 100);
-
-                // Crear un Timer con una acción predeterminada (puedes personalizarlo según tus necesidades)
-                Timer timer = new Timer(1000, null);
-
-                // Crear el panel proporcionando el Timer como parámetro
-                RelojPanel relojPanel = new RelojPanel(timer);
-
-                // Botón para pausar o reanudar el tiempo
-                JButton pausarReanudarButton = new JButton("Pausar/Reanudar");
-                pausarReanudarButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        relojPanel.pausarOReanudarTiempo();
-                    }
-                });
-
-                // Botón para reiniciar el panel
-                JButton reiniciarButton = new JButton("Reiniciar");
-                reiniciarButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        relojPanel.reiniciarPanel();
-                    }
-                });
-
-                frame.add(relojPanel);
-                frame.add(pausarReanudarButton);
-                frame.add(reiniciarButton);
-
-                frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-                frame.setVisible(true);
-
-                // Iniciar el temporizador después de que la interfaz esté visible
-                timer.start();
-            }
-        });
+        enPausa = false;
+        timer.start();
     }
 }
 
