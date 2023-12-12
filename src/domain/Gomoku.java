@@ -122,7 +122,7 @@ public class Gomoku {
     }
 
     /**
-     * 
+     * Play the game
      * @param placeToX
      * @param placeToY
      * @param tokenType
@@ -201,8 +201,8 @@ public class Gomoku {
         	Log.record(e);
         	return 0;
     	}
-        
     }
+    
     /**
      * Changes the turn.
      */
@@ -249,7 +249,6 @@ public class Gomoku {
     /**
      * Creates a new instance of Machine
      * @param type
-     * @return
      * @throws java.lang.reflect.InvocationTargetException
      */
     public void addToken(String tokenType, String playerName, int[] position){
@@ -273,7 +272,7 @@ public class Gomoku {
     /**
      * Creates a new instance of Machine
      * @param type
-     * @return
+     * @return machine is the new instansce
      * @throws java.lang.reflect.InvocationTargetException
      */
     public Machine createMachine(String type){
@@ -292,7 +291,7 @@ public class Gomoku {
     }
 	/**
      * Returns the winner of gomoku if gomokuFinished.
-     * @return
+     * @return winner's name of the game
      */
 	public String getWinner(){
 		ok = true;
@@ -317,8 +316,8 @@ public class Gomoku {
     }
 	
     /**
-     * 
-     * @return
+     * Returns the current player to play
+     * @return name of the player playing
      */
     public String getTurn() {
     	ok = true;
@@ -328,7 +327,7 @@ public class Gomoku {
     
     /**
      * Returns the value of gomokuFinished.
-     * @return  gomokuFinshed
+     * @return gomokuFinshed is the status of the game
      */
     public boolean getGomokuFinished(){
     	ok = true;
@@ -338,7 +337,7 @@ public class Gomoku {
     
     /**
      * Sets the dimension of Gomoku
-     * @param dimension
+     * @param dimension size of the Gomoku's board
      */
     public void setDimension(int dimension){
         this.dimension = dimension;
@@ -346,7 +345,7 @@ public class Gomoku {
     
     /**
      * Return the dimension of Gomoku
-     * @return dimension
+     * @return dimension is the dimention of the board
      */
     public int getDimension() {
     	ok = true;
@@ -356,7 +355,7 @@ public class Gomoku {
 
     /**
      * Sets the gameMode of Gomoku
-     * @param gameMode
+     * @param gameMode set the current gamemode of Gomoku
      */
     public void setGameMode(String gameMode){
     	ok = true;
@@ -364,7 +363,7 @@ public class Gomoku {
     }
     /**
      * Returns the gameMode of gomoku
-     * @return gameMode
+     * @return gameMode the current gamemode of Gomoku
      */
     public String getGameMode(){
     	ok = true;
@@ -372,7 +371,7 @@ public class Gomoku {
     }
     /**
      * Sets the opponent of Gomoku
-     * @param gameMode
+     * @param oponente is the opponent of the game (Human or Machine) 
      */
     public void setOpponent(String oponente){
     	ok = true;
@@ -381,7 +380,7 @@ public class Gomoku {
 
     /**
      * Returns the opponent of gomoku
-     * @return gameMode
+     * @return opponent is the current opponent
      */
     public String getOpponent(){
     	ok = true;
@@ -390,7 +389,7 @@ public class Gomoku {
 
     /**
      * Set the name of the player 1
-     * @param nombre
+     * @param nombre is the name of player 1
      */
     public void setNameP1(String nombre){
     	ok = true;
@@ -398,8 +397,8 @@ public class Gomoku {
     }
     
 	/**
-	 * 
-	 * @return
+	 * Returns the name of player 1
+	 * @return nameP1 is the name of the player 1
 	 */
 	public static String getP1() {
 		return nameP1;
@@ -407,15 +406,15 @@ public class Gomoku {
 	
     /**
      * Set the name of the player 2
-     * @param nombre
+     * @param nombre is the name to set to player 2
      */
     public void setNameP2(String nombre){
     	ok = true;
         this.nameP2 = nombre;
     }
 	/**
-	 * 
-	 * @return
+	 * Returns the name of the player 2
+	 * @return nameP2 is the name of the player 2
 	 */
 	public static String getP2() {
 		return nameP2;
@@ -432,9 +431,9 @@ public class Gomoku {
 
     /**
      * Set's the player's color.
-     * @param jugador
-     * @param color
-     * @throws GomokuException
+     * @param jugador is the player to set color
+     * @param color is the player's color
+     * @throws GomokuException 
      */
     public void setColor(String jugador, Color color){
     	ok = true;
@@ -451,8 +450,8 @@ public class Gomoku {
 
     /**
      * Return the player's color.
-     * @param jugador
-     * @return colorString
+     * @param jugador is the player to get his color
+     * @return colorString is the color of the selected player in hex format
      * @throws GomokuException 
      */
     public String getColor(String jugador){
@@ -490,7 +489,7 @@ public class Gomoku {
 
     /**
      * Set's the time limit of the game when the quick mode is used.
-     * @param time
+     * @param time is the time to split in quickmode 
      */
     public void setTime(int time){
         this.timeLimit = time;
@@ -504,9 +503,9 @@ public class Gomoku {
     //Nuevos metodos.
     
     /**
-     * 
-     * @param placeToX
-     * @param placeToY
+     * Calculates the last position of the tokens
+     * @param xPos is the x position
+     * @param yPos is the y position
      */ 
     public void calculateLastPositionTokens(int xPos, int yPos){
     	ok = true;
@@ -541,7 +540,7 @@ public class Gomoku {
     
     /**
      * Deletes the token in the tokenMatrix of both players and Gomoku
-     * @param token
+     * @param token is the token to delete
      * @throws GomokuException
      */
     private void deleteToken(Token token) {
@@ -571,13 +570,12 @@ public class Gomoku {
             }
         }
     }
-
     
     /**
      * Returns the token in the position xPos, yPos of the tokenMatrix
-     * @param xPos
-     * @param yPos
-     * @return token
+     * @param xPos is the x position
+     * @param yPos is the y position
+     * @return token is the desired token
      */
     public Token getToken(int xPos, int yPos){
     	ok = true;
@@ -587,7 +585,7 @@ public class Gomoku {
     
     /**
      * Returns the tokenMatrix of Gomoku
-     * @return
+     * @return tokenMatrix is the tonkens matrix
      */
 	public Token[][] getTokenMatrix() {
 		ok = true;
@@ -605,7 +603,7 @@ public class Gomoku {
     
     /**
      * Creates the tokens kList the players are gona use when playing.
-     * @param playerName
+     * @param playerName is the player name to create the token
      * @throws GomokuException 
      */
     public void createTokensToUse(String playerName){
@@ -624,8 +622,8 @@ public class Gomoku {
     
     /**
      * Creates the token to use when the gameMode is Normal.
-     * @param playerName
-     * @param tokens
+     * @param playerName is the player name
+     * @param tokens are the tokens to use
      * @throws GomokuException 
      */
     public void createTokensToUse(String playerName, ArrayList<String> tokens){
@@ -643,11 +641,11 @@ public class Gomoku {
     	
     }
     /**
-     * 
-     * @param playerName
-     * @param tokensPercentage
-     * @param random
-     * @param tokens
+     * Creates the token to use when the gameMode is Normal.
+     * @param playerName is the player name
+     * @param tokensPercentage is the percentage of special tokens
+     * @param random is the random object to select the next token
+     * @param tokens is the array of tokens
      */
     public void createTokensToUse(String playerName, int tokensPercentage, Random random, ArrayList<String> tokens) {
 		int quantityOfTokens = (dimension * dimension) / 2;
@@ -669,8 +667,8 @@ public class Gomoku {
     
     
     /**
-     * Restuns the token a player is next to use
-     * @return
+     * Returns the token a player is next to use
+     * @return the token to use in the next turn
      * @throws GomokuException
      */
 	public String getTokenType(){
@@ -684,8 +682,8 @@ public class Gomoku {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Returns the types of tokens available
+	 * @return arraylist which contains the types of tokens
 	 */
 	public ArrayList<String> getTypesOfTokens(){
 		return this.typeOfTokens;
@@ -694,7 +692,7 @@ public class Gomoku {
 	
 	/**
 	 * Returns the tokens percentage the players have.
-	 * @return
+	 * @return the current percentage of special tokens
 	 */
 	public int getTokensPercentage(){
 		return this.tokensPercentage;
@@ -702,14 +700,14 @@ public class Gomoku {
 	
 	/**
 	 * Sets the tokens percentage.
-	 * @param percentage
+	 * @param percentage is the percentage of special tokens to set
 	 */
 	public void setTokensPercentage(int percentage) {
 		this.tokensPercentage = percentage;
 	}
 	/**
-	 * 
-	 * @return
+	 * Returns the tokens of the game
+	 * @return arraylist of tokens
 	 */
 	public ArrayList<Token> getTokens(){
 		return this.tokens;
@@ -717,10 +715,10 @@ public class Gomoku {
 	
 	/**
 	 * Makes the validations to verify if there's a winner.
-	 * @param xPos
-	 * @param yPos
-	 * @param dimension
-	 * @param matrix
+	 * @param xPos is the x coordinate
+	 * @param yPos is the y coordinate
+	 * @param dimension is the dimention of the board
+	 * @param matrix is the token matrix
 	 */
 	public void winner(int xPos, int yPos, int dimension, Token[][] matrix){
 		this.verifier.winner(xPos, yPos, dimension, matrix);
@@ -728,8 +726,8 @@ public class Gomoku {
 	
 	/**
 	 * Returns the Player.
-	 * @param playerName
-	 * @return Player
+	 * @param playerName is the player to get
+	 * @return Player is the desired player
 	 * @throws GomokuException
 	 */
 	public Player loadPlayer(String playerName) throws GomokuException{
@@ -743,17 +741,25 @@ public class Gomoku {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Its a flag method
+	 * @return the last operation status (true is it was successful or false if it isn't)
 	 */
 	public boolean ok() {
 		return this.ok;
 	}
 	
+	/**
+	 * Returns the time left for the player 1 (quicktime mode)
+	 * @return is the time left for the player 1
+	 */
 	public int returnTimeLeftP1() {
 		return players.get(nameP1).validateTime();
 	}
 	
+	/**
+	 * Returns the time left for the player 2 (quicktime mode)
+	 * @return is the time left for the player 2
+	 */
 	public int returnTimeLeftP2() {
 		return players.get(nameP2).validateTime();
 	}
