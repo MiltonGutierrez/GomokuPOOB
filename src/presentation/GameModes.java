@@ -114,7 +114,15 @@ public class GameModes extends JPanel{
         limitedTokens.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                
+            	try {
+					GomokuGUI.changeColor();
+					Gomoku.getGomoku().setGameMode("limited");
+	                Gomoku.getGomoku().startGame();
+	                GomokuGUI.limitedGameSelected();
+				} catch (GomokuException e1) {
+					// TODO Auto-generated catch block
+					Log.record(e1);
+				}
             }});
     }
     

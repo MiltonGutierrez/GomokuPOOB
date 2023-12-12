@@ -4,8 +4,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import domain.Gomoku;
-
 public class PvpQuick extends PvpNormal {
 	private static PvpQuick pvpQuick = null;
 

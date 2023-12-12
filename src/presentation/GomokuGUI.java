@@ -254,6 +254,12 @@ public class GomokuGUI extends JFrame{
     public static int returnTimeLeftP2() {
     	return Gomoku.getGomoku().returnTimeLeftP2();
     }
+    
+    public static void limitedGameSelected() {
+    	GameModes.getGameModes().setInvisible();
+        JPanel panel = generalPanel(PvpLimited.getPvpLimited());
+        principal.add(panel, BorderLayout.CENTER);
+    }
 
     //////////////////////////////////////////////////////////////////////////
     /**
