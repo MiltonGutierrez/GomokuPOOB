@@ -27,7 +27,9 @@ public class Gomoku {
     private int ticks = 0;
 
     //Nuevos atributos
-    private ArrayList<String> typeOfTokens = new ArrayList<>(); 
+    private ArrayList<String> typeOfTokens = new ArrayList<>();
+    private ArrayList<String> typeOfBoxes = new ArrayList<>();
+    private ArrayList<String> boxesToUse = new ArrayList<>();
     private GomokuVerifier verifier = new GomokuVerifier(this);
     private int tokensPercentage = 30; // by default
     private int boxesPercentage = 30; //by default
@@ -83,10 +85,15 @@ public class Gomoku {
      * @return boxMatrix
      */
     private Box[][] createBoxMatrix(){
+    	this.setTypeOfBoxes();
+    	this.createBoxesToUse();
         Box[][] boxMatrix = new Box[dimension][dimension];
         for(int i = 0; i < dimension; i++){
             for(int j = 0; j < dimension; j++){
-                boxMatrix[i][j] = null;
+            	Box b = this.createBox(this.boxesToUse.get(0));
+            	this.boxesToUse.remove(0);
+                boxMatrix[i][j] = b;
+                
             }
         }
         return boxMatrix;
@@ -99,7 +106,7 @@ public class Gomoku {
      */
     public void createBoards(){
         tokenMatrix = createTokenMatrix();
-        boxMatrix = createBoxMatrix();
+        //boxMatrix = createBoxMatrix();
         setPlayerTokenMatrix(nameP1);
         setPlayerTokenMatrix(nameP2);
     }
@@ -225,10 +232,11 @@ public class Gomoku {
         if(opponent == "pvp"){
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
             players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
-        }else if(opponent == "pve"){ 
+        }else if(opponent == "pve"){
+        	setNameP2("machine");
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
-            setNameP2("machine");
             players.put(nameP2, createMachine(machineType));
+            
         }
     }
     
@@ -262,7 +270,7 @@ public class Gomoku {
             player.setToken(token, position[0], position[1], tokenType);
             tokenMatrix[position[0]][position[1]] = token;
             tokens.add(token);
-            boxMatrix[position[0]][position[1]].setToken(token);
+            //boxMatrix[position[0]][position[1]].setToken(token);
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
@@ -286,9 +294,23 @@ public class Gomoku {
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
             Log.record(e);
             ok = false;
-            return machine;
         }
 		return machine;
+    }
+    
+    public Box createBox(String type) {
+    	ok = true;
+    	Box box = null;
+        try{
+            Class<?> boxChilds = Class.forName("domain."+type+"Box");
+            Constructor<?> constructorBoxChilds = boxChilds.getConstructor();
+            box = (Box) constructorBoxChilds.newInstance();
+        } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
+            Log.record(e);
+            ok = false;
+        }
+		return box;
+    	
     }
 	/**
      * Returns the winner of gomoku if gomokuFinished.
@@ -519,7 +541,6 @@ public class Gomoku {
         }
         this.lastPositionTokens = positionOfTokens;
     }
-
     /**
      * Returns the position of the last placed token.
      * @return lastPositionTOken
@@ -592,7 +613,51 @@ public class Gomoku {
 		ok = true;
 		return tokenMatrix;
 	}
-	
+	/**
+	 * Adds the type of boxes used in gomoku
+	 */
+    public void setTypeOfBoxes() {
+    	this.typeOfBoxes.add("Normal");
+    	this.typeOfBoxes.add("Temporal");
+    	this.typeOfBoxes.add("Golden");
+    	this.typeOfBoxes.add("Explosive");
+    }
+    
+    /**
+     * Returns the box position at (xPos, yPos) in the boxMatrix
+     * @param xPos
+     * @param yPos
+     * @return
+     */
+    public Box getBox(int xPos, int yPos) {
+    	return this.boxMatrix[xPos][yPos];
+    	
+    }
+    /**
+     * Creates the ArrayList containing strings that represent the type of boxes to use.
+     */
+    public void createBoxesToUse() {
+    	Random random = new Random();
+    	ArrayList<String> boxes = new ArrayList<>();
+    	int quantityOfBoxes = dimension * dimension;
+    	if(gameMode.equals("normal")) {
+    		for(int i = 0; i < quantityOfBoxes - boxesPercentage; i++) {
+    			boxes.add(typeOfBoxes.get(0));
+    		}
+    		for(int i = quantityOfBoxes- tokensPercentage; i < quantityOfBoxes; i++) {
+    			boxes.add(typeOfBoxes.get(random.nextInt(2) + 1));
+    		}
+    		Collections.shuffle(boxes);
+    		this.boxesToUse = boxes;
+    	}
+    	else {
+    		for(int i = 0; i < quantityOfBoxes; i++) {
+    			boxes.add(typeOfBoxes.get(0));
+    		}
+    		this.boxesToUse = boxes;
+    	}
+    }
+    
 	/**
 	 * Adds the type of tokens used in gomolu
 	 */
@@ -603,7 +668,7 @@ public class Gomoku {
     }
     
     /**
-     * Creates the tokens kList the players are gona use when playing.
+     * Creates the tokens list the players are gona use when playing.
      * @param playerName is the player name to create the token
      * @throws GomokuException 
      */
@@ -663,7 +728,6 @@ public class Gomoku {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
 		}
-    	
     }
     
     
@@ -750,19 +814,29 @@ public class Gomoku {
 	}
 	
 	/**
-	 * Returns the time left for the player 1 (quicktime mode)
+	 * Returns the time for the player 1 
 	 * @return is the time left for the player 1
 	 */
 	public TimePassed getTimeP1(String typeOfTime){
 		return players.get(nameP1).getTime(typeOfTime);
 	}
 	
+	/**
+	 * Returns the time for the player 2 
+	 * @param typeOfTime
+	 * @return
+	 */
 	public TimePassed getTimeP2(String typeOfTime){
 		return players.get(nameP2).getTime(typeOfTime);
 	}
 		
 
-	
+	/**
+	 * Returns the timer 
+	 * @param playerName
+	 * @param typeOfTimer
+	 * @return
+	 */
 	public javax.swing.Timer getTimer(String playerName, String typeOfTimer) {
 		try {
 			return loadPlayer(playerName).getTimer(typeOfTimer);
@@ -781,6 +855,9 @@ public class Gomoku {
 		this.stopPlayerTimer(nameP2);
 	}
 	
+	/**
+	 * Makes the time validation
+	 */
 	public void timeValidation() {
 		verifier.timeValidation();
 	}

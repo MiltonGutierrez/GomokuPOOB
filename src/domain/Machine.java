@@ -5,20 +5,13 @@ import java.util.ArrayList;
 
 public abstract class Machine implements Player{
     private int puntos;
-    private Color color;
+    private String name;
     private ArrayList<Token> tokens = new ArrayList<>();
     
-    public void setColor(Color color){
-        color = Color.WHITE;
+    
+    public Machine(String name) {
+    	this.name = name;
     }
-
-    /*
-     * Return the color of the player
-     */
-    public Color getColor(){
-        return color;
-    }
-
 
 
     public void setToken(Token token){

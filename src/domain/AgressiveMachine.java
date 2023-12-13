@@ -14,7 +14,7 @@ public class AgressiveMachine extends Machine {
      * @param name
      */
     public AgressiveMachine(String name){
-        this.name = name;
+        super(name);
     }
 
 	@Override
@@ -97,6 +97,18 @@ public class AgressiveMachine extends Machine {
 
 	@Override
 	public Timer getTimer(String timer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setColor(Color color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Color getColor() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -96,11 +96,9 @@ public class Human implements Player {
      * Starts the time the player takes to play
      */
     public void startTime(){
-    	System.out.println("player " + name);
     	for(Timer timer: timers.values()) {
             if (!timer.isRunning()) {
                 timer.start();
-                System.out.println("emepzo");
             }
     	}
 
