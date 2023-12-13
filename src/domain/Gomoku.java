@@ -322,18 +322,23 @@ public class Gomoku {
         if(gameMode == "quicktime" && gomokuFinished) {
         	if(players.get(turn).validateTime() != false) {
         		if(turn == nameP1) {
+        			stopGame();
         			return nameP2;
         		}else {
+        			stopGame();
         			return nameP1;
         		}
         	}
         }
         if(gomokuFinished){
+        	stopGame();
             return turn;
         }
         else if(!gomokuFinished && cellsMissing == 0){
+        	stopGame();
             return result + "Empate";
         }
+        stopGame();
         return result;
     }
 	
@@ -881,6 +886,9 @@ public class Gomoku {
 	}
 	
 	public void nullAll() {
+		board.stopPlayerTimer(nameP1);
+		board.stopPlayerTimer(nameP2);
 		board = null;
+	    
 	}
 }
