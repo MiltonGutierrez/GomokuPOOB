@@ -1,5 +1,7 @@
 package domain;
 
+import java.awt.event.ActionEvent;
+
 import javax.management.BadStringOperationException;
 
 public class NormalBox extends Box{
@@ -17,5 +19,11 @@ public class NormalBox extends Box{
     public void deleteToken() {
     	this.token = null;
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

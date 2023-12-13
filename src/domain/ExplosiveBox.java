@@ -1,5 +1,6 @@
 package domain;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 public class ExplosiveBox extends Box{
 	
 	private Color colorWithToken = new Color(255,0,0,125);
@@ -30,6 +31,12 @@ public class ExplosiveBox extends Box{
     	this.setBackground(this.backgroundColor);
     	updateAppearance();
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
       
 

@@ -618,7 +618,7 @@ public class Gomoku {
 	 */
     public void setTypeOfBoxes() {
     	this.typeOfBoxes.add("Normal");
-    	this.typeOfBoxes.add("Temporal");
+    	this.typeOfBoxes.add("Teleporting");
     	this.typeOfBoxes.add("Golden");
     	this.typeOfBoxes.add("Explosive");
     }
@@ -645,7 +645,7 @@ public class Gomoku {
     			boxes.add(typeOfBoxes.get(0));
     		}
     		for(int i = quantityOfBoxes- tokensPercentage; i < quantityOfBoxes; i++) {
-    			boxes.add(typeOfBoxes.get(random.nextInt(2) + 1));
+    			boxes.add(typeOfBoxes.get(random.nextInt(3) + 1));
     		}
     		Collections.shuffle(boxes);
     		this.boxesToUse = boxes;

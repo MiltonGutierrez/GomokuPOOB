@@ -4,6 +4,7 @@
 package domain;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -38,6 +39,12 @@ public class TeleportingBox extends Box{
 		this.token = null;
     	this.setBackground(this.backgroundColor);
     	updateAppearance();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
