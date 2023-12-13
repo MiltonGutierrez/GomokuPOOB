@@ -239,8 +239,9 @@ public class PvpNormal extends JPanel{
      * Actions for the finish button
      */
     public void finishOption(){
-        this.remove(boardGame);
-        this.remove(gameOptions);
+    	this.removeAll();
+        GomokuGUI.finishButtonQuick();
+        pvpNormal = null;
     }
     protected JPanel optionsPanel;
     /**

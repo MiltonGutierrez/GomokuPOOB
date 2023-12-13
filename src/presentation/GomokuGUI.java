@@ -90,7 +90,7 @@ public class GomokuGUI extends JFrame{
         GameModes.getGameModes().setVisible();
         principal.add(panel, BorderLayout.CENTER);
     }
-
+    
     public static String returnP1(){
         return Gomoku.getP1();
     }
