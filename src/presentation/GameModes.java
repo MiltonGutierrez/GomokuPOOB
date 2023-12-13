@@ -17,7 +17,7 @@ public class GameModes extends JPanel{
      */
     private GameModes() {
         this.setOpaque(true);
-       
+        this.setVisible(true);
     }
 
     public static GameModes getGameModes() {
@@ -31,10 +31,12 @@ public class GameModes extends JPanel{
 
     public void setInvisible(){
         this.setVisible(false);
+        gameModes.repaint();
     }
 
     public void setVisible(){
         this.setVisible(true);
+        gameModes.repaint();
     }
 
 

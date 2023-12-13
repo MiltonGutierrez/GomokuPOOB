@@ -25,7 +25,7 @@ public class MainMenu extends JPanel {
      */
     private MainMenu() {
         this.setOpaque(true);
-       
+        this.setVisible(true);
     }
 
 

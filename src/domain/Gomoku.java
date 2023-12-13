@@ -262,7 +262,7 @@ public class Gomoku {
             player.setToken(token, position[0], position[1], tokenType);
             tokenMatrix[position[0]][position[1]] = token;
             tokens.add(token);
-            boxMatrix[position[0]][position[1]].setToken(token);
+            //boxMatrix[position[0]][position[1]].setToken(token);
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);

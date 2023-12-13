@@ -55,7 +55,7 @@ public class GomokuGUI extends JFrame{
         this.add(principal, BorderLayout.CENTER);
     }   
     
-    public void prepareElementsMenu() {
+    public static void prepareElementsMenu() {
         JPanel optionsPanel = generalPanel(MainMenu.getMainMenu());
         principal.add(optionsPanel, BorderLayout.CENTER);
     }
@@ -72,18 +72,22 @@ public class GomokuGUI extends JFrame{
         int panelHeight = (int) (principal.getHeight());
         optionsPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
         optionsPanel.add(panelToPaste, gbc);
+        optionsPanel.setVisible(true);
         return optionsPanel;
     }
 
     public static void newGame() throws InvocationTargetException{
         MainMenu.getMainMenu().setInvisible();
         JPanel panel = generalPanel(MenuOpponents.getMenuOpponents());
+        MenuOpponents.getMenuOpponents().setVisible();
         principal.add(panel, BorderLayout.CENTER);
     }  
 
     public static void gameModes() throws InvocationTargetException{
-        MenuOpponents.getMenuOpponents().setInvisible();
+    	MenuOpponents.getMenuOpponents().setInvisible();
+        principal.remove(MenuOpponents.getMenuOpponents());
         JPanel panel = generalPanel(GameModes.getGameModes());
+        GameModes.getGameModes().setVisible();
         principal.add(panel, BorderLayout.CENTER);
     }
 
@@ -104,8 +108,10 @@ public class GomokuGUI extends JFrame{
     }
 
     public static void normalGameSelected(){
-        GameModes.getGameModes().setInvisible();
+    	GameModes.getGameModes().setInvisible();
+        principal.remove(GameModes.getGameModes());
         JPanel panel = generalPanel(PvpNormal.getPvpNormal());
+        PvpNormal.getPvpNormal().setVisible();
         principal.add(panel, BorderLayout.CENTER);
     }
 
@@ -241,8 +247,10 @@ public class GomokuGUI extends JFrame{
      * Selects the gameMode QuickTime
      */
     public static void quickTimeGameSelected(){
-        GameModes.getGameModes().setInvisible();
+    	GameModes.getGameModes().setInvisible();
+        principal.remove(GameModes.getGameModes());
         JPanel panel = generalPanel(PvpQuick.getPvpQuick());
+        PvpQuick.getPvpQuick().setVisible();
         principal.add(panel, BorderLayout.CENTER);
     }
     
@@ -250,9 +258,29 @@ public class GomokuGUI extends JFrame{
     public static void limitedGameSelected() {
     	GameModes.getGameModes().setInvisible();
         JPanel panel = generalPanel(PvpLimited.getPvpLimited());
+        PvpLimited.getPvpLimited().setVisible();
         principal.add(panel, BorderLayout.CENTER);
     }
 
+    public static void finishButtonNormal() {
+    	PvpNormal.getPvpNormal().setInvisible();
+    	principal.remove(PvpNormal.getPvpNormal());
+    	MainMenu.getMainMenu().setVisible();
+    }
+    
+    public static void finishButtonQuick() {
+    	PvpQuick.getPvpQuick().setInvisible();
+    	principal.remove(PvpQuick.getPvpQuick());
+    	MainMenu.getMainMenu().setVisible();
+    }
+    
+    public static void finishButtonLimited() {
+    	PvpLimited.getPvpLimited().setInvisible();
+    	principal.remove(PvpLimited.getPvpLimited());
+    	MainMenu.getMainMenu().setVisible();
+    }
+    
+    
     //////////////////////////////////////////////////////////////////////////
     /**
      * Runs the presentation

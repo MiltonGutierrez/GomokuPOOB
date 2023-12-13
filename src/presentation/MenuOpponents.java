@@ -23,6 +23,7 @@ public class MenuOpponents extends JPanel{
         if (menuOpponents == null) {
             menuOpponents = new MenuOpponents();
             menuOpponents.preparePanel();
+            
         }
         return menuOpponents;
     }
@@ -115,9 +116,11 @@ public class MenuOpponents extends JPanel{
 
     public void setInvisible(){
         this.setVisible(false);
+        menuOpponents.repaint();
     }
 
     public void setVisible(){
         this.setVisible(true);
+        menuOpponents.repaint();
     }
 }

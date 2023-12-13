@@ -15,6 +15,7 @@ public class PvpQuick extends PvpNormal {
      */
 	private PvpQuick() {
 		this.setOpaque(true);
+		this.setVisible(true);
 	}
 
     public static PvpQuick getPvpQuick() {
@@ -130,6 +131,26 @@ public class PvpQuick extends PvpNormal {
         timeLeft.add(tiempoRestanteP2, gbc);
 
         return timeLeft;
+    }
+    
+    /*
+     * Actions for the finish button
+     */
+    @Override
+    public void finishOption(){
+    	this.removeAll();
+        GomokuGUI.finishButtonQuick();
+        pvpQuick = null;
+    }
+    
+    protected void setVisible() {
+    	this.setVisible(true);
+    	pvpQuick.repaint();
+    }
+    
+    protected void setInvisible() {
+    	this.setVisible(false);
+    	pvpQuick.repaint();
     }
     
     

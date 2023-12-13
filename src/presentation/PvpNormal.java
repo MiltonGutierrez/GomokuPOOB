@@ -21,7 +21,7 @@ public class PvpNormal extends JPanel{
      */
     public PvpNormal() {
         this.setOpaque(true);
-
+        this.setVisible(true);
        
     }
 
@@ -267,9 +267,11 @@ public class PvpNormal extends JPanel{
      * Actions for the finish button
      */
     public void finishOption(){
-        this.remove(boardGame);
-        this.remove(gameOptions);
+    	this.removeAll();
+        GomokuGUI.finishButtonNormal();
+        pvpNormal = null;
     }
+    
     protected JPanel optionsPanel;
     /**
      * Prepares the elements of the panel with option buttons
@@ -375,6 +377,16 @@ public class PvpNormal extends JPanel{
             logoLabel.setIcon(new ImageIcon(logo.getImage().getScaledInstance(logoLabel.getWidth(), logoLabel.getHeight(), Image.SCALE_SMOOTH)));
         }
         return logoPanel;
+    }
+    
+    protected void setVisible() {
+    	this.setVisible(true);
+    	pvpNormal.repaint();
+    }
+    
+    protected void setInvisible() {
+    	this.setVisible(false);
+    	pvpNormal.repaint();
     }
     
 

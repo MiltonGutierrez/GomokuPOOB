@@ -115,5 +115,15 @@ public class PvpLimited extends PvpNormal{
         boardGame.repaint();
     }
 	
+	protected void setVisible() {
+    	this.setVisible(true);
+    	pvpLimited.repaint();
+    }
+    
+    protected void setInvisible() {
+    	this.setVisible(false);
+    	pvpLimited.repaint();
+    }
+	
 	
 }
