@@ -9,9 +9,9 @@ public class FearfulMachine extends Machine {
     private Color color;
 
     public FearfulMachine(String name){
-        this.name = name;
+        super(name);
     }
-
+    
 	@Override
 	public void setToken(Token token, int xPos, int yPos, String tokenType) {
 		// TODO Auto-generated method stub
@@ -92,6 +92,18 @@ public class FearfulMachine extends Machine {
 
 	@Override
 	public Timer getTimer(String timer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setColor(Color color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Color getColor() {
 		// TODO Auto-generated method stub
 		return null;
 	}

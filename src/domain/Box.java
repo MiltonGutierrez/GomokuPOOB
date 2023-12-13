@@ -5,12 +5,14 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 public abstract class Box extends JButton {
-    // Atributos privados
+
     protected Token token;
     protected Color backgroundColor;
     protected Color borderColor;
 
-    // Constructor
+    /**
+     * Creates an instance of Box|
+     */
     public Box() {
         super();
         this.token = null; 

@@ -63,6 +63,7 @@ class GomokuTest {
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
 		board.setGameMode("normal");
+		board.setMachineType("Agressive");
 		board.createRivals();
 		board.startGame();
 		board.addToken("Normal", board.getTurn(), new int[]{0, 0});
@@ -100,5 +101,21 @@ class GomokuTest {
 		board.calculateLastPositionTokens(0, 0);
 		assertEquals(board.getLastPositionTokens().size(), 2);
 	}
+	
+	@Test
+	void shouldCreateBoxes() {
+		board.createBox("Normal");
+		assertTrue(board.ok());
+		
+		board.createBox("Golden");
+		assertTrue(board.ok());
+
+		board.createBox("Teleporting");
+		assertTrue(board.ok());
+
+		board.createBox("Explosive");
+		assertTrue(board.ok());
+	}
 }
+
 
