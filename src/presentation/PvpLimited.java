@@ -115,6 +115,16 @@ public class PvpLimited extends PvpNormal{
         boardGame.repaint();
     }
 	
+	/*
+     * Actions for the finish button
+     */
+    @Override
+    public void finishOption(){
+    	this.removeAll();
+        GomokuGUI.finishButtonLimited();
+        pvpLimited = null;
+    }
+	
 	protected void setVisible() {
     	this.setVisible(true);
     	pvpLimited.repaint();
