@@ -644,7 +644,7 @@ public class Gomoku {
     		for(int i = 0; i < quantityOfBoxes - boxesPercentage; i++) {
     			boxes.add(typeOfBoxes.get(0));
     		}
-    		for(int i = quantityOfBoxes- tokensPercentage; i < quantityOfBoxes; i++) {
+    		for(int i = quantityOfBoxes - boxesPercentage; i < quantityOfBoxes; i++) {
     			boxes.add(typeOfBoxes.get(random.nextInt(3) + 1));
     		}
     		Collections.shuffle(boxes);
