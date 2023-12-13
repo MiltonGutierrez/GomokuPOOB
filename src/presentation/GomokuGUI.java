@@ -265,18 +265,22 @@ public class GomokuGUI extends JFrame{
     public static void finishButtonNormal() {
     	PvpNormal.getPvpNormal().setInvisible();
     	principal.remove(PvpNormal.getPvpNormal());
+    	Gomoku.getGomoku().nullAll();
     	MainMenu.getMainMenu().setVisible();
+    	
     }
     
     public static void finishButtonQuick() {
     	PvpQuick.getPvpQuick().setInvisible();
     	principal.remove(PvpQuick.getPvpQuick());
+    	Gomoku.getGomoku().nullAll();
     	MainMenu.getMainMenu().setVisible();
     }
     
     public static void finishButtonLimited() {
     	PvpLimited.getPvpLimited().setInvisible();
     	principal.remove(PvpLimited.getPvpLimited());
+    	Gomoku.getGomoku().nullAll();
     	MainMenu.getMainMenu().setVisible();
     }
     

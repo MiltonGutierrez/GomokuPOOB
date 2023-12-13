@@ -861,4 +861,8 @@ public class Gomoku {
 	public void timeValidation() {
 		verifier.timeValidation();
 	}
+	
+	public void nullAll() {
+		board = null;
+	}
 }
