@@ -9,7 +9,7 @@ public class NormalBox extends Box{
 	}
 
 	@Override
-	public void act() {
+	protected void act() {
 		
 	}
 	

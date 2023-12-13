@@ -2,8 +2,11 @@ package domain;
 import java.awt.Color;
 public class ExplosiveBox extends Box{
 	
-	private Color colorWithToken = Color.RED;
-
+	private Color colorWithToken = new Color(255,0,0,125);
+	
+	/**
+	 * 
+	 */
     public ExplosiveBox() {
         super();
     }
@@ -18,7 +21,7 @@ public class ExplosiveBox extends Box{
     }
     
     @Override
-    public void act(){
+	protected void act(){
     	
     }
     

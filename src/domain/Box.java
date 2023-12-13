@@ -49,7 +49,7 @@ public abstract class Box extends JButton {
         updateAppearance(); 
     }
     
-    public abstract void act();
+    protected abstract void act();
 
     public abstract void deleteToken();
     
