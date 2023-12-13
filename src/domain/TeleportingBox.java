@@ -24,15 +24,13 @@ public class TeleportingBox extends Box{
 	@Override
 	public void setToken(Token token) {
 		this.token = token;
-        this.setBorderColor(colorWithToken);
-        this.setTextInBox("" + token.getIdentifier());
 		act();
 	}
 
 	@Override
 	protected void act() {
-		// TODO Auto-generated method stub
-		
+        this.setBorderColor(colorWithToken);
+        this.setTextInBox("" + token.getIdentifier());
 	}
 	
 	@Override

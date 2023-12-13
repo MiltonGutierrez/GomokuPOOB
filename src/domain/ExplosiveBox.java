@@ -14,15 +14,14 @@ public class ExplosiveBox extends Box{
     @Override
     public void setToken(Token token) {
         this.token = token;
-        this.setBorderColor(colorWithToken);
-        this.setTextInBox("" + token.getIdentifier());
         act();
         updateAppearance(); 
     }
     
     @Override
 	protected void act(){
-    	
+        this.setBorderColor(colorWithToken);
+        this.setTextInBox("" + token.getIdentifier());
     }
     
     @Override

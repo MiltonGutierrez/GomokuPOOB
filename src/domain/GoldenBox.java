@@ -17,9 +17,20 @@ public class GoldenBox extends Box{
 	public GoldenBox() {
 		super();
 	}
-
+	
+	/**
+	 * 
+	 */
+	@Override
+	public void setToken(Token token) {
+		this.token = token;
+		act();
+	}
+	
 	@Override
 	protected void act() {
+        this.setBorderColor(colorWithToken);
+        this.setTextInBox("" + token.getIdentifier());
 		
 	}
 

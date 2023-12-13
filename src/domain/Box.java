@@ -20,6 +20,7 @@ public abstract class Box extends JButton {
 
     public void setToken(Token token) {
         this.token = token;
+        act();
         updateAppearance(); 
     }
 
