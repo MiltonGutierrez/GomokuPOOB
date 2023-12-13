@@ -106,15 +106,27 @@ class GomokuTest {
 	void shouldCreateBoxes() {
 		board.createBox("Normal");
 		assertTrue(board.ok());
-		
 		board.createBox("Golden");
 		assertTrue(board.ok());
-
 		board.createBox("Teleporting");
 		assertTrue(board.ok());
-
 		board.createBox("Explosive");
 		assertTrue(board.ok());
+	}
+	
+	@Test
+	void shouldCreateMatrixBox() {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+		board.startGame();
+		for(int i = 0; i < Gomoku.getGomoku().getDimension(); i++) {
+			for(int j = 0; j < Gomoku.getGomoku().getDimension(); j++) {
+				assertTrue(Gomoku.getGomoku().getBox(i, j) instanceof Box);
+			}
+		}
 	}
 }
 

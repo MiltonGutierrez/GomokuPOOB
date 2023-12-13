@@ -106,7 +106,7 @@ public class Gomoku {
      */
     public void createBoards(){
         tokenMatrix = createTokenMatrix();
-        //boxMatrix = createBoxMatrix();
+        boxMatrix = createBoxMatrix();
         setPlayerTokenMatrix(nameP1);
         setPlayerTokenMatrix(nameP2);
     }
