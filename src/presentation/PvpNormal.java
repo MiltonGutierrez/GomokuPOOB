@@ -301,8 +301,8 @@ public class PvpNormal extends JPanel{
     protected JLabel colorP2;
     protected JLabel puntuacionJugador1;
     protected JLabel puntuacionJugador2;
-    private JPanel tiempoP1 = new RelojPanelSum(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1(), "timerT"), Gomoku.getGomoku().getTimeP1("timeT"));
-    private JPanel tiempoP2 = new RelojPanelSum(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2(), "timerT"), Gomoku.getGomoku().getTimeP2("timeT"));
+    protected JPanel tiempoP1 = new RelojPanelSum(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1(), "timerT"), Gomoku.getGomoku().getTimeP1("timeT"));
+    protected JPanel tiempoP2 = new RelojPanelSum(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2(), "timerT"), Gomoku.getGomoku().getTimeP2("timeT"));
     /**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel

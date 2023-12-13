@@ -30,6 +30,49 @@ public class PvpQuick extends PvpNormal {
 	private JPanel tiempoRestanteP1 = new RelojPanelSub(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1(), "timerM"), Gomoku.getGomoku().getTimeP1("timeM"));
 	private JPanel tiempoRestanteP2 = new RelojPanelSub(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2(), "timerM"), Gomoku.getGomoku().getTimeP2("timeM"));
 	
+	/**
+     * Prepares the elements of the panel with labels with important information of the game
+     * @return informationPanel
+     */
+	@Override
+    public JPanel createInformationPanelGameOptions(){
+        informationPanel = new JPanel(new GridBagLayout());
+        Font arial = new Font("italic", 1, 18);
+        turno = new JLabel("Siguiente en jugar: " + Gomoku.getGomoku().getTurn());
+        nombreP1 = new JLabel("P1: " + GomokuGUI.returnP1());
+        nombreP2 = new JLabel("P2: " + GomokuGUI.returnP2());
+        colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP1()));
+        colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP2()));
+        turno.setFont(arial);
+        nombreP1.setFont(arial);
+        nombreP2.setFont(arial);
+        colorP1.setForeground(hexToColor(Gomoku.getGomoku().getColor(GomokuGUI.returnP1())));
+        colorP2.setForeground(hexToColor(Gomoku.getGomoku().getColor(GomokuGUI.returnP2())));
+        tiempoP1.setFont(arial);
+        tiempoP2.setFont(arial);
+        informationPanel.setBackground(new Color(224,62,82));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(0, 10, 0, 0);
+        informationPanel.add(turno, gbc);
+        gbc.gridy = 1;
+        informationPanel.add(Box.createRigidArea(new Dimension(0, 10)), gbc);
+        gbc.gridy = 2;
+        informationPanel.add(nombreP1, gbc);
+        gbc.gridy = 3;
+        informationPanel.add(colorP1, gbc);
+        gbc.gridy = 5;
+        informationPanel.add(tiempoP1, gbc);
+        gbc.gridy = 6;
+        informationPanel.add(nombreP2, gbc);
+        gbc.gridy = 7;
+        informationPanel.add(colorP2, gbc);
+        gbc.gridy = 9;
+        informationPanel.add(tiempoP2, gbc);
+        return informationPanel;
+    }
+	
     @Override
     public void prepareElementsGame() {
         boardGame.setLayout(new BorderLayout());
@@ -44,8 +87,6 @@ public class PvpQuick extends PvpNormal {
         gameWrapper.add(game);
         gameWrapper.add(timeInformation);
         boardGame.add(gameWrapper, BorderLayout.CENTER);
-        super.informationPanel.remove(puntuacionJugador1);
-        super.informationPanel.remove(puntuacionJugador2);
         boardGame.validate();
         boardGame.repaint();
     }
@@ -56,31 +97,42 @@ public class PvpQuick extends PvpNormal {
         timeLeft.setBackground(new Color(166, 220, 242));
         timeLeft.setPreferredSize(new Dimension(200, 200));
         GridBagConstraints gbc = new GridBagConstraints();
+
+        // Time left and timer for Player 1
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(0, 10, 0, 0);
         Font arial = new Font("italic", 1, 14);
-        tiempoRestanteP1.setFont(arial);
-        timeLeft.add(tiempoRestanteP1, gbc);
+
+        // Time left
+        JLabel timeLeftP1 = new JLabel("Tiempo restante: " + GomokuGUI.returnP1());
+        timeLeftP1.setFont(arial);
+        timeLeft.add(timeLeftP1, gbc);
+
+        // Timer
         gbc.gridy = 1;
+        timeLeft.add(tiempoRestanteP1, gbc);
+
+        // Space
+        gbc.gridy = 2;
         timeLeft.add(Box.createVerticalStrut(5), gbc);
-        gbc.gridy = 6;
-        tiempoRestanteP2.setFont(arial);
+
+        // Time left and timer for Player 2
+        gbc.gridy = 3;
+
+        // Time left
+        JLabel timeLeftP2 = new JLabel("Tiempo restante: " + GomokuGUI.returnP2());
+        timeLeftP2.setFont(arial);
+        timeLeft.add(timeLeftP2, gbc);
+
+        // Timer
+        gbc.gridy = 4;
         timeLeft.add(tiempoRestanteP2, gbc);
+
         return timeLeft;
     }
     
-    @Override
-    public void refreshTime(){
-    	timeInformation.removeAll();
-        gameWrapper.remove(timeInformation);
-        timeInformation = createBoardTokenInformation();
-        informationPanel.remove(puntuacionJugador1);
-        informationPanel.remove(puntuacionJugador2);
-        gameWrapper.add(timeInformation);
-        boardGame.validate();
-        boardGame.repaint();
-    }
+    
 }
 
     
