@@ -39,9 +39,12 @@ public class TeleportingBox extends Box{
 	public void deleteToken() {
 		if(this.token != null) {
 			this.token = null;
-	    	this.setBackground(this.backgroundColor);
+	    	this.setBackgroundColor(Color.white);
+	    	this.setBorderColor(Color.black);
+	    	this.setTextInBox(null);
 	    	updateAppearance();
 		}
+
 	}
 
 	@Override

@@ -140,9 +140,10 @@ public class Gomoku {
             lastPositionTokens = null;
             String playerName = getTurn();
             updateTicks();
-            calculateLastPositionTokens();
             updateTokens();
             addToken(getTokenType(), playerName, new int[]{xPos, yPos});
+            calculateLastPositionTokens();
+            updateTokens();
             stopPlayerTimer(playerName);
             winner(xPos, yPos, dimension, loadPlayer(playerName).returnTokenMatrix());
             if(!verifier.getGomokuFinished()){
@@ -268,9 +269,7 @@ public class Gomoku {
             player.setToken(token, position[0], position[1], tokenType);
             tokenMatrix[position[0]][position[1]] = token;
             tokens.add(token);
-            System.out.println(boxMatrix[position[0]][position[1]].getPosition());
             boxMatrix[position[0]][position[1]].setToken(token);
-            System.out.println(getBox(position[0], position[1]).getClass().getName());
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
@@ -574,6 +573,7 @@ public class Gomoku {
     	ok = true;
         int[] position = token.getPosition();
         this.tokenMatrix[position[0]][position[1]] = null;
+        this.boxMatrix[position[0]][position[1]].deleteToken();
         try {
 			loadPlayer(token.getNameOfPlayer()).deleteToken(position[0], position[1]);
 		} catch (GomokuException e) {
@@ -618,7 +618,7 @@ public class Gomoku {
     		this.tokensPercentage = 0;
     	}
     	else {
-    		this.tokensPercentage = (dimension * dimension / 2) * (percentage / 100);
+    		this.tokensPercentage = (int) ((int) Math.round(dimension * dimension / 2) * (percentage / 100f));
     	}
     	
     }

@@ -19,7 +19,9 @@ public abstract class Box extends JButton implements ActionListener {
         this.token = null; 
         this.backgroundColor = Color.WHITE;
         this.borderColor = Color.BLACK;
-        this.setBorder(BorderFactory.createLineBorder(borderColor, 1));
+        this.setBorder(BorderFactory.createLineBorder(borderColor, 2));
+        this.setBackground(backgroundColor);
+        this.position = position;
         updateAppearance();
     }
 
@@ -35,6 +37,7 @@ public abstract class Box extends JButton implements ActionListener {
 
     public void setBackgroundColor(Color color) {
         this.backgroundColor = color;
+        this.setBackground(color);
         updateAppearance(); 
     }
 
@@ -52,7 +55,7 @@ public abstract class Box extends JButton implements ActionListener {
 
     public void setBorderColor(Color color) {
         this.borderColor = color;
-        this.setBorder(BorderFactory.createLineBorder(color, 1));
+        this.setBorder(BorderFactory.createLineBorder(color, 2));
         updateAppearance(); 
     }
     

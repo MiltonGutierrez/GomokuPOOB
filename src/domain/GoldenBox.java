@@ -30,7 +30,7 @@ public class GoldenBox extends Box{
 	
 	@Override
 	protected void act() {
-		super.setBackground(super.token.getColor());
+		super.setBackgroundColor(super.token.getColor());
         this.setBorderColor(colorWithToken);
         this.setTextInBox("" + token.getIdentifier());
 		
@@ -40,10 +40,11 @@ public class GoldenBox extends Box{
 	public void deleteToken() {
 		if(this.token != null) {
 			this.token = null;
-	    	this.setBackground(this.backgroundColor);
+	    	this.setBackgroundColor(Color.white);
+	    	this.setBorderColor(Color.black);
+	    	this.setTextInBox(null);
 	    	updateAppearance();
 		}
-
 	}
 
 	@Override

@@ -35,7 +35,10 @@ public class ExplosiveBox extends Box{
     	for (int i = xPos - 1; i <= xPos + 1; i++) {
     		for (int j = yPos - 1; j <= yPos + 1; j++) {
     			if (i >= 0 && i < filas && j >= 0 && j < columnas && !(i == xPos && j == yPos)) {
-    				matrix[i][j].deleteToken();
+    				if(matrix[i][j].getToken() != null) {
+        				matrix[i][j].getToken().setIdentifier('D');
+        				matrix[i][j].deleteToken();
+    				}
                 }
             }
     	}
@@ -46,9 +49,12 @@ public class ExplosiveBox extends Box{
     public void deleteToken() {
 		if(this.token != null) {
 			this.token = null;
-	    	this.setBackground(this.backgroundColor);
+	    	this.setBackgroundColor(Color.white);
+	    	this.setBorderColor(Color.black);
+	    	this.setTextInBox(null);
 	    	updateAppearance();
 		}
+
     }
 
 	@Override
