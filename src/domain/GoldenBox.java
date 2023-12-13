@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
  */
 public class GoldenBox extends Box{
 	
-	private Color colorWithToken = new Color(255,222,0,125);
+	private Color colorWithToken = new Color(255,222,0);
 	/**
 	 * Creates an instance of GoldenBox
 	 */
@@ -30,6 +30,7 @@ public class GoldenBox extends Box{
 	
 	@Override
 	protected void act() {
+		super.setBackground(super.token.getColor());
         this.setBorderColor(colorWithToken);
         this.setTextInBox("" + token.getIdentifier());
 		

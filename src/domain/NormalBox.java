@@ -12,7 +12,8 @@ public class NormalBox extends Box{
 
 	@Override
 	protected void act() {
-		
+		super.setBackground(super.token.getColor());
+		this.setTextInBox("" + token.getIdentifier());
 	}
 	
     @Override

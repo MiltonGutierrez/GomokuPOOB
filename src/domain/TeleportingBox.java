@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
  */
 public class TeleportingBox extends Box{
 	
-	private Color colorWithToken = new Color(0, 255, 17, 125);
+	private Color colorWithToken = new Color(0, 255, 17);
 	/**
 	 * Creates an instance of TeleportingBox
 	 */
@@ -30,8 +30,9 @@ public class TeleportingBox extends Box{
 
 	@Override
 	protected void act() {
-        this.setBorderColor(colorWithToken);
-        this.setTextInBox("" + token.getIdentifier());
+		setBackground(super.token.getColor());
+        setBorderColor(colorWithToken);
+        setTextInBox("" + token.getIdentifier());
 	}
 	
 	@Override

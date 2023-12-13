@@ -90,10 +90,8 @@ public class Gomoku {
         Box[][] boxMatrix = new Box[dimension][dimension];
         for(int i = 0; i < dimension; i++){
             for(int j = 0; j < dimension; j++){
-            	Box b = this.createBox(this.boxesToUse.get(0));
-            	this.boxesToUse.remove(0);
-                boxMatrix[i][j] = b;
-                
+                boxMatrix[i][j] = this.createBox(this.boxesToUse.get(0));
+                this.boxesToUse.remove(0);
             }
         }
         return boxMatrix;
@@ -142,7 +140,7 @@ public class Gomoku {
             lastPositionTokens = null;
             String playerName = getTurn();
             updateTicks();
-            calculateLastPositionTokens(xPos, yPos);
+            calculateLastPositionTokens();
             updateTokens();
             addToken(getTokenType(), playerName, new int[]{xPos, yPos});
             stopPlayerTimer(playerName);
@@ -270,7 +268,8 @@ public class Gomoku {
             player.setToken(token, position[0], position[1], tokenType);
             tokenMatrix[position[0]][position[1]] = token;
             tokens.add(token);
-            //boxMatrix[position[0]][position[1]].setToken(token);
+            boxMatrix[position[0]][position[1]].setToken(token);
+            System.out.println(getBox(position[0], position[1]).getClass().getName());
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
@@ -530,10 +529,9 @@ public class Gomoku {
      * @param xPos is the x position
      * @param yPos is the y position
      */ 
-    public void calculateLastPositionTokens(int xPos, int yPos){
+    public void calculateLastPositionTokens(){
     	ok = true;
         ArrayList<int[]> positionOfTokens = new ArrayList<>();
-        positionOfTokens.add(new int[]{xPos, yPos});
         for(Token t: tokens){
             if(t.getIdentifier() == 'D'){
                 positionOfTokens.add(t.getPosition());

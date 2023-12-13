@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 public class ExplosiveBox extends Box{
 	
-	private Color colorWithToken = new Color(255,0,0,125);
+	private Color colorWithToken = new Color(255,0,0);
 	
 	/**
 	 * 
@@ -21,6 +21,7 @@ public class ExplosiveBox extends Box{
     
     @Override
 	protected void act(){
+    	super.setBackground(super.token.getColor());
         this.setBorderColor(colorWithToken);
         this.setTextInBox("" + token.getIdentifier());
     }

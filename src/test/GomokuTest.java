@@ -98,8 +98,8 @@ class GomokuTest {
 		board.startGame();
 		board.addToken("Normal", board.getTurn(),new int[] {0, 1});
 		board.getToken(0, 1).setIdentifier('D');
-		board.calculateLastPositionTokens(0, 0);
-		assertEquals(board.getLastPositionTokens().size(), 2);
+		board.calculateLastPositionTokens();
+		assertEquals(board.getLastPositionTokens().size(), 1);
 	}
 	
 	@Test

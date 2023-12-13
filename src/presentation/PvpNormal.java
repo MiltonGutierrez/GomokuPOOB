@@ -104,9 +104,8 @@ public class PvpNormal extends JPanel{
         game.setPreferredSize(new Dimension(400, 400));
         for (int fila = 0; fila < GomokuGUI.returnDimension(); fila++) {
           for (int columna = 0; columna < GomokuGUI.returnDimension(); columna++) {
-            setBoton(fila, columna, Gomoku.getGomoku().getBox(columna, fila));
-            
-            game.add(Gomoku.getGomoku().getBox(columna, fila));
+            setBoton(fila, columna, Gomoku.getGomoku().getBox(fila, columna));
+            game.add(Gomoku.getGomoku().getBox(fila, columna));
           }
         }
         
@@ -120,17 +119,14 @@ public class PvpNormal extends JPanel{
      */
     private void setBoton(int fila, int columna, domain.Box boton) {
     	boton.setPreferredSize(new Dimension(30, 30));
-        boton.setBackground(Color.WHITE);
-        boton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
                 if(Gomoku.getGomoku().validPlay(fila, columna)){
                 	Gomoku.getGomoku().play(fila, columna);
-                    updateTokensOnBoard();
+                	deleteTokensOnBoard(Gomoku.getGomoku().getLastPositionTokens());
                     refreshInformationPanel();
                     GomokuGUI.validateWinCondition();
-                    //refreshTime();
                 }
                 else{
                 	GomokuGUI.validateWinCondition();
@@ -141,17 +137,7 @@ public class PvpNormal extends JPanel{
         }); 
         return ;
     }
-    
-    
-    private void updateTokensOnBoard(){
-        ArrayList<int[]> listOfPositionsOfTokens = Gomoku.getGomoku().getLastPositionTokens();
-        if(listOfPositionsOfTokens.size() > 0){
-            putTokenOnBoard(listOfPositionsOfTokens.get(0)[0],listOfPositionsOfTokens.get(0)[1]);
-            listOfPositionsOfTokens.remove(0);
-        }
-        deleteTokensOnBoard(listOfPositionsOfTokens);   
-    }
-  
+      
     private void deleteTokensOnBoard(ArrayList<int[]> positions){
         for(int[] position: positions){
             int buttonPosition = getComponentNumber(Gomoku.getGomoku().getDimension(), position[0], position[1]);
@@ -165,17 +151,6 @@ public class PvpNormal extends JPanel{
         }
     }
     
-    private void putTokenOnBoard(int xPos, int yPos){
-        int buttonPosition = getComponentNumber(Gomoku.getGomoku().getDimension(), xPos, yPos);
-        buttonPosition--;
-        JButton boton = (JButton) game.getComponent(buttonPosition);
-        boton.setBackground(Gomoku.getGomoku().getLastColor());
-        setButtonBackground(boton, xPos, yPos);
-        game.remove(buttonPosition);
-        game.add(boton, buttonPosition);
-        game.repaint();
-    }
-
     private JButton setButtonBackground(JButton boton, int xPos, int yPos){
         if(Gomoku.getGomoku().getToken(xPos, yPos).getIdentifier() == 'H'){
             boton.setText("H");
