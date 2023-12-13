@@ -44,9 +44,11 @@ public class ExplosiveBox extends Box{
     
     @Override
     public void deleteToken() {
-    	this.token = null;
-    	this.setBackground(this.backgroundColor);
-    	updateAppearance();
+		if(this.token != null) {
+			this.token = null;
+	    	this.setBackground(this.backgroundColor);
+	    	updateAppearance();
+		}
     }
 
 	@Override

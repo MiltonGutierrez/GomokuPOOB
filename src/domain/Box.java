@@ -78,5 +78,9 @@ public abstract class Box extends JButton implements ActionListener {
     public void doClick() {
         actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
     }
+    
+    public int[] getPosition() {
+    	return this.position;
+    }
        
 }

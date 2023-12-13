@@ -101,7 +101,7 @@ public class GameModes extends JPanel{
     	boolean flag = false;
     	while(!flag) {
         	try{
-        		int tokenPercentage = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el porcentage de casillas especiales"));
+        		int tokenPercentage = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el porcentage de tokens especiales"));
                 Gomoku.getGomoku().setTokenPercentage(tokenPercentage);
                 flag = true;
             }catch(Exception e){
@@ -116,10 +116,10 @@ public class GameModes extends JPanel{
             public void actionPerformed(ActionEvent e){
                 try {
                     GomokuGUI.changeColor();
-                    Gomoku.getGomoku().setGameMode("normal");
-                    Gomoku.getGomoku().startGame();
                     setSpecialBoxesPercentage();
                     setSpecialTokensPercentage();
+                    Gomoku.getGomoku().setGameMode("normal");
+                    Gomoku.getGomoku().startGame();
                     GomokuGUI.normalGameSelected();
                 } catch (GomokuException e1) {
                     Log.record(e1);
@@ -132,6 +132,7 @@ public class GameModes extends JPanel{
             	try {
             		GomokuGUI.askForTime();
 					GomokuGUI.changeColor();
+                    setSpecialTokensPercentage();
 					Gomoku.getGomoku().setGameMode("quicktime");
 	                Gomoku.getGomoku().startGame();
 	                GomokuGUI.quickTimeGameSelected();

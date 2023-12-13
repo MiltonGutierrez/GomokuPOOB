@@ -268,6 +268,7 @@ public class Gomoku {
             player.setToken(token, position[0], position[1], tokenType);
             tokenMatrix[position[0]][position[1]] = token;
             tokens.add(token);
+            System.out.println(boxMatrix[position[0]][position[1]].getPosition());
             boxMatrix[position[0]][position[1]].setToken(token);
             System.out.println(getBox(position[0], position[1]).getClass().getName());
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
@@ -362,6 +363,7 @@ public class Gomoku {
      * @param dimension size of the Gomoku's board
      */
     public void setDimension(int dimension){
+    	
         this.dimension = dimension;
     }
     
@@ -607,7 +609,13 @@ public class Gomoku {
      * @param percentage
      */
     public void setTokenPercentage(int percentage) {
-    	this.tokensPercentage = (dimension * dimension / 2) * percentage;
+    	if(percentage <= 0) {
+    		this.tokensPercentage = 0;
+    	}
+    	else {
+    		this.tokensPercentage = (dimension * dimension / 2) * (percentage / 100);
+    	}
+    	
     }
     
     /**
@@ -615,7 +623,13 @@ public class Gomoku {
      * @param percentage
      */
     public void setBoxPercentage(int percentage) {
-    	this.tokensPercentage = dimension * dimension  * percentage;
+    	if(percentage <= 0) {
+    		this.boxesPercentage = 0;
+    	}
+    	else {
+    		this.boxesPercentage = dimension * dimension  * (percentage / 100);
+    	}
+    	
     	
     } 
     
@@ -658,6 +672,7 @@ public class Gomoku {
     	Random random = new Random();
     	ArrayList<String> boxes = new ArrayList<>();
     	int quantityOfBoxes = dimension * dimension;
+    	System.out.println("create " + boxesPercentage);
     	if(gameMode.equals("normal")) {
     		for(int i = 0; i < quantityOfBoxes - boxesPercentage; i++) {
     			boxes.add(typeOfBoxes.get(0));

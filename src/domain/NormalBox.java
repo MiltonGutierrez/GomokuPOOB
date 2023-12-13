@@ -18,7 +18,11 @@ public class NormalBox extends Box{
 	
     @Override
     public void deleteToken() {
-    	this.token = null;
+		if(this.token != null) {
+			this.token = null;
+	    	this.setBackground(this.backgroundColor);
+	    	updateAppearance();
+		}
     }
 
 	@Override
