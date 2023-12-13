@@ -92,11 +92,11 @@ public class GomokuGUI extends JFrame{
     }
     
     public static String returnP1(){
-        return Gomoku.getP1();
+        return Gomoku.getGomoku().getP1();
     }
 
     public static String returnP2(){
-        return Gomoku.getP2();
+        return Gomoku.getGomoku().getP2();
     }
 
     public static void setNewDimension(int dimension_){

@@ -175,6 +175,7 @@ public class Human implements Player {
 	 */
 	public void setTime(Integer time) {
 		times.get("timeM").setTime(time);
+		
 	}
 	
 	/**

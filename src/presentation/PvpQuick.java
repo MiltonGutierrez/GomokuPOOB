@@ -30,7 +30,6 @@ public class PvpQuick extends PvpNormal {
 	private JPanel gameWrapper;
 	private JPanel tiempoRestanteP1 = new RelojPanelSub(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1(), "timerM"), Gomoku.getGomoku().getTimeP1("timeM"));
 	private JPanel tiempoRestanteP2 = new RelojPanelSub(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2(), "timerM"), Gomoku.getGomoku().getTimeP2("timeM"));
-	
 	/**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
