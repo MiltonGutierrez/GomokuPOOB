@@ -104,10 +104,9 @@ public class PvpNormal extends JPanel{
         game.setPreferredSize(new Dimension(400, 400));
         for (int fila = 0; fila < GomokuGUI.returnDimension(); fila++) {
           for (int columna = 0; columna < GomokuGUI.returnDimension(); columna++) {
-            JButton boton = createBoton(fila, columna);
-            Gomoku.getGomoku().getBox(fila, columna).setJButton(boton);
-            boton.setPreferredSize(new Dimension(30, 30));
-            game.add(boton);
+            setBoton(fila, columna, Gomoku.getGomoku().getBox(columna, fila));
+            
+            game.add(Gomoku.getGomoku().getBox(columna, fila));
           }
         }
         
@@ -119,9 +118,8 @@ public class PvpNormal extends JPanel{
      * @param columna
      * @param color
      */
-    private JButton createBoton(int fila, int columna){
-        JButton boton = new JButton();
-        boton.setPreferredSize(new Dimension(40, 40));
+    private void setBoton(int fila, int columna, domain.Box boton) {
+    	boton.setPreferredSize(new Dimension(30, 30));
         boton.setBackground(Color.WHITE);
         boton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         boton.addActionListener(new ActionListener() {
@@ -141,7 +139,7 @@ public class PvpNormal extends JPanel{
                 }
             }
         }); 
-        return boton;
+        return ;
     }
     
     

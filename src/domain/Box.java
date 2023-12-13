@@ -1,16 +1,12 @@
 package domain;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
 import presentation.GomokuGUI;
 
-public abstract class Box extends JButton implements ActionListener  {
-	protected JButton button;
+public abstract class Box extends JButton implements ActionListener {  
     protected Token token;
     protected Color backgroundColor;
     protected Color borderColor;
@@ -21,7 +17,7 @@ public abstract class Box extends JButton implements ActionListener  {
     public Box() {
         super();
         this.token = null; 
-        this.backgroundColor = Color.WHITE; 
+        this.backgroundColor = Color.WHITE;
         updateAppearance();
     }
 
@@ -66,20 +62,18 @@ public abstract class Box extends JButton implements ActionListener  {
     	this.repaint();
     }
     
-    public void addActionListener(ActionListener listener) {
-        button.addActionListener(listener);
+    private void initialize() {
+        addActionListener(this); // Agrega esta instancia como ActionListener al Box
     }
 
-    public void removeActionListener(ActionListener listener) {
-        button.removeActionListener(listener);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
     }
 
+    @Override
     public void doClick() {
-        button.doClick();
-    }
-    
-    public void setJButton(JButton button) {
-    	this.button = button;
+        actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
     }
        
 }
