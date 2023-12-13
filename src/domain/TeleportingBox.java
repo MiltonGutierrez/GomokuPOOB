@@ -15,8 +15,8 @@ public class TeleportingBox extends Box{
 	/**
 	 * Creates an instance of TeleportingBox
 	 */
-	public TeleportingBox() {
-		super();
+	public TeleportingBox(int[] position) {
+		super(position);
 	}
 	
 	/**

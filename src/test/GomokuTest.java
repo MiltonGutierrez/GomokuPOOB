@@ -104,13 +104,13 @@ class GomokuTest {
 	
 	@Test
 	void shouldCreateBoxes() {
-		board.createBox("Normal");
+		board.createBox("Normal", new int[] {0,0});
 		assertTrue(board.ok());
-		board.createBox("Golden");
+		board.createBox("Golden", new int[] {0,0});
 		assertTrue(board.ok());
-		board.createBox("Teleporting");
+		board.createBox("Teleporting", new int[] {0,0});
 		assertTrue(board.ok());
-		board.createBox("Explosive");
+		board.createBox("Explosive", new int[] {0,0});
 		assertTrue(board.ok());
 	}
 	

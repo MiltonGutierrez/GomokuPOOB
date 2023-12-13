@@ -8,8 +8,8 @@ public class ExplosiveBox extends Box{
 	/**
 	 * 
 	 */
-    public ExplosiveBox() {
-        super();
+    public ExplosiveBox(int[] position) {
+        super(position);
     }
     
     @Override
@@ -24,7 +24,23 @@ public class ExplosiveBox extends Box{
     	super.setBackground(super.token.getColor());
         this.setBorderColor(colorWithToken);
         this.setTextInBox("" + token.getIdentifier());
+        deleteContigousTokens(Gomoku.getGomoku().getBoxMatrix());
     }
+    
+    public void deleteContigousTokens(Box[][] matrix) {
+    	int filas = matrix.length;
+    	int columnas = matrix[0].length;
+    	int xPos = this.position[0];
+    	int yPos = this.position[1];
+    	for (int i = xPos - 1; i <= xPos + 1; i++) {
+    		for (int j = yPos - 1; j <= yPos + 1; j++) {
+    			if (i >= 0 && i < filas && j >= 0 && j < columnas && !(i == xPos && j == yPos)) {
+    				
+                }
+            }
+    	}
+    }
+    
     
     @Override
     public void deleteToken() {

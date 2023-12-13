@@ -15,8 +15,8 @@ public class GoldenBox extends Box{
 	/**
 	 * Creates an instance of GoldenBox
 	 */
-	public GoldenBox() {
-		super();
+	public GoldenBox(int[] position) {
+		super(position);
 	}
 	
 	/**

@@ -6,8 +6,8 @@ import javax.management.BadStringOperationException;
 
 public class NormalBox extends Box{
 	
-	public NormalBox() {
-		super();
+	public NormalBox(int[] position) {
+		super(position);
 	}
 
 	@Override

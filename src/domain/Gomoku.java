@@ -90,7 +90,7 @@ public class Gomoku {
         Box[][] boxMatrix = new Box[dimension][dimension];
         for(int i = 0; i < dimension; i++){
             for(int j = 0; j < dimension; j++){
-                boxMatrix[i][j] = this.createBox(this.boxesToUse.get(0));
+                boxMatrix[i][j] = this.createBox(this.boxesToUse.get(0), new int[]{i, j});
                 this.boxesToUse.remove(0);
             }
         }
@@ -297,13 +297,13 @@ public class Gomoku {
 		return machine;
     }
     
-    public Box createBox(String type) {
+    public Box createBox(String type, int[] position) {
     	ok = true;
     	Box box = null;
         try{
             Class<?> boxChilds = Class.forName("domain."+type+"Box");
-            Constructor<?> constructorBoxChilds = boxChilds.getConstructor();
-            box = (Box) constructorBoxChilds.newInstance();
+            Constructor<?> constructorBoxChilds = boxChilds.getConstructor(int[].class);
+            box = (Box) constructorBoxChilds.newInstance(position);
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
             Log.record(e);
             ok = false;
@@ -630,6 +630,10 @@ public class Gomoku {
     public Box getBox(int xPos, int yPos) {
     	return this.boxMatrix[xPos][yPos];
     	
+    }
+    
+    public Box[][] getBoxMatrix(){
+    	return this.boxMatrix;
     }
     /**
      * Creates the ArrayList containing strings that represent the type of boxes to use.

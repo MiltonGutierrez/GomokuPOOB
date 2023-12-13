@@ -10,16 +10,16 @@ public abstract class Box extends JButton implements ActionListener {
     protected Token token;
     protected Color backgroundColor;
     protected Color borderColor;
-
+    protected int[] position;
     /**
      * Creates an instance of Box|
      */
-    public Box() {
+    public Box(int[] position) {
         super();
         this.token = null; 
         this.backgroundColor = Color.WHITE;
         this.borderColor = Color.BLACK;
-        this.setBorder(BorderFactory.createLineBorder(borderColor, 2));
+        this.setBorder(BorderFactory.createLineBorder(borderColor, 1));
         updateAppearance();
     }
 
@@ -52,6 +52,7 @@ public abstract class Box extends JButton implements ActionListener {
 
     public void setBorderColor(Color color) {
         this.borderColor = color;
+        this.setBorder(BorderFactory.createLineBorder(color, 1));
         updateAppearance(); 
     }
     
