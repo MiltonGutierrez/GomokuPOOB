@@ -11,8 +11,7 @@ public interface Player {
     void setToken(Token token, int xPos, int yPos, String tokenType);
     void startTime();
     void stopTime();
-    void calculateTotalTime();
-    int getTotalTime();    
+    TimePassed getTime(String time);
     void setTokenMatrix(Token[][] matrix);
     Token[][] returnTokenMatrix();
     //Nuevos metodos.
@@ -23,7 +22,5 @@ public interface Player {
 	void setTime(Integer time);
 	boolean validateTime();
 	int getTokensLeft();
-	javax.swing.Timer getTimer();
-	Integer getTimeLeft();
-	
+	javax.swing.Timer getTimer(String timer);
 }

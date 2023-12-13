@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
-
+import domain.TimePassed;
 import domain.Gomoku;
 import domain.Log;
 
@@ -21,6 +21,7 @@ public class PvpNormal extends JPanel{
      */
     public PvpNormal() {
         this.setOpaque(true);
+
        
     }
 
@@ -47,11 +48,12 @@ public class PvpNormal extends JPanel{
         gameOptions.setVisible(true);
         boardGame.setVisible(true);
         prepareActionsBoardGame();
+        
     }
 
-    private JButton saveGomoku;
-    private JButton resetGomoku;
-    private JButton finishGomoku;
+    protected JButton saveGomoku;
+    protected JButton resetGomoku;
+    protected JButton finishGomoku;
     /**
      * Prepares the elements of the game options
      *  */
@@ -68,6 +70,7 @@ public class PvpNormal extends JPanel{
         gameOptions.add(optionsPanel, BorderLayout.EAST);
         gameOptions.add(informationPanel, BorderLayout.WEST);
         gameOptions.add(logoPanel, BorderLayout.CENTER);
+      
     }
 
     protected JPanel game;
@@ -80,17 +83,13 @@ public class PvpNormal extends JPanel{
         boardGame.setLayout(new BorderLayout());
         boardGame.setSize(this.getWidth() - gameOptions.getWidth(), this.getHeight());
         boardGame.setBackground(new Color(113, 197, 232,128));
-    
         game = createBoardGame();
-    
         // Create a panel to hold the game component in the center
         JPanel gameWrapper = new JPanel();
         gameWrapper.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 30));
         gameWrapper.setBackground(new Color(113, 197, 232,128));
         gameWrapper.add(game);
-
         boardGame.add(gameWrapper, BorderLayout.CENTER);
-        
         boardGame.validate();
         boardGame.repaint();
     }
@@ -131,10 +130,13 @@ public class PvpNormal extends JPanel{
                 	Gomoku.getGomoku().play(fila, columna);
                     updateTokensOnBoard();
                     refreshInformationPanel();
+                    GomokuGUI.validateWinCondition();
                     //refreshTime();
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
+                	GomokuGUI.validateWinCondition();
+                    JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    
                 }
             }
         }); 
@@ -175,9 +177,6 @@ public class PvpNormal extends JPanel{
         game.repaint();
     }
 
-    
-
-
     private JButton setButtonBackground(JButton boton, int xPos, int yPos){
         if(Gomoku.getGomoku().getToken(xPos, yPos).getIdentifier() == 'H'){
             boton.setText("H");
@@ -214,14 +213,7 @@ public class PvpNormal extends JPanel{
         this.revalidate();
         this.repaint();
     }
-    /**
-     * Validates if there is a winner
-     */
-    public void validateWinCondition(){
-        if(Gomoku.getGomoku().getGomokuFinished()){ 
-            JOptionPane.showMessageDialog(this, "Juego Terminado\n" + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
+
 
     /**
      * Prepares the actions of the board game
@@ -278,11 +270,11 @@ public class PvpNormal extends JPanel{
         this.remove(boardGame);
         this.remove(gameOptions);
     }
-    private JPanel optionsPanel;
+    protected JPanel optionsPanel;
     /**
      * Prepares the elements of the panel with option buttons
      */
-    private JPanel createOptionsPanelGameOptions() {
+    protected JPanel createOptionsPanelGameOptions() {
         optionsPanel = new JPanel(new GridBagLayout());
         optionsPanel.setBackground(new Color(224,62,82,128));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -307,10 +299,10 @@ public class PvpNormal extends JPanel{
     protected JLabel nombreP2;
     protected JLabel colorP1;
     protected JLabel colorP2;
-    protected JPanel tiempoP1 = new RelojPanel(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1()), "normal");
-    protected JPanel tiempoP2 = new RelojPanel(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2()), "normal");
     protected JLabel puntuacionJugador1;
     protected JLabel puntuacionJugador2;
+    private JPanel tiempoP1 = new RelojPanelSum(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1(), "timerT"), Gomoku.getGomoku().getTimeP1("timeT"));
+    private JPanel tiempoP2 = new RelojPanelSum(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2(), "timerT"), Gomoku.getGomoku().getTimeP2("timeT"));
     /**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
@@ -334,7 +326,6 @@ public class PvpNormal extends JPanel{
         tiempoP2.setFont(arial);
         puntuacionJugador1.setFont(arial);
         puntuacionJugador2.setFont(arial);
-
         informationPanel.setBackground(new Color(224,62,82));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -359,7 +350,6 @@ public class PvpNormal extends JPanel{
         informationPanel.add(puntuacionJugador2, gbc);
         gbc.gridy = 9;
         informationPanel.add(tiempoP2, gbc);
-        
         return informationPanel;
     }
     public static Color hexToColor(String hex) {
@@ -369,7 +359,7 @@ public class PvpNormal extends JPanel{
         return new Color(r, g, b);
     }
     private ImageIcon logo;
-    private JPanel logoPanel;
+    protected JPanel logoPanel;
     /**
      * Prepares the elements of the panel with labels with the logo of the game
      *  */

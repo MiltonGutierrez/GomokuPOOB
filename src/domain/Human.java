@@ -18,8 +18,8 @@ public class Human implements Player {
     private Token[][] tokenMatrix;
     private ArrayList<String> tokensToUse = new ArrayList<>();
     private Gomoku gomoku;
-	private Integer timeLeft;
-	private Timer timer;
+    private HashMap<String, TimePassed> times = new HashMap<>();
+    private HashMap<String, Timer> timers = new HashMap<>();
     
     /**
      * Creates an instance of Human.
@@ -28,21 +28,32 @@ public class Human implements Player {
     public Human(String name, Gomoku gomoku){
         this.name = name;
         this.gomoku = gomoku;
-        this.timeLeft = 0;
-        timer = new Timer(1000, new ActionListener() {
+        times.put("timeT", new TimePassed(0));
+        times.put("timeM", new TimePassed(0));
+        Timer timerTotal = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 actualizarTiempo();
             }
 			private void actualizarTiempo() {
-				
 			}
         });
+        Timer timerMissing = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarTiempo();
+            }
+			private void actualizarTiempo() {
+			}
+        });
+		timers.put("timerT", timerTotal);
+		timers.put("timerM", timerMissing);
     }
     
-    public javax.swing.Timer getTimer() {
-    	return this.timer;
+    public javax.swing.Timer getTimer(String timer) {
+    	return timers.get(timer);
     }
+    
     
     /**
      * Sets the token matrix for the player.
@@ -85,20 +96,26 @@ public class Human implements Player {
      * Starts the time the player takes to play
      */
     public void startTime(){
-        if (!timer.isRunning()) {
-            timer.start();
-            
-        }
+    	System.out.println("player " + name);
+    	for(Timer timer: timers.values()) {
+            if (!timer.isRunning()) {
+                timer.start();
+                System.out.println("emepzo");
+            }
+    	}
+
     }
     
     /**
      * Stops the time the player takes to play
      */
     public void stopTime() {
-        if (timer.isRunning()) {
-            timer.stop();
-            
-        }
+    	for(Timer timer: timers.values()) {
+            if (timer.isRunning()) {
+                timer.stop();
+            }
+    	}
+
     }
     
     /**
@@ -159,20 +176,16 @@ public class Human implements Player {
 	 * Sets the time left
 	 */
 	public void setTime(Integer time) {
-		timeLeft = time;
+		times.get("timeM").setTime(time);
 	}
 	
 	/**
 	 * Validates the time left
 	 */
 	public boolean validateTime() {
-		return timeLeft <= 0;
+		return times.get("timeM").getTime() <= 0;
 	}
 	
-	public Integer getTimeLeft() {
-		return timeLeft;
-	}
-
 	/**W
 	 * Returns the tokens left to use by the player.
 	 */
@@ -180,15 +193,9 @@ public class Human implements Player {
 		return this.tokensToUse.size();
 	}
 
+	public TimePassed getTime(String time) {
 
-	public void calculateTotalTime() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public int getTotalTime() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.times.get(time);
 	}
 
 

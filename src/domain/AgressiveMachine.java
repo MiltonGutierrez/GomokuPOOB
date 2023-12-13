@@ -16,20 +16,6 @@ public class AgressiveMachine extends Machine {
     public AgressiveMachine(String name){
         this.name = name;
     }
-    
-    /**
-     * 
-     * @param matrix
-     */
-    public void setTokenMatrix(Token[][] matrix){
-        this.tokenMatrix = matrix;
-    }
-    /**
-     * Set color of tokens
-     */
-    public void setColor(Color color){
-        this.color = color;
-    }
 
 	@Override
 	public void setToken(Token token, int xPos, int yPos, String tokenType) {
@@ -50,15 +36,15 @@ public class AgressiveMachine extends Machine {
 	}
 
 	@Override
-	public void calculateTotalTime() {
+	public TimePassed getTime(String time) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public int getTotalTime() {
+	public void setTokenMatrix(Token[][] matrix) {
 		// TODO Auto-generated method stub
-		return 0;
+		
 	}
 
 	@Override
@@ -66,7 +52,6 @@ public class AgressiveMachine extends Machine {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public String getName() {
@@ -93,7 +78,7 @@ public class AgressiveMachine extends Machine {
 	}
 
 	@Override
-	public void setTime(int time) {
+	public void setTime(Integer time) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -101,7 +86,7 @@ public class AgressiveMachine extends Machine {
 	@Override
 	public boolean validateTime() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override
@@ -111,10 +96,13 @@ public class AgressiveMachine extends Machine {
 	}
 
 	@Override
-	public Timer getTimer() {
+	public Timer getTimer(String timer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+    
+
+
 
 
 }

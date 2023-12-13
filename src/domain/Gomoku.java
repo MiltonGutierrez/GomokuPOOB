@@ -22,7 +22,7 @@ public class Gomoku {
     private static String nameP2 = "machine";
     private String turn;
     private String machineType;
-    private int timeLimit;
+    private Integer timeLimit;
     private int cellsMissing;
     private int ticks = 0;
 
@@ -145,9 +145,6 @@ public class Gomoku {
                 startPlayerTimer(getTurn());
                 cellsMissing--;
             }
-            else {
-            	stopGame();
-            }
         }
         catch(GomokuException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
@@ -197,7 +194,7 @@ public class Gomoku {
     public int getPlayerTotalTime(String playerName){
     	ok = true;
     	try {
-    		return loadPlayer(playerName).getTotalTime();
+    		return loadPlayer(playerName).getTime("timeT").getTime();
     	}
     	catch(GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
@@ -301,7 +298,7 @@ public class Gomoku {
         String result = "";
         boolean gomokuFinished = verifier.getGomokuFinished();
         if(gameMode == "quicktime" && gomokuFinished) {
-        	if(players.get(turn).validateTime() == false) {
+        	if(players.get(turn).validateTime() != false) {
         		if(turn == nameP1) {
         			return nameP2;
         		}else {
@@ -494,9 +491,9 @@ public class Gomoku {
      * Set's the time limit of the game when the quick mode is used.
      * @param time is the time to split in quickmode 
      */
-    public void setTime(int time){
+    public void setTime(Integer time){
         this.timeLimit = time;
-        int timeForPlayers = (int)(time / 2);
+        Integer timeForPlayers = (time / 2);
         for(Player p: players.values()) {
         	p.setTime(timeForPlayers);
         }
@@ -755,21 +752,19 @@ public class Gomoku {
 	 * Returns the time left for the player 1 (quicktime mode)
 	 * @return is the time left for the player 1
 	 */
-	public int getTimeLeftP1() {
-		return players.get(nameP1).getTimeLeft();
+	public TimePassed getTimeP1(String typeOfTime){
+		return players.get(nameP1).getTime(typeOfTime);
 	}
 	
-	/**
-	 * Returns the time left for the player 2 (quicktime mode)
-	 * @return is the time left for the player 2
-	 */
-	public int getTimeLeftP2() {
-		return players.get(nameP2).getTimeLeft();
+	public TimePassed getTimeP2(String typeOfTime){
+		return players.get(nameP2).getTime(typeOfTime);
 	}
+		
+
 	
-	public javax.swing.Timer getTimer(String playerName) {
+	public javax.swing.Timer getTimer(String playerName, String typeOfTimer) {
 		try {
-			return loadPlayer(playerName).getTimer();
+			return loadPlayer(playerName).getTimer(typeOfTimer);
 		} catch (GomokuException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -783,5 +778,9 @@ public class Gomoku {
 	public void stopGame(){
 		this.stopPlayerTimer(nameP1);
 		this.stopPlayerTimer(nameP2);
+	}
+	
+	public void timeValidation() {
+		verifier.timeValidation();
 	}
 }

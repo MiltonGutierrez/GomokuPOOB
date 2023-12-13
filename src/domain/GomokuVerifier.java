@@ -285,7 +285,7 @@ public class GomokuVerifier {
     public void timeValidation() {
     	HashMap<String, Player> players = gomoku.getPlayers();
     	for(Player p: players.values()) {
-    		if(p.validateTime() == false) {
+    		if(p.validateTime() != false) {
     			gomokuFinished = true;
     		}
     	}

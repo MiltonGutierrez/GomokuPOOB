@@ -31,15 +31,9 @@ public class FearfulMachine extends Machine {
 	}
 
 	@Override
-	public void calculateTotalTime() {
+	public TimePassed getTime(String time) {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getTotalTime() {
-		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
@@ -53,7 +47,6 @@ public class FearfulMachine extends Machine {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public String getName() {
@@ -80,7 +73,7 @@ public class FearfulMachine extends Machine {
 	}
 
 	@Override
-	public void setTime(int time) {
+	public void setTime(Integer time) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -88,7 +81,7 @@ public class FearfulMachine extends Machine {
 	@Override
 	public boolean validateTime() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override
@@ -98,10 +91,11 @@ public class FearfulMachine extends Machine {
 	}
 
 	@Override
-	public Timer getTimer() {
+	public Timer getTimer(String timer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }
 

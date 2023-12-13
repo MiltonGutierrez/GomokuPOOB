@@ -26,7 +26,14 @@ public class GomokuGUI extends JFrame{
         prepareElements();
     }
     
-    
+    /**
+     * Validates if there is a winner
+     */
+    public static void validateWinCondition(){
+        if(Gomoku.getGomoku().getGomokuFinished()){ 
+            JOptionPane.showMessageDialog(null, "Juego Terminado\n" + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
     
     /**
@@ -239,21 +246,6 @@ public class GomokuGUI extends JFrame{
         principal.add(panel, BorderLayout.CENTER);
     }
     
-    /**
-     * Returns the time left for player 1
-     * @return
-     */
-    public static int returnTimeLeftP1() {
-    	return Gomoku.getGomoku().getTimeLeftP1();
-    }
-    
-    /**
-     * Returns the time left for player 2
-     * @return
-     */
-    public static int returnTimeLeftP2() {
-    	return Gomoku.getGomoku().getTimeLeftP2();
-    }
     
     public static void limitedGameSelected() {
     	GameModes.getGameModes().setInvisible();
