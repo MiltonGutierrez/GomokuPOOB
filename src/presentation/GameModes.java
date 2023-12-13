@@ -83,6 +83,33 @@ public class GameModes extends JPanel{
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
     
+    public void setSpecialBoxesPercentage() {
+    	boolean flag = false;
+    	while(!flag) {
+        	try{
+        		int boxPercentage = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el porcentage de casillas especiales"));
+                Gomoku.getGomoku().setBoxPercentage(boxPercentage);
+                flag = true;
+            }catch(Exception e){
+                Log.record(e);
+            }
+    	}
+
+    }
+    
+    public void setSpecialTokensPercentage() {
+    	boolean flag = false;
+    	while(!flag) {
+        	try{
+        		int tokenPercentage = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el porcentage de casillas especiales"));
+                Gomoku.getGomoku().setTokenPercentage(tokenPercentage);
+                flag = true;
+            }catch(Exception e){
+                Log.record(e);
+            }
+    	}
+    }
+    
     private void prepareActions(){
         normal.addActionListener(new ActionListener() {
             @Override
@@ -91,6 +118,8 @@ public class GameModes extends JPanel{
                     GomokuGUI.changeColor();
                     Gomoku.getGomoku().setGameMode("normal");
                     Gomoku.getGomoku().startGame();
+                    setSpecialBoxesPercentage();
+                    setSpecialTokensPercentage();
                     GomokuGUI.normalGameSelected();
                 } catch (GomokuException e1) {
                     Log.record(e1);

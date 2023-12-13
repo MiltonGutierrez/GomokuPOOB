@@ -128,6 +128,17 @@ class GomokuTest {
 			}
 		}
 	}
+	
+	void shouldExplosiveBoxBeExplosive() {
+		board.setDimension(5);
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+		board.startGame();
+		
+	}
 }
 
 

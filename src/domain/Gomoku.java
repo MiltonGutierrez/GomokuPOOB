@@ -602,6 +602,22 @@ public class Gomoku {
         return tokenMatrix[xPos][yPos];
     }
     
+    /**
+     * Set's the special token percentage appearance
+     * @param percentage
+     */
+    public void setTokenPercentage(int percentage) {
+    	this.tokensPercentage = (dimension * dimension / 2) * percentage;
+    }
+    
+    /**
+     * Set's the boxes token percentage appearance
+     * @param percentage
+     */
+    public void setBoxPercentage(int percentage) {
+    	this.tokensPercentage = dimension * dimension  * percentage;
+    	
+    } 
     
     /**
      * Returns the tokenMatrix of Gomoku

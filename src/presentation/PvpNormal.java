@@ -21,8 +21,6 @@ public class PvpNormal extends JPanel{
      */
     public PvpNormal() {
         this.setOpaque(true);
-
-       
     }
 
     public static PvpNormal getPvpNormal() {
