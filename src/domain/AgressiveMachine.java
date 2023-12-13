@@ -112,6 +112,12 @@ public class AgressiveMachine extends Machine {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void addTokenToUse(String tokenType) {
+		// TODO Auto-generated method stub
+		
+	}
     
 
 

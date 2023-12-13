@@ -706,6 +706,14 @@ public class Gomoku {
     }
     
     /**
+     * Returns the typeOfTokens array
+     * @return
+     */
+    public ArrayList<String> getTypeOfTokens(){
+    	return this.typeOfTokens;
+    }
+    
+    /**
      * Creates the tokens list the players are gona use when playing.
      * @param playerName is the player name to create the token
      * @throws GomokuException 

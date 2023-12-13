@@ -23,4 +23,5 @@ public interface Player {
 	boolean validateTime();
 	int getTokensLeft();
 	javax.swing.Timer getTimer(String timer);
+	void addTokenToUse(String tokenType);
 }

@@ -108,6 +108,12 @@ public class FearfulMachine extends Machine {
 		return null;
 	}
 
+	@Override
+	public void addTokenToUse(String tokenType) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
 
