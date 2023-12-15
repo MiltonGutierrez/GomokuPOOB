@@ -114,6 +114,18 @@ public class FearfulMachine extends Machine {
 		
 	}
 
+	@Override
+	public void setPuntuacion(int score_) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getPuntuacion() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
 

@@ -256,9 +256,10 @@ public class Gomoku {
     /**
      * Creates a new instance of Machine
      * @param type
+     * @throws GomokuException 
      * @throws java.lang.reflect.InvocationTargetException
      */
-    public void addToken(String tokenType, String playerName, int[] position){
+    public void addToken(String tokenType, String playerName, int[] position) throws GomokuException{
     	ok = true;
         try{
             Class<?> tokenChilds = Class.forName("domain."+tokenType+"Token");
@@ -270,6 +271,9 @@ public class Gomoku {
             tokenMatrix[position[0]][position[1]] = token;
             tokens.add(token);
             boxMatrix[position[0]][position[1]].setToken(token);
+            if(!(token instanceof NormalToken)) {
+            	setPuntuacion(playerName, 100);
+            }
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
@@ -576,6 +580,10 @@ public class Gomoku {
         this.boxMatrix[position[0]][position[1]].deleteToken();
         try {
 			loadPlayer(token.getNameOfPlayer()).deleteToken(position[0], position[1]);
+			loadPlayer(token.getNameOfPlayer()).setPuntuacion(-50);
+			if(token.getNameOfPlayer() != getTurn()) {
+				loadPlayer(token.getNameOfPlayer()).setPuntuacion(100);
+			}
 		} catch (GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
@@ -912,6 +920,27 @@ public class Gomoku {
 		board.stopPlayerTimer(nameP1);
 		board.stopPlayerTimer(nameP2);
 		board = null;
-	    
 	}
+	
+	/**
+	 * Sets the score of the player
+	 * @param name is the name of the player
+	 * @param score is the score to add 
+	 * @throws GomokuException
+	 */
+	public void setPuntuacion(String name, int score) throws GomokuException  {
+		loadPlayer(name).setPuntuacion(score);
+	}
+	
+	/**
+	 * Returns the current score of the player
+	 * @param name is the name of the player
+	 * @return score of the player
+	 * @throws GomokuException
+	 */
+	public int getPuntuacion(String name) throws GomokuException {
+		return loadPlayer(name).getPuntuacion();
+	} 
+	
+	
 }

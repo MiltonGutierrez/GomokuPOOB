@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import domain.Gomoku;
+import domain.GomokuException;
 
 public class PvpLimited extends PvpNormal{
 	private static PvpLimited pvpLimited = null;
@@ -13,7 +14,7 @@ public class PvpLimited extends PvpNormal{
 		this.setOpaque(true);
 	}
 	
-	public static PvpLimited getPvpLimited() {
+	public static PvpLimited getPvpLimited() throws GomokuException {
         if (pvpLimited == null) {
             pvpLimited = new PvpLimited();
             pvpLimited.prepareElementsGameBoardPVP();
@@ -119,7 +120,7 @@ public class PvpLimited extends PvpNormal{
      * Actions for the finish button
      */
     @Override
-    public void finishOption(){
+    public void finishOption() throws GomokuException{
     	this.removeAll();
         GomokuGUI.finishButtonLimited();
         pvpLimited = null;

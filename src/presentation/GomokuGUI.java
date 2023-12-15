@@ -107,7 +107,7 @@ public class GomokuGUI extends JFrame{
         return dimension;
     }
 
-    public static void normalGameSelected(){
+    public static void normalGameSelected() throws GomokuException{
     	GameModes.getGameModes().setInvisible();
         principal.remove(GameModes.getGameModes());
         JPanel panel = generalPanel(PvpNormal.getPvpNormal());
@@ -245,8 +245,9 @@ public class GomokuGUI extends JFrame{
     
     /**
      * Selects the gameMode QuickTime
+     * @throws GomokuException 
      */
-    public static void quickTimeGameSelected(){
+    public static void quickTimeGameSelected() throws GomokuException{
     	GameModes.getGameModes().setInvisible();
         principal.remove(GameModes.getGameModes());
         JPanel panel = generalPanel(PvpQuick.getPvpQuick());
@@ -255,14 +256,14 @@ public class GomokuGUI extends JFrame{
     }
     
     
-    public static void limitedGameSelected() {
+    public static void limitedGameSelected() throws GomokuException {
     	GameModes.getGameModes().setInvisible();
         JPanel panel = generalPanel(PvpLimited.getPvpLimited());
         PvpLimited.getPvpLimited().setVisible();
         principal.add(panel, BorderLayout.CENTER);
     }
 
-    public static void finishButtonNormal() {
+    public static void finishButtonNormal() throws GomokuException {
     	PvpNormal.getPvpNormal().setInvisible();
     	principal.remove(PvpNormal.getPvpNormal());
     	Gomoku.getGomoku().nullAll();
@@ -270,18 +271,28 @@ public class GomokuGUI extends JFrame{
     	
     }
     
-    public static void finishButtonQuick() {
+    public static void finishButtonQuick() throws GomokuException {
     	PvpQuick.getPvpQuick().setInvisible();
     	principal.remove(PvpQuick.getPvpQuick());
     	Gomoku.getGomoku().nullAll();
     	MainMenu.getMainMenu().setVisible();
     }
     
-    public static void finishButtonLimited() {
+    public static void finishButtonLimited() throws GomokuException {
     	PvpLimited.getPvpLimited().setInvisible();
     	principal.remove(PvpLimited.getPvpLimited());
     	Gomoku.getGomoku().nullAll();
     	MainMenu.getMainMenu().setVisible();
+    }
+    
+    /**
+     * Returns the score of a specific player
+     * @param name is the name of the player
+     * @return score is the total score of the desired player
+     * @throws GomokuException
+     */
+    public static int getPuntuacion(String name) throws GomokuException {
+    	return Gomoku.getGomoku().getPuntuacion(name);
     }
     
     

@@ -7,6 +7,7 @@ import java.awt.*;
 import javax.swing.*;
 import domain.TimePassed;
 import domain.Gomoku;
+import domain.GomokuException;
 import domain.Log;
 
 public class PvpNormal extends JPanel{
@@ -23,7 +24,7 @@ public class PvpNormal extends JPanel{
         this.setOpaque(true);
     }
 
-    public static PvpNormal getPvpNormal() {
+    public static PvpNormal getPvpNormal() throws GomokuException {
         if (pvpNormal == null) {
             pvpNormal = new PvpNormal();
             pvpNormal.prepareElementsGameBoardPVP();
@@ -34,8 +35,9 @@ public class PvpNormal extends JPanel{
 
     /**
      * Prepares the elements of the board
+     * @throws GomokuException 
      *  */
-    public void prepareElementsGameBoardPVP() {
+    public void prepareElementsGameBoardPVP() throws GomokuException {
         gameOptions = new JPanel();
         boardGame = new JPanel();
         this.setLayout(new BorderLayout());
@@ -54,8 +56,9 @@ public class PvpNormal extends JPanel{
     protected JButton finishGomoku;
     /**
      * Prepares the elements of the game options
+     * @throws GomokuException 
      *  */
-    public void prepareElementsGameOptionsPVP() {
+    public void prepareElementsGameOptionsPVP() throws GomokuException {
         gameOptions.setSize(this.getWidth() / 3, this.getHeight());
         gameOptions.setBackground(new Color(224,62,82));
         gameOptions.setLayout(new BorderLayout());
@@ -123,7 +126,11 @@ public class PvpNormal extends JPanel{
                 if(Gomoku.getGomoku().validPlay(fila, columna)){
                 	Gomoku.getGomoku().play(fila, columna);
                 	deleteTokensOnBoard(Gomoku.getGomoku().getLastPositionTokens());
-                    refreshInformationPanel();
+                    try {
+						refreshInformationPanel();
+					} catch (GomokuException e1) {
+						Log.record(e1);
+					}
                     GomokuGUI.validateWinCondition();
                 }
                 else{
@@ -174,7 +181,7 @@ public class PvpNormal extends JPanel{
         boardGame.validate();
         boardGame.repaint();
     }
-    public void refreshInformationPanel(){
+    public void refreshInformationPanel() throws GomokuException{
         gameOptions.removeAll();
         informationPanel.removeAll();
         gameOptions.remove(informationPanel);
@@ -209,7 +216,11 @@ public class PvpNormal extends JPanel{
         finishGomoku.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                finishOption();
+                try {
+					finishOption();
+				} catch (GomokuException e1) {
+					Log.record(e1);
+				}
             }
         });
     }
@@ -238,7 +249,7 @@ public class PvpNormal extends JPanel{
     /*
      * Actions for the finish button
      */
-    public void finishOption(){
+    public void finishOption() throws GomokuException{
     	this.removeAll();
         GomokuGUI.finishButtonNormal();
         pvpNormal = null;
@@ -280,8 +291,9 @@ public class PvpNormal extends JPanel{
     /**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
+     * @throws GomokuException 
      */
-    public JPanel createInformationPanelGameOptions(){
+    public JPanel createInformationPanelGameOptions() throws GomokuException{
         informationPanel = new JPanel(new GridBagLayout());
         Font arial = new Font("italic", 1, 18);
         turno = new JLabel("Siguiente en jugar: " + Gomoku.getGomoku().getTurn());
@@ -289,8 +301,8 @@ public class PvpNormal extends JPanel{
         nombreP2 = new JLabel("P2: " + GomokuGUI.returnP2());
         colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP1()));
         colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP2()));
-        puntuacionJugador1 = new JLabel("Score P1: " + "Pendiente");
-        puntuacionJugador2 = new JLabel("Score P2: " + "Pendiente");
+        puntuacionJugador1 = new JLabel("Score P1: " + GomokuGUI.getPuntuacion(GomokuGUI.returnP1()));
+        puntuacionJugador2 = new JLabel("Score P2: " + GomokuGUI.getPuntuacion(GomokuGUI.returnP2()));
         turno.setFont(arial);
         nombreP1.setFont(arial);
         nombreP2.setFont(arial);
@@ -360,6 +372,8 @@ public class PvpNormal extends JPanel{
     	this.setVisible(false);
     	pvpNormal.repaint();
     }
+    
+    
     
 
 }

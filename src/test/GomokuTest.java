@@ -58,7 +58,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldAddToken() {
+	void shouldAddToken() throws GomokuException {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -89,7 +89,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldCalculateLastPositions() {
+	void shouldCalculateLastPositions() throws GomokuException {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");

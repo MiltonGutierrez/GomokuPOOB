@@ -24,4 +24,6 @@ public interface Player {
 	int getTokensLeft();
 	javax.swing.Timer getTimer(String timer);
 	void addTokenToUse(String tokenType);
+	void setPuntuacion(int score_);
+	int getPuntuacion();
 }

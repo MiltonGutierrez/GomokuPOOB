@@ -21,6 +21,9 @@ public class Human implements Player {
     private HashMap<String, TimePassed> times = new HashMap<>();
     private HashMap<String, Timer> timers = new HashMap<>();
     
+    //nuevo
+    private int score;
+    
     /**
      * Creates an instance of Human.
      * @param name
@@ -203,6 +206,23 @@ public class Human implements Player {
 		this.tokensToUse.add(0, tokenType);
 		System.out.println(this.tokensToUse.size());
 		
+	}
+	
+	
+	
+	/**
+	 * Adds the score
+	 */
+	public void setPuntuacion(int score_) {
+		int sumar = score_;
+		this.score += sumar;
+	}
+	
+	/**
+	 * returns the current score of the player
+	 */
+	public int getPuntuacion() {
+		return score;
 	}
 
 
