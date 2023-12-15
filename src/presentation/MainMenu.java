@@ -110,7 +110,11 @@ public class MainMenu extends JPanel {
         loadOptionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadOption();
+                try {
+					loadOption();
+				} catch (GomokuException e1) {
+					Log.record(e1);
+				}
             }
         });
     
@@ -156,31 +160,23 @@ public class MainMenu extends JPanel {
             GomokuGUI.setNewDimension(dimension);
         }
     }
-
     
     /**
      * Shows the user a menu to load a file
+     * @throws GomokuException 
      */
-    public void loadOption(){
-        File file = null;
-        load = new JFileChooser();
+    public void loadOption() throws GomokuException{
+    	JFileChooser load = new JFileChooser();
         load.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        showFileName("Se abrió el archivo ", file);
-    }
-
-    /**
-     * Shows the name of the selected file.
-     * @param m 
-     * @param file 
-     */
-    private void showFileName(String m, File file){
         int result = load.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            file = load.getSelectedFile();
+            File file = load.getSelectedFile();
+            if (file != null) {
+            	Gomoku.getGomoku();
+				Gomoku.open01(file);
+            }
         }
-        if (file != null) {
-            JOptionPane.showMessageDialog(null, m + file.getName(), "Atencion", JOptionPane.INFORMATION_MESSAGE);
-        }
+        GomokuGUI.validatePanel();
     }
 
     /**

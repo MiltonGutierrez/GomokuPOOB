@@ -1,10 +1,13 @@
 package presentation;
 import java.awt.event.*;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import domain.TimePassed;
 import domain.Gomoku;
 import domain.GomokuException;
@@ -203,7 +206,11 @@ public class PvpNormal extends JPanel{
         saveGomoku.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                saveOption();
+                try {
+					saveOption();
+				} catch (GomokuException e1) {
+					Log.record(e1);
+				}
             }
         });
 
@@ -228,12 +235,13 @@ public class PvpNormal extends JPanel{
 
     /**
      * Shows the user a menu to save a file.
+     * @throws GomokuException 
      * */
-    public void saveOption(){
-        save = new JFileChooser();
-        save.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        save.showSaveDialog(this);
+    public void saveOption() throws GomokuException{
+        Gomoku.getGomoku().save(fileToSave());
     }
+    
+    
     /*
      * Actions for the reset button
      */
@@ -371,6 +379,26 @@ public class PvpNormal extends JPanel{
     protected void setInvisible() {
     	this.setVisible(false);
     	pvpNormal.repaint();
+    }
+    
+    /**
+     * Shows the user a menu to save a file.
+     * */
+    public File fileToSave() {
+        File file = null;
+        save = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .dat", "dat");
+        save.setFileFilter(filter);
+        save.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int result = save.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            file = save.getSelectedFile();
+            if (!file.getName().endsWith(".dat")) {
+                String filename = file.getAbsolutePath() + ".dat";
+                file = new File(filename);
+            }
+        }
+        return file;
     }
     
     

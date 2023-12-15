@@ -3,12 +3,13 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * 
  */
-public class GomokuVerifier {
+public class GomokuVerifier implements Serializable {
 	
 	private Gomoku gomoku;
 	private boolean gomokuFinished;

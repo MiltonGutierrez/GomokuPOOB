@@ -2,13 +2,14 @@ package domain;
 import java.util.*;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class Gomoku {
+public class Gomoku implements Serializable{
     public static Gomoku board = null;
     private static int dimension;
     private HashMap<String, Player> players;
@@ -18,8 +19,8 @@ public class Gomoku {
     private Box[][] boxMatrix;
     private String gameMode;
     private String opponent; //"pvp" "pve"
-    private static String nameP1;
-    private static String nameP2 = "machine";
+    private String nameP1;
+    private String nameP2 = "machine";
     private String turn;
     private String machineType;
     private Integer timeLimit;
@@ -425,14 +426,14 @@ public class Gomoku {
      */
     public void setNameP1(String nombre){
     	ok = true;
-        this.nameP1 = nombre;
+        nameP1 = nombre;
     }
     
 	/**
 	 * Returns the name of player 1
 	 * @return nameP1 is the name of the player 1
 	 */
-	public static String getP1() {
+	public String getP1() {
 		return nameP1;
 	}
 	
@@ -442,13 +443,13 @@ public class Gomoku {
      */
     public void setNameP2(String nombre){
     	ok = true;
-        this.nameP2 = nombre;
+        nameP2 = nombre;
     }
 	/**
 	 * Returns the name of the player 2
 	 * @return nameP2 is the name of the player 2
 	 */
-	public static String getP2() {
+	public String getP2() {
 		return nameP2;
 	}
 
@@ -942,5 +943,38 @@ public class Gomoku {
 		return loadPlayer(name).getPuntuacion();
 	} 
 	
+	/**
+     * Saves the status of the game into a file
+     * @param file
+     * @throws ColonyException
+     */
+	public void save(File file) throws GomokuException {
+	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+	        out.writeObject(this);
+	    } catch (Exception e) {
+	        Log.record(e);
+	    }
+	}
 	
+    /**
+     * Opens a game from a data file
+     * @param file
+     * @return
+     * @throws ColonyException
+     */
+    public static void open01(File file) throws GomokuException {
+        board = null;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+          	Gomoku loadGomoku= (Gomoku) in.readObject();
+          	board = loadGomoku;
+        } catch (Exception e) {
+            Log.record(e);
+        }
+        System.out.println(board.getGameMode());
+    }
+    
+    
+    
+    
+    
 }

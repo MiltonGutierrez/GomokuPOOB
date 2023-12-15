@@ -92,6 +92,7 @@ public class GomokuGUI extends JFrame{
     }
     
     public static String returnP1(){
+    		System.out.println(Gomoku.getGomoku().getP1());
         return Gomoku.getGomoku().getP1();
     }
 
@@ -108,6 +109,7 @@ public class GomokuGUI extends JFrame{
     }
 
     public static void normalGameSelected() throws GomokuException{
+    	MainMenu.getMainMenu().setInvisible();
     	GameModes.getGameModes().setInvisible();
         principal.remove(GameModes.getGameModes());
         JPanel panel = generalPanel(PvpNormal.getPvpNormal());
@@ -248,6 +250,7 @@ public class GomokuGUI extends JFrame{
      * @throws GomokuException 
      */
     public static void quickTimeGameSelected() throws GomokuException{
+    	MainMenu.getMainMenu().setInvisible();
     	GameModes.getGameModes().setInvisible();
         principal.remove(GameModes.getGameModes());
         JPanel panel = generalPanel(PvpQuick.getPvpQuick());
@@ -257,6 +260,7 @@ public class GomokuGUI extends JFrame{
     
     
     public static void limitedGameSelected() throws GomokuException {
+    	MainMenu.getMainMenu().setInvisible();
     	GameModes.getGameModes().setInvisible();
         JPanel panel = generalPanel(PvpLimited.getPvpLimited());
         PvpLimited.getPvpLimited().setVisible();
@@ -293,6 +297,21 @@ public class GomokuGUI extends JFrame{
      */
     public static int getPuntuacion(String name) throws GomokuException {
     	return Gomoku.getGomoku().getPuntuacion(name);
+    }
+    
+    public static void validatePanel() throws GomokuException {
+        String gameMode_ = Gomoku.getGomoku().getGameMode();
+        System.out.println(gameMode_);
+        if ("normal".equals(gameMode_)) {
+            System.out.println("Estoy colocando el modo normal");
+            normalGameSelected();
+        } else if ("quicktime".equals(gameMode_)) {
+            System.out.println("Estoy colocando el modo quick");
+            quickTimeGameSelected();
+        } else if ("limited".equals(gameMode_)) {
+            System.out.println("Estoy colocando el modo limited");
+            limitedGameSelected();
+        }
     }
     
     

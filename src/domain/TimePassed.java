@@ -3,10 +3,12 @@
  */
 package domain;
 
+import java.io.Serializable;
+
 /**
  * 
  */
-public class TimePassed {
+public class TimePassed implements Serializable {
 	private int time;
 	/**
 	 * 

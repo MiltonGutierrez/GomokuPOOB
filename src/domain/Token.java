@@ -1,6 +1,7 @@
 package domain;
 import java.awt.Color;
-public abstract class Token{
+import java.io.Serializable;
+public abstract class Token implements Serializable{
     protected Color color;
     protected int[] position;
     protected Player player;

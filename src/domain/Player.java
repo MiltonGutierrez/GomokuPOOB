@@ -1,11 +1,12 @@
 package domain;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
 
-public interface Player {
+public interface Player extends Serializable{
     void setColor(Color color);
     Color getColor();
     void setToken(Token token, int xPos, int yPos, String tokenType);
