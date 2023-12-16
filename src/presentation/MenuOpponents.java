@@ -110,7 +110,25 @@ public class MenuOpponents extends JPanel{
         personaVMaquina.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                
+            	Gomoku.getGomoku().setOpponent("pve");
+            	askForNames();
+            	try {
+                    GomokuGUI.gameModes();
+                } catch (InvocationTargetException e1) {
+                    Log.record(e1);
+                }
+            	 try {
+					askForTypeOfMachine();
+				} catch (InvocationTargetException e1) {
+					Log.record(e1);
+				} catch (GomokuException e1) {
+					Log.record(e1);
+				}
+            	try {
+					Gomoku.getGomoku().createRivals();
+				} catch (GomokuException e1) {
+					Log.record(e1);
+				}
             }});
     }  
 
@@ -125,16 +143,20 @@ public class MenuOpponents extends JPanel{
             }
             } while(p1Name == null || p1Name.isEmpty());
         Gomoku.getGomoku().setNameP1(p1Name);
-
-        do { 
-            p2Name = JOptionPane.showInputDialog("Inserta el nombre del Jugador 2", "");
-            if (p2Name == null || p2Name.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
-            }else if (p2Name.equals(p1Name)){
-                JOptionPane.showMessageDialog(null, "El nombre no puede ser igual al del otro jugador");
-            }
-            } while(p2Name == null || p2Name.isEmpty() || p2Name.equals(p1Name));
-        Gomoku.getGomoku().setNameP2(p2Name);
+        if(Gomoku.getGomoku().getOpponent() != "pve") {
+        	do { 
+                p2Name = JOptionPane.showInputDialog("Inserta el nombre del Jugador 2", "");
+                if (p2Name == null || p2Name.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
+                }else if (p2Name.equals(p1Name)){
+                    JOptionPane.showMessageDialog(null, "El nombre no puede ser igual al del otro jugador");
+                }
+                } while(p2Name == null || p2Name.isEmpty() || p2Name.equals(p1Name));
+            Gomoku.getGomoku().setNameP2(p2Name);
+        }else {
+        	Gomoku.getGomoku().setNameP2("machine");
+        }
+        
     }
     
     /**
@@ -151,5 +173,38 @@ public class MenuOpponents extends JPanel{
     public void setVisible(){
         this.setVisible(true);
         menuOpponents.repaint();
+    }
+    
+    /**
+     * Asks for the type of machine to create
+     * @throws InvocationTargetException
+     * @throws GomokuException 
+     */
+    public void askForTypeOfMachine() throws InvocationTargetException, GomokuException{
+        JRadioButton agressive = new JRadioButton("Agresiva");
+        JRadioButton expert = new JRadioButton("Experta");
+        JRadioButton fearful = new JRadioButton("fearful");
+        ButtonGroup sizeGroup = new ButtonGroup();
+        sizeGroup.add(agressive);
+        sizeGroup.add(expert);
+        sizeGroup.add(fearful);
+        Object[] options = {agressive, expert, fearful};
+        JOptionPane.showOptionDialog(
+                null,
+                options,
+                "Seleccione el tipo de oponente",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                null,
+                null
+        );
+        if (agressive.isSelected()) {
+            Gomoku.getGomoku().setMachineType("Agressive");
+        } else if (expert.isSelected()) {
+            Gomoku.getGomoku().setMachineType("Expert");
+        } else if (fearful.isSelected()) {
+            Gomoku.getGomoku().setMachineType("Fearful");
+        }
     }
 }

@@ -144,7 +144,11 @@ public class GomokuGUI extends JFrame{
             for(String name : playersNames){
                 if(players.get(name) instanceof Human){
                     Player p = players.get(name);
-                    Color color = JColorChooser.showDialog(null, "Elige el color para tus piedras, " + name , null);
+                    Color color = JColorChooser.showDialog(null, "Elige el color para tus piedras, " + name, null);
+                    while (color == null || color.equals(Color.WHITE)) {
+                        JOptionPane.showMessageDialog(null, "No puedes seleccionar el color blanco ni uno nulo", "Alerta", JOptionPane.ERROR_MESSAGE);
+                        color = JColorChooser.showDialog(null, "Elige el color para tus piedras, " + name, null);
+                    }
                     p.setColor(color);
                 }else{
                     Player p = players.get(name);
@@ -155,38 +159,7 @@ public class GomokuGUI extends JFrame{
         
     }
     
-    /**
-     * Asks for the type of machine to create
-     * @throws InvocationTargetException
-     * @throws GomokuException 
-     */
-    public void askForTypeOfMachine() throws InvocationTargetException, GomokuException{
-        JRadioButton agressive = new JRadioButton("Agresiva");
-        JRadioButton expert = new JRadioButton("Experta");
-        JRadioButton fearful = new JRadioButton("fearful");
-        ButtonGroup sizeGroup = new ButtonGroup();
-        sizeGroup.add(agressive);
-        sizeGroup.add(expert);
-        sizeGroup.add(fearful);
-        Object[] options = {agressive, expert, fearful};
-        JOptionPane.showOptionDialog(
-                null,
-                options,
-                "Seleccione el tipo de oponente",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                null,
-                null
-        );
-        if (agressive.isSelected()) {
-            Gomoku.getGomoku().createMachine("Agressive");
-        } else if (expert.isSelected()) {
-            Gomoku.getGomoku().createMachine("Expert");
-        } else if (fearful.isSelected()) {
-            Gomoku.getGomoku().createMachine("Fearful");
-        }
-    }
+    
 
 
     /**

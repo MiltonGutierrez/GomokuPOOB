@@ -248,6 +248,10 @@ public class Human implements Player {
 		this.score = 0;
 		this.timers= null;
 	}
+//
+	@Override
+	public void getTurn() {
+	}
 	
 	
 

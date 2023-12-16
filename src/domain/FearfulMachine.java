@@ -1,5 +1,7 @@
 package domain;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
@@ -8,10 +10,33 @@ public class FearfulMachine extends Machine {
     private String name;
     private Color color;
 
-    public FearfulMachine(String name){
-        super(name);
+    public FearfulMachine(String name, Gomoku gomoku){
+    	super(name, gomoku);
+        times.put("timeT", new TimePassed(0));
+        times.put("timeM", new TimePassed(0));
+        Timer timerTotal = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarTiempo();
+            }
+			private void actualizarTiempo() {
+			}
+        });
+        Timer timerMissing = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarTiempo();
+            }
+			private void actualizarTiempo() {
+			}
+        });
+		timers.put("timerT", timerTotal);
+		timers.put("timerM", timerMissing);
+        
     }
     
+    
+
 	@Override
 	public void setToken(Token token, int xPos, int yPos) {
 		// TODO Auto-generated method stub
@@ -91,21 +116,26 @@ public class FearfulMachine extends Machine {
 	}
 
 	@Override
-	public Timer getTimer(String timer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/**
+     * Returns the timer of the player
+     */
+    public javax.swing.Timer getTimer(String timer) {
+    	return timers.get(timer);
+    }
 
+	
+	/**
+     * Set color of tokens
+     * @param color: color of the tokens
+     */
 	@Override
-	public void setColor(Color color) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setColor(Color color){
+        this.color = color;
+    }
 
 	@Override
 	public Color getColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return color;
 	}
 
 	@Override
@@ -126,6 +156,20 @@ public class FearfulMachine extends Machine {
 		return 0;
 	}
 
+	@Override
+	public int tokensLeft() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void resetAll() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+
+
+
 
 }
-

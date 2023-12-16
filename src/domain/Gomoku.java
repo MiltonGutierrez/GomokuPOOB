@@ -137,6 +137,7 @@ public class Gomoku implements Serializable{
         try {
             lastPositionTokens = null;
             String playerName = getTurn();
+            
             updateTicks();
             int[] position = {xPos, yPos};
             Token t = addToken(getTokenType(), playerName, position);
@@ -149,7 +150,12 @@ public class Gomoku implements Serializable{
                 nextTurn();
                 startPlayerTimer(getTurn());
                 cellsMissing--;
+                Player machine = loadPlayer(getTurn());
+                if(machine instanceof Machine) {
+                	machine.getTurn();
+                }
             }
+            lastPositionToken = position;
         }
         catch(GomokuException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
@@ -235,10 +241,9 @@ public class Gomoku implements Serializable{
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
             players.put(nameP2, new Human(nameP2, Gomoku.getGomoku()));
         }else if(opponent == "pve"){
-        	setNameP2("machine");
             players.put(nameP1, new Human(nameP1, Gomoku.getGomoku()));
             players.put(nameP2, createMachine(machineType));
-            
+            System.out.println("Mi gente tenemos la maquina: "+ players.get(nameP2));
         }
     }
     
@@ -282,6 +287,8 @@ public class Gomoku implements Serializable{
 		}
 
     }
+    
+    int[] lastPositionToken;
     /**
      * Creates a new instance of Machine
      * @param type
@@ -297,6 +304,7 @@ public class Gomoku implements Serializable{
             Player player = players.get(playerName);
             token = (Token) constructorTokenChilds.newInstance(player.getColor(), position, player, Gomoku.getGomoku());
             lastColor = player.getColor();
+            lastPositionToken = position;
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
@@ -315,19 +323,17 @@ public class Gomoku implements Serializable{
      * @throws GomokuException 
      * @throws java.lang.reflect.InvocationTargetException
      */
-    public Machine createMachine(String type) throws GomokuException{
-    	ok = true;
+    public Machine createMachine(String type) throws GomokuException {
         Machine machine = null;
-        try{
-            Class<?> machineChilds = Class.forName("domain."+type+"Machine");
-            Constructor<?> constructorMachineChilds = machineChilds.getConstructor(String.class);
-            machine = (Machine) constructorMachineChilds.newInstance(nameP2);
-        } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
+        try {
+            Class<?> machineChilds = Class.forName("domain." + type + "Machine");
+            Constructor<?> constructorMachineChilds = machineChilds.getConstructor(String.class, Gomoku.class);
+            machine = (Machine) constructorMachineChilds.newInstance(nameP2, board);
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
             Log.record(e);
-            ok = false;
             throw new GomokuException(GomokuException.INVALID_MACHINE);
         }
-		return machine;
+        return machine;
     }
     
     public Box createBox(String type, int[] position) throws GomokuException {
@@ -380,8 +386,9 @@ public class Gomoku implements Serializable{
     /**
      * Returns the current player to play
      * @return name of the player playing
+     * @throws GomokuException 
      */
-    public String getTurn() {
+    public String getTurn() throws GomokuException {
     	ok = true;
 		return turn;
 	}
@@ -1031,6 +1038,11 @@ public class Gomoku implements Serializable{
     		p.resetAll();
     	}
     	
+    }
+    
+    ///////////////
+    public int[] returnLastPositionToken() {
+    	return lastPositionToken;
     }
     
     

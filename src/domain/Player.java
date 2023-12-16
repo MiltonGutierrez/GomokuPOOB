@@ -29,4 +29,6 @@ public interface Player extends Serializable{
 	int getPuntuacion();
 	int tokensLeft();
 	void resetAll();
+	//
+	void getTurn();
 }

@@ -2,15 +2,26 @@ package domain;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.swing.Timer;
 
 public abstract class Machine implements Player{
-    private int puntos;
-    private String name;
-    private ArrayList<Token> tokens = new ArrayList<>();
+	protected String name;
+	protected Color color;
+	protected ArrayList<Token> tokens = new ArrayList<>();
+	protected Token[][] tokenMatrix;
+	protected ArrayList<String> tokensToUse = new ArrayList<>();
+	protected Gomoku gomoku;
+	protected HashMap<String, TimePassed> times = new HashMap<>();
+	protected HashMap<String, Timer> timers = new HashMap<>();
+	protected int score;
+
     
     
-    public Machine(String name) {
+    public Machine(String name, Gomoku gomoku) {
     	this.name = name;
+        this.gomoku = gomoku;
     }
 
 
