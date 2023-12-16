@@ -19,7 +19,7 @@ class GomokuTest {
 	}
 
 	@Test
-	void shouldCreateRivals1() {
+	void shouldCreateRivals1() throws GomokuException {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -57,7 +57,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldCreateMatrixBox() {
+	void shouldCreateMatrixBox() throws GomokuException {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -72,23 +72,23 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldAddTokenCreateNormal() {
+	void shouldAddTokenCreateNormal() throws GomokuException {
 		assertTrue(board.addToken("Normal", "Mutsia", new int[] {0,0}) instanceof NormalToken);
 		assertTrue(board.ok());
 	}
 	@Test
-	void shouldAddTokenCreateHeavy() {
+	void shouldAddTokenCreateHeavy() throws GomokuException {
 		assertTrue(board.addToken("Heavy", "Mutsia", new int[] {0,3}) instanceof HeavyToken);
 		assertTrue(board.ok());
 	}
 	@Test
-	void shouldAddTokenCreateTemporal() {
+	void shouldAddTokenCreateTemporal() throws GomokuException {
 		assertTrue(board.addToken("Temporal", "Mutsia", new int[] {0,1}) instanceof TemporalToken);
 		assertTrue(board.ok());
 	}
 	
 	@Test
-	void shouldAddTokenSetNormal() {
+	void shouldAddTokenSetNormal() throws GomokuException {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -102,7 +102,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldAddTokenSetTemporal() {
+	void shouldAddTokenSetTemporal() throws GomokuException {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -132,7 +132,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldAddTokenSetHeavy() {
+	void shouldAddTokenSetHeavy()  throws GomokuException{
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -146,7 +146,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldBeHeavyToken() {
+	void shouldBeHeavyToken()  throws GomokuException{
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -158,32 +158,32 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldCreateNormalBox() {
+	void shouldCreateNormalBox()  throws GomokuException{
 		board.createBox("Normal", new int[] {0,0});
 		assertTrue(board.ok());
 		
 	}
 	
 	@Test
-	void shouldCreateGoldenBox() {
+	void shouldCreateGoldenBox() throws GomokuException {
 		board.createBox("Golden", new int[] {0,0});
 		assertTrue(board.ok());
 	}
 	
 	@Test
-	void shouldCreateTeleportingBox() {
+	void shouldCreateTeleportingBox() throws GomokuException {
 		board.createBox("Teleporting", new int[] {0,0});
 		assertTrue(board.ok());
 	}
 	
 	@Test
-	void shouldCreateExplosiveBox() {
+	void shouldCreateExplosiveBox()  throws GomokuException{
 		board.createBox("Explosive", new int[] {0,0});
 		assertTrue(board.ok());
 	}
 	
 	@Test
-	void shouldExplodeNearTokens() {
+	void shouldExplodeNearTokens()  throws GomokuException{
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -202,7 +202,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldValidPlay() {
+	void shouldValidPlay() throws GomokuException {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -213,7 +213,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldCalculateLastPositions() {
+	void shouldCalculateLastPositions() throws GomokuException {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");

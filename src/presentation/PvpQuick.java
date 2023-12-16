@@ -40,9 +40,10 @@ public class PvpQuick extends PvpNormal {
 	/**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
+	 * @throws GomokuException 
      */
 	@Override
-    public JPanel createInformationPanelGameOptions(){
+    public JPanel createInformationPanelGameOptions() throws GomokuException{
         informationPanel = new JPanel(new GridBagLayout());
         Font arial = new Font("italic", 1, 18);
         turno = new JLabel("Siguiente en jugar: " + Gomoku.getGomoku().getTurn());

@@ -6,8 +6,11 @@ package presentation;
 import javax.swing.*;
 
 import domain.Gomoku;
+import domain.GomokuException;
+import domain.Log;
 import domain.TimePassed;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -33,15 +36,23 @@ public class RelojPanelSub extends JPanel {
         timer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarTiempo();
+                try {
+					actualizarTiempo();
+				} catch (HeadlessException e1) {
+					Log.record(e1);
+				} catch (GomokuException e1) {
+					Log.record(e1);
+				}
             }
         });
     }
     
     /**
      * Updates the time
+     * @throws GomokuException 
+     * @throws HeadlessException 
      */
-    private void actualizarTiempo() {
+    private void actualizarTiempo() throws HeadlessException, GomokuException {
         // Decrementar la variable de segundos solo si no está en pausa
         if (timePassed.getTime() > 0) {
             timePassed.sumTime(-1);

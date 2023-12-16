@@ -158,7 +158,11 @@ public class Human implements Player {
 			tokensToUse.remove(0);
 		}
 		else if(gameMode.equals("normal") || gameMode.equals("quicktime") && tokensToUse.size() == 0) {
-			gomoku.createTokensToUse(this.name); // evitamos que se quede sin fichas.
+			try {
+				gomoku.createTokensToUse(this.name);
+			} catch (GomokuException e) {
+				Log.record(e);
+			} // evitamos que se quede sin fichas.
 		}
 		else if(tokensToUse.size() == 0 && gameMode.equals("limited")) {
 			return null;

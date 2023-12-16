@@ -158,8 +158,9 @@ public class GomokuGUI extends JFrame{
     /**
      * Asks for the type of machine to create
      * @throws InvocationTargetException
+     * @throws GomokuException 
      */
-    public void askForTypeOfMachine() throws InvocationTargetException{
+    public void askForTypeOfMachine() throws InvocationTargetException, GomokuException{
         JRadioButton agressive = new JRadioButton("Agresiva");
         JRadioButton expert = new JRadioButton("Experta");
         JRadioButton fearful = new JRadioButton("fearful");
@@ -308,10 +309,12 @@ public class GomokuGUI extends JFrame{
     
     /**
      * Validates if there is a winner
+     * @throws GomokuException 
+     * @throws HeadlessException 
      */
-    public static void validateWinCondition(){
+    public static void validateWinCondition() throws HeadlessException, GomokuException{
         if(Gomoku.getGomoku().getGomokuFinished()){ 
-            JOptionPane.showMessageDialog(null, "Juego Terminado\n" + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Juego Terminado\nGANADOR: " + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     

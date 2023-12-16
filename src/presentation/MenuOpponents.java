@@ -100,7 +100,11 @@ public class MenuOpponents extends JPanel{
                 } catch (InvocationTargetException e1) {
                     Log.record(e1);
                 }
-                Gomoku.getGomoku().createRivals();
+                try {
+					Gomoku.getGomoku().createRivals();
+				} catch (GomokuException e1) {
+					Log.record(e1);
+				}
             }});
         
         personaVMaquina.addActionListener(new ActionListener() {

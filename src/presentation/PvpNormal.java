@@ -146,7 +146,11 @@ public class PvpNormal extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e){
                 if(Gomoku.getGomoku().validPlay(fila, columna)){
-                	Gomoku.getGomoku().play(fila, columna);
+                	try {
+						Gomoku.getGomoku().play(fila, columna);
+					} catch (GomokuException e1) {
+						Log.record(e1);
+					}
                 	deleteTokensOnBoard(Gomoku.getGomoku().getLastPositionTokens());
                     try {
 						refreshInformationPanel();
@@ -154,10 +158,20 @@ public class PvpNormal extends JPanel{
 					} catch (GomokuException e1) {
 						Log.record(e1);
 					}
-                    GomokuGUI.validateWinCondition();
+                    try {
+						GomokuGUI.validateWinCondition();
+					} catch (HeadlessException | GomokuException e1) {
+						Log.record(e1);
+					}
                 }
                 else{
-                	GomokuGUI.validateWinCondition();
+                	try {
+						GomokuGUI.validateWinCondition();
+					} catch (HeadlessException e1) {
+						Log.record(e1);
+					} catch (GomokuException e1) {
+						Log.record(e1);
+					}
                     JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     
                 }
