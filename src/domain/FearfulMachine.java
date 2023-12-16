@@ -167,6 +167,14 @@ public class FearfulMachine extends Machine {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public void getTurn() {
+		// TODO Auto-generated method stub
+		
+	}
     
 
 
