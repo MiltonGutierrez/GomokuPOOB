@@ -57,6 +57,21 @@ class GomokuTest {
 	}
 	
 	@Test
+	void shouldCreateMatrixBox() {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+		board.startGame();
+		for(int i = 0; i < Gomoku.getGomoku().getDimension(); i++) {
+			for(int j = 0; j < Gomoku.getGomoku().getDimension(); j++) {
+				assertTrue(Gomoku.getGomoku().getBox(i, j) instanceof Box);
+			}
+		}
+	}
+	
+	@Test
 	void shouldAddTokenCreateNormal() {
 		assertTrue(board.addToken("Normal", "Mutsia", new int[] {0,0}) instanceof NormalToken);
 		assertTrue(board.ok());
@@ -101,6 +116,22 @@ class GomokuTest {
 	}
 	
 	@Test
+	void shouldBeTemporalToken() throws GomokuException {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+	    board.startGame();
+	    board.loadPlayer("Mutsia").addTokenToUse("Temporal");
+	    board.play(0, 0);
+	    board.play(0, 1);
+	    board.play(0, 2);
+	    board.play(0, 3);
+	    assertEquals(board.getToken(0, 0), null);
+	}
+	
+	@Test
 	void shouldAddTokenSetHeavy() {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
@@ -112,6 +143,18 @@ class GomokuTest {
 		assertTrue(board.ok());
 		board.addToken("Mutsia", t2, new int[] {0,1});
 		assertTrue(board.ok());
+	}
+	
+	@Test
+	void shouldBeHeavyToken() {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+	    board.startGame();
+		Token t = board.addToken("Heavy", "Mutsia", new int[] {0,0});
+		assertEquals(t.getValue(), 2);
 	}
 	
 	@Test
@@ -140,18 +183,17 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldCreateMatrixBox() {
+	void shouldExplodeNearTokens() {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
 		board.setGameMode("normal");
 		board.createRivals();
-		board.startGame();
-		for(int i = 0; i < Gomoku.getGomoku().getDimension(); i++) {
-			for(int j = 0; j < Gomoku.getGomoku().getDimension(); j++) {
-				assertTrue(Gomoku.getGomoku().getBox(i, j) instanceof Box);
-			}
-		}
+		board.setBoxPercentage(0);
+		board.setTokenPercentage(0);
+	    board.startGame();
+	    Box b = board.createBox("Explosive", new int[] {0,0});
+	    board.getBoxMatrix()[0][0] = b;
 	}
 	
 	@Test

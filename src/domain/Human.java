@@ -202,10 +202,8 @@ public class Human implements Player {
 
 	@Override
 	public void addTokenToUse(String tokenType) {
-		System.out.println(this.tokensToUse.size());
 		this.tokensToUse.add(0, tokenType);
-		System.out.println(this.tokensToUse.size());
-		
+	
 	}
 	
 	

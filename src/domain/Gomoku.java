@@ -645,7 +645,7 @@ public class Gomoku implements Serializable{
     		this.tokensPercentage = 0;
     	}
     	else {
-    		this.tokensPercentage = (int) ((int) Math.round(dimension * dimension / 2) * (percentage / 100f));
+    		this.tokensPercentage = Math.round((dimension * dimension / 2) * (percentage / 100f));
     	}
     	
     }
@@ -659,7 +659,7 @@ public class Gomoku implements Serializable{
     		this.boxesPercentage = 0;
     	}
     	else {
-    		this.boxesPercentage = dimension * dimension  * (percentage / 100);
+    		this.boxesPercentage = Math.round(dimension * dimension  * (percentage / 100f));
     	}
     	
     	
@@ -835,13 +835,6 @@ public class Gomoku implements Serializable{
 		return this.tokensPercentage;
 	}
 	
-	/**
-	 * Sets the tokens percentage.
-	 * @param percentage is the percentage of special tokens to set
-	 */
-	public void setTokensPercentage(int percentage) {
-		this.tokensPercentage = percentage;
-	}
 	/**
 	 * Returns the tokens of the game
 	 * @return arraylist of tokens
