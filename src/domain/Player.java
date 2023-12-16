@@ -27,4 +27,5 @@ public interface Player extends Serializable{
 	void addTokenToUse(String tokenType);
 	void setPuntuacion(int score_);
 	int getPuntuacion();
+	int tokensLeft();
 }

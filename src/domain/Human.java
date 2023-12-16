@@ -228,6 +228,14 @@ public class Human implements Player {
 	public int getPuntuacion() {
 		return score;
 	}
+	
+	/**
+	 * Returns the tokens left to use
+	 * @return
+	 */
+	public int tokensLeft() {
+		return tokensToUse.size();
+	}
 
 
 }

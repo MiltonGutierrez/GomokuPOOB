@@ -1,11 +1,14 @@
 package presentation;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 import domain.Gomoku;
 import domain.GomokuException;
+import domain.Log;
 
 public class PvpLimited extends PvpNormal{
 	private static PvpLimited pvpLimited = null;
@@ -42,7 +45,11 @@ public class PvpLimited extends PvpNormal{
         boardGame.setBackground(new Color(113, 197, 232,128));
     
         game = createBoardGame();
-        tokensLeft = createBoardTokenInformation();
+        try {
+			tokensLeft = createBoardTokenInformation();
+		} catch (GomokuException e) {
+			Log.record(e);
+		}
         // Create a panel to hold the game component in the center
         gameWrapper = new JPanel();
         gameWrapper.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 30));
@@ -60,58 +67,42 @@ public class PvpLimited extends PvpNormal{
 	/**
 	 * Creates the information for the tokens left for each player
 	 * @return a panel with the information of the tokens
+	 * @throws GomokuException 
 	 */
-	public JPanel createBoardTokenInformation() {
+	public JPanel createBoardTokenInformation() throws GomokuException {
         tokensLeft = new JPanel();
         tokensLeft.setLayout(new GridBagLayout());
         tokensLeft.setBackground(new Color(166, 220, 242));
-        tokensLeft.setPreferredSize(new Dimension(200, 200));
+        tokensLeft.setPreferredSize(new Dimension(350, 350));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(0, 10, 0, 0);
         Font arial = new Font("italic", 1, 14);
-        JLabel fichasDisponiblesP1 = new JLabel("Fichas Restantes " + Gomoku.getGomoku().getP1());
+        JLabel fichasDisponiblesP1 = new JLabel("Piedras Restantes para el jugador: " + Gomoku.getGomoku().getP1());
         fichasDisponiblesP1.setFont(arial);
         tokensLeft.add(fichasDisponiblesP1, gbc);
         gbc.gridy = 1;
         tokensLeft.add(Box.createVerticalStrut(5), gbc);
         gbc.gridy = 2;
-        JLabel normalTokenLeftP1 = new JLabel("Piedras normales restantes: " + "Gomoku.getGomoku().getTokensLeft(GomokuGUI.returnP1(), \"Normal\")");
+        JLabel normalTokenLeftP1 = new JLabel("Piedras restantes " + Gomoku.getGomoku().getTokensLeft(Gomoku.getGomoku().getP1()));
         normalTokenLeftP1.setFont(arial);
         tokensLeft.add(normalTokenLeftP1, gbc);
-        gbc.gridy = 3;
-        JLabel heavyTokenLeftP1 = new JLabel("Piedras pesadas restantes: " + "Gomoku.getGomoku().getTokensLeft(GomokuGUI.returnP1(), \"Heavy\")");
-        heavyTokenLeftP1.setFont(arial);
-        tokensLeft.add(heavyTokenLeftP1, gbc);
-    
-        gbc.gridy = 4;
-        JLabel temporalTokenLeftP1 = new JLabel("Piedras temporales restantes: " + "Gomoku.getGomoku().getTokensLeft(GomokuGUI.returnP1(), \"Temporal\")");
-        temporalTokenLeftP1.setFont(arial);
-        tokensLeft.add(temporalTokenLeftP1, gbc);
-    
+        
         gbc.gridy = 5;
         tokensLeft.add(Box.createVerticalStrut(5), gbc);
     
         gbc.gridy = 6;
-        JLabel fichasDisponiblesP2 = new JLabel("Fichas Restantes " + Gomoku.getGomoku().getP1());
+        JLabel fichasDisponiblesP2 = new JLabel("Fichas Restantes para el jugador: " + Gomoku.getGomoku().getP2());
         fichasDisponiblesP2.setFont(arial);
         tokensLeft.add(fichasDisponiblesP2, gbc);
     
         gbc.gridy = 7;
         tokensLeft.add(Box.createVerticalStrut(5), gbc);
         gbc.gridy = 8;
-        JLabel normalTokenLeftP2 = new JLabel("Piedras normales restantes: " + "Gomoku.getGomoku().getTokensLeft(GomokuGUI.returnP2(), \"Normal\")");
+        JLabel normalTokenLeftP2 = new JLabel("Piedras restantes " + Gomoku.getGomoku().getTokensLeft(Gomoku.getGomoku().getP2()));
         normalTokenLeftP2.setFont(arial);
         tokensLeft.add(normalTokenLeftP2, gbc);
-        gbc.gridy = 9;
-        JLabel heavyTokenLeftP2 = new JLabel("Piedras pesadas restantes: " + "Gomoku.getGomoku().getTokensLeft(GomokuGUI.returnP2(), \"Heavy\")");
-        heavyTokenLeftP2.setFont(arial);
-        tokensLeft.add(heavyTokenLeftP2, gbc);
-        gbc.gridy = 10;
-        JLabel temporalTokenLeftP2 = new JLabel("Piedras temporales restantes: " + "Gomoku.getGomoku().getTokensLeft(GomokuGUI.returnP2(), \"Temporal\")");
-        temporalTokenLeftP2.setFont(arial);
-        tokensLeft.add(temporalTokenLeftP2, gbc);
         
         return tokensLeft;
     }
@@ -123,13 +114,16 @@ public class PvpLimited extends PvpNormal{
     public void refreshTime(){
     	tokensLeft.removeAll();
         gameWrapper.remove(tokensLeft);
-        tokensLeft = createBoardTokenInformation();
-        informationPanel.remove(puntuacionJugador1);
-        informationPanel.remove(puntuacionJugador2);
+        try {
+			tokensLeft = createBoardTokenInformation();
+		} catch (GomokuException e) {
+			Log.record(e);
+		}
         gameWrapper.add(tokensLeft);
         boardGame.validate();
         boardGame.repaint();
     }
+	
 	
 	/*
      * Actions for the finish button
@@ -156,6 +150,9 @@ public class PvpLimited extends PvpNormal{
     	this.setVisible(false);
     	pvpLimited.repaint();
     }
+    
+    
+    
 	
 	
 }

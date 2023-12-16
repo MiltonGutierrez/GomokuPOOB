@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Gomoku implements Serializable{
     public static Gomoku board = null;
-    private int dimension;
+    private int dimension = 0;
     private HashMap<String, Player> players;
     private ArrayList<Token> tokens = new ArrayList<>();
     private ArrayList<Box> boxes = new ArrayList<>();
@@ -390,9 +390,9 @@ public class Gomoku implements Serializable{
      * Sets the dimension of Gomoku
      * @param dimension size of the Gomoku's board
      */
-    public void setDimension(int dimension){
+    public void setDimension(int dimension_){
     	
-        this.dimension = dimension;
+        dimension = dimension_;
     }
     
     /**
@@ -955,8 +955,8 @@ public class Gomoku implements Serializable{
 	
 	/**
      * Saves the status of the game into a file
-     * @param file
-     * @throws ColonyException
+     * @param file is the file to save
+     * @throws GomokuException
      */
 	public void save(File file) throws GomokuException {
 	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
@@ -968,9 +968,8 @@ public class Gomoku implements Serializable{
 	
     /**
      * Opens a game from a data file
-     * @param file
-     * @return
-     * @throws ColonyException
+     * @param file is the file to load
+     * @throws GomokuException
      */
     public static void open01(File file) throws GomokuException {
         board = null;
@@ -980,8 +979,23 @@ public class Gomoku implements Serializable{
         } catch (Exception e) {
             Log.record(e);
         }
-        System.out.println(board.getGameMode());
     }
+    
+    /**
+     * Gets the tokens left for the desired player
+     * @param name is the name of the player
+     * @return the quantity of tokens left for that player
+     * @throws GomokuException
+     */
+    public int getTokensLeft(String name) throws GomokuException{
+    	try {
+			return loadPlayer(name).getTokensLeft();
+		} catch (GomokuException e) {
+			Log.record(e);
+			throw new GomokuException(GomokuException.PLAYER_NOT_FOUND);
+		}
+    }
+    
     
     
     

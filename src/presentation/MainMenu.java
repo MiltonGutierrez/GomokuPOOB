@@ -143,8 +143,9 @@ public class MainMenu extends JPanel {
      * @throws GomokuException
      */
     public void newOption() throws InvocationTargetException, GomokuException{
-        Gomoku.getGomoku();
-        Gomoku.getGomoku().setDimension(15);
+        if(Gomoku.getGomoku().getDimension() == 0) {
+        	Gomoku.getGomoku().setDimension(15);
+        }
         GomokuGUI.newGame();
     }
     

@@ -150,6 +150,7 @@ public class PvpNormal extends JPanel{
                 	deleteTokensOnBoard(Gomoku.getGomoku().getLastPositionTokens());
                     try {
 						refreshInformationPanel();
+						refreshTime();
 					} catch (GomokuException e1) {
 						Log.record(e1);
 					}
