@@ -9,7 +9,7 @@ import javax.swing.Timer;
 public interface Player extends Serializable{
     void setColor(Color color);
     Color getColor();
-    void setToken(Token token, int xPos, int yPos, String tokenType);
+    void setToken(Token token, int xPos, int yPos);
     void startTime();
     void stopTime();
     TimePassed getTime(String time);

@@ -14,7 +14,7 @@ public class ExpertMachine extends Machine{
     }
     
 	@Override
-	public void setToken(Token token, int xPos, int yPos, String tokenType) {
+	public void setToken(Token token, int xPos, int yPos) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -83,7 +83,7 @@ public class Human implements Player {
     /**
      * Sets the token in the respective lists and matrixes
      */
-    public void setToken(Token token, int xPos, int yPos, String tokenType){
+    public void setToken(Token token, int xPos, int yPos){
         tokens.add(token);
         tokenMatrix[xPos][yPos] = token;
     }
