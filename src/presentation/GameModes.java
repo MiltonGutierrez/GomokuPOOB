@@ -177,6 +177,7 @@ public class GameModes extends JPanel{
             	try {
 					GomokuGUI.changeColor();
 					Gomoku.getGomoku().setGameMode("limited");
+					setSpecialBoxesPercentage();
 	                Gomoku.getGomoku().startGame();
 	                GomokuGUI.limitedGameSelected();
 				} catch (GomokuException e1) {

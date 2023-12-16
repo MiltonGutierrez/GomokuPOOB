@@ -35,8 +35,6 @@ public class FearfulMachine extends Machine {
         
     }
     
-    
-
     @Override
     /**
      * Gets the last token of gomoku
@@ -47,7 +45,7 @@ public class FearfulMachine extends Machine {
     	int xPosLast = ultimaFichaOponente[0];
     	int yPosLast = ultimaFichaOponente[1];
     	try {
-    		System.out.println("Voy a judar\n"+ xPosLast + "\n" + yPosLast);
+   
 			play(xPosLast, yPosLast, dimensiones);
 		} catch (GomokuException e) {
 			Log.record(e);

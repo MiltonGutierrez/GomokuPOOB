@@ -10,6 +10,7 @@ public class GomokuException extends Exception implements Serializable {
     public static final String PERCENTAGE_INVALID = "Porcentaje Invalido";
     public static final String INVALID_MACHINE = "Maquina invalida";
     public static final String GENERAL_ERROR = "Ha ocurrido un error general";
+    public static final String GOMOKU_HAS_NO_WINNER_YET = "No se han cumplido las condicioens seleccionar un ganardor";
 
     public GomokuException(String message) {
         super(message);

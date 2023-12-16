@@ -79,7 +79,7 @@ public class GomokuGUI extends JFrame{
      * Creates the panel of the new game
      * @throws InvocationTargetException
      */
-    public static void newGame() throws InvocationTargetException{
+    public static void newGame(){
         MainMenu.getMainMenu().setInvisible();
         JPanel panel = generalPanel(MenuOpponents.getMenuOpponents());
         MenuOpponents.getMenuOpponents().setVisible();
@@ -90,7 +90,7 @@ public class GomokuGUI extends JFrame{
      * Prepares the gameMode panel
      * @throws InvocationTargetException
      */
-    public static void gameModes() throws InvocationTargetException{
+    public static void gameModes(){
     	MenuOpponents.getMenuOpponents().setInvisible();
         principal.remove(MenuOpponents.getMenuOpponents());
         JPanel panel = generalPanel(GameModes.getGameModes());
@@ -102,7 +102,7 @@ public class GomokuGUI extends JFrame{
      * Activates the panel for the normal game
      * @throws GomokuException
      */
-    public static void normalGameSelected() throws GomokuException{
+    public static void normalGameSelected(){
     	MainMenu.getMainMenu().setInvisible();
     	GameModes.getGameModes().setInvisible();
         principal.remove(GameModes.getGameModes());
@@ -115,7 +115,7 @@ public class GomokuGUI extends JFrame{
      * Changes the color of the players
      * @throws GomokuException
      */
-    public static void changeColor() throws GomokuException{
+    public static void changeColor(){
         HashMap<String, Player> players = Gomoku.getGomoku().getPlayers();
         Set<String> playersNames = players.keySet();
         HashSet<Color> selectedColors = new HashSet<>();
@@ -136,7 +136,13 @@ public class GomokuGUI extends JFrame{
                     }
                 }
                 if (selectedColor != null) {
-                    Gomoku.getGomoku().setColor(name, selectedColor);
+                    try {
+						Gomoku.getGomoku().setColor(name, selectedColor);
+					} catch (GomokuException e) {
+						JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.ERROR_MESSAGE);
+						Log.record(e);
+						
+					}
                     selectedColors.add(selectedColor);
                 }
             }
@@ -225,7 +231,7 @@ public class GomokuGUI extends JFrame{
      * Selects the gameMode QuickTime
      * @throws GomokuException 
      */
-    public static void quickTimeGameSelected() throws GomokuException{
+    public static void quickTimeGameSelected(){
     	MainMenu.getMainMenu().setInvisible();
     	GameModes.getGameModes().setInvisible();
         principal.remove(GameModes.getGameModes());
@@ -238,7 +244,7 @@ public class GomokuGUI extends JFrame{
      * Activates the panel for limited mode
      * @throws GomokuException
      */
-    public static void limitedGameSelected() throws GomokuException {
+    public static void limitedGameSelected(){
     	MainMenu.getMainMenu().setInvisible();
     	GameModes.getGameModes().setInvisible();
         JPanel panel = generalPanel(PvpLimited.getPvpLimited());
@@ -250,7 +256,7 @@ public class GomokuGUI extends JFrame{
      * Finish the normal game
      * @throws GomokuException
      */
-    public static void finishButtonNormal() throws GomokuException {
+    public static void finishButtonNormal(){
     	PvpNormal.getPvpNormal().setInvisible();
     	principal.remove(PvpNormal.getPvpNormal());
     	Gomoku.getGomoku().nullAll();
@@ -262,7 +268,7 @@ public class GomokuGUI extends JFrame{
      * Finish the quickgame
      * @throws GomokuException
      */
-    public static void finishButtonQuick() throws GomokuException {
+    public static void finishButtonQuick(){
     	PvpQuick.getPvpQuick().setInvisible();
     	principal.remove(PvpQuick.getPvpQuick());
     	Gomoku.getGomoku().nullAll();
@@ -273,7 +279,7 @@ public class GomokuGUI extends JFrame{
      * Finish the limited game
      * @throws GomokuException
      */
-    public static void finishButtonLimited() throws GomokuException {
+    public static void finishButtonLimited(){
     	PvpLimited.getPvpLimited().setInvisible();
     	principal.remove(PvpLimited.getPvpLimited());
     	Gomoku.getGomoku().nullAll();
@@ -285,9 +291,15 @@ public class GomokuGUI extends JFrame{
      * @throws GomokuException 
      * @throws HeadlessException 
      */
-    public static void validateWinCondition() throws HeadlessException, GomokuException{
+    public static void validateWinCondition(){
         if(Gomoku.getGomoku().getGomokuFinished()){ 
-            JOptionPane.showMessageDialog(null, "Juego Terminado\nGANADOR: " + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
+        	try {
+        		JOptionPane.showMessageDialog(null, "Juego Terminado\nGANADOR: " + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
+        	}
+        	catch(GomokuException e) {
+        		JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        		Log.record(e);
+        	}
         }
     }
     
@@ -305,7 +317,7 @@ public class GomokuGUI extends JFrame{
      * Validates the current panel when a game is open
      * @throws GomokuException
      */
-    public static void validatePanel() throws GomokuException {
+    public static void validatePanel(){
         String gameMode_ = Gomoku.getGomoku().getGameMode();
         System.out.println(gameMode_);
         if ("normal".equals(gameMode_)) {

@@ -21,7 +21,7 @@ public class MenuOpponents extends JPanel{
      * Constructor for menu opponents panel
      * @throws InvocationTargetException
      */
-    private MenuOpponents() throws InvocationTargetException{
+    private MenuOpponents(){
         this.setBackground(new Color(113, 197, 232));
     }
     
@@ -30,7 +30,7 @@ public class MenuOpponents extends JPanel{
      * @return panel for menuOpponents 
      * @throws InvocationTargetException
      */
-    public static MenuOpponents getMenuOpponents() throws InvocationTargetException {
+    public static MenuOpponents getMenuOpponents(){
         if (menuOpponents == null) {
             menuOpponents = new MenuOpponents();
             menuOpponents.preparePanel();
@@ -43,7 +43,7 @@ public class MenuOpponents extends JPanel{
      * Prepares the panel with his buttons
      * @throws InvocationTargetException
      */
-    private void preparePanel() throws InvocationTargetException{
+    private void preparePanel(){
         menuOpponents.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Establece BoxLayout como layout del panel
     
         menuOpponents.setBackground(new Color(0, 0, 0, 35));
@@ -95,11 +95,7 @@ public class MenuOpponents extends JPanel{
             public void actionPerformed(ActionEvent e){
             	Gomoku.getGomoku().setOpponent("pvp");
                 askForNames();
-                try {
-                    GomokuGUI.gameModes();
-                } catch (InvocationTargetException e1) {
-                    Log.record(e1);
-                }
+                GomokuGUI.gameModes();
                 try {
 					Gomoku.getGomoku().createRivals();
 				} catch (GomokuException e1) {
@@ -112,18 +108,8 @@ public class MenuOpponents extends JPanel{
             public void actionPerformed(ActionEvent e){
             	Gomoku.getGomoku().setOpponent("pve");
             	askForNames();
-            	try {
-                    GomokuGUI.gameModes();
-                } catch (InvocationTargetException e1) {
-                    Log.record(e1);
-                }
-            	 try {
-					askForTypeOfMachine();
-				} catch (InvocationTargetException e1) {
-					Log.record(e1);
-				} catch (GomokuException e1) {
-					Log.record(e1);
-				}
+                GomokuGUI.gameModes();
+				askForTypeOfMachine();
             	try {
 					Gomoku.getGomoku().createRivals();
 				} catch (GomokuException e1) {
@@ -180,7 +166,7 @@ public class MenuOpponents extends JPanel{
      * @throws InvocationTargetException
      * @throws GomokuException 
      */
-    public void askForTypeOfMachine() throws InvocationTargetException, GomokuException{
+    public void askForTypeOfMachine(){
         JRadioButton agressive = new JRadioButton("Agresiva");
         JRadioButton expert = new JRadioButton("Experta");
         JRadioButton fearful = new JRadioButton("Miedosa");
@@ -202,7 +188,7 @@ public class MenuOpponents extends JPanel{
         if (agressive.isSelected()) {
             Gomoku.getGomoku().setMachineType("Agressive");
         } else if (expert.isSelected()) {
-        	JOptionPane.showMessageDialog(null, "Escoge otra maquina porfavor");
+        	JOptionPane.showMessageDialog(null, "Pendiente, selecciona otra maquina porfavor.");
             askForTypeOfMachine();
         } else if (fearful.isSelected()) {
             Gomoku.getGomoku().setMachineType("Fearful");

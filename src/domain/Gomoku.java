@@ -132,54 +132,54 @@ public class Gomoku implements Serializable{
      * @throws InvocationTargetException
      * @throws GomokuException 
      */
-    public void play(int xPos, int yPos) throws GomokuException{
+    public void play(int xPos, int yPos){
     	ok = true;
+        lastPositionTokens = null;
+        String playerName = getTurn();
+        updateTicks();
+        int[] position = {xPos, yPos};
+        Token t = addToken(getTokenType(), playerName, position);
+        this.addToken(playerName, t, position);
+        updateTokens();
+        calculateLastPositionTokens();
+        stopPlayerTimer(playerName);
         try {
-            lastPositionTokens = null;
-            String playerName = getTurn();
-            
-            updateTicks();
-            int[] position = {xPos, yPos};
-            Token t = addToken(getTokenType(), playerName, position);
-            this.addToken(playerName, t, position);
-            updateTokens();
-            calculateLastPositionTokens();
-            stopPlayerTimer(playerName);
-            winner(xPos, yPos, dimension, loadPlayer(playerName).returnTokenMatrix());
-            if(!verifier.getGomokuFinished()){
-                nextTurn();
-                startPlayerTimer(getTurn());
-                cellsMissing--;
-                Player machine = loadPlayer(getTurn());
-                if(machine instanceof Machine) {
-                	machine.getTurn();
-                }
-            }
-            lastPositionToken = position;
-        }
-        catch(GomokuException e){
-        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-        	Log.record(e);
-        	ok = false;
-        	throw new GomokuException(GomokuException.GENERAL_ERROR);
-        }
+			winner(xPos, yPos, dimension, loadPlayer(playerName).returnTokenMatrix());
+		} catch (GomokuException e) {
+			Log.record(e);
+			JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+		}
+        if(!verifier.getGomokuFinished()){
+            nextTurn();
+            startPlayerTimer(getTurn());
+            cellsMissing--;
+            Player machine;
+			try {
+				machine = loadPlayer(getTurn());
+	            if(machine instanceof Machine) {
+	            	machine.getTurn();
+	            }
+			} catch (GomokuException e) {
+				Log.record(e);
+				JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			}
+       }
+       lastPositionToken = position;
     }
+    
     
     /**
      * Starts the player's timer.
      * @throws GomokuException 
      */
-    public void startPlayerTimer(String playerName) throws GomokuException{
+    public void startPlayerTimer(String playerName) {
     	ok = true;
     	try {
-    		loadPlayer(playerName).startTime();
-    	}
-        catch(GomokuException e) {
-        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-        	Log.record(e);
-        	ok = false;
-        	throw new GomokuException(GomokuException.INVALID_TIME);
-        }
+			loadPlayer(playerName).startTime();
+		} catch (GomokuException e) {
+			JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			Log.record(e);
+		}
     }
     
     /**
@@ -204,9 +204,15 @@ public class Gomoku implements Serializable{
      * @return
      * @throws GomokuException 
      */
-    public int getPlayerTotalTime(String playerName) throws GomokuException{
+    public int getPlayerTotalTime(String playerName){
     	ok = true;
-    	return loadPlayer(playerName).getTime("timeT").getTime();
+    	try {
+			return loadPlayer(playerName).getTime("timeT").getTime();
+		} catch (GomokuException e) {
+			Log.record(e);
+			JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+			return 0;
+		}
     }
     
     /**
@@ -259,17 +265,23 @@ public class Gomoku implements Serializable{
      * @param position
      * @throws GomokuException 
      */
-    public void addToken(String playerName, Token token, int[] position) throws GomokuException {
+    public void addToken(String playerName, Token token, int[] position){
     	ok = true;
     	Player player;
-		player = loadPlayer(playerName);
-		player.setToken(token, position[0], position[1]);
-	    tokenMatrix[position[0]][position[1]] = token;
-	    tokens.add(token);
-	    boxMatrix[position[0]][position[1]].setToken(token);
-	    if(!(token instanceof NormalToken)) {
-	    	setPuntuacion(playerName, 100);
-        }
+		try {
+			player = loadPlayer(playerName);
+			player.setToken(token, position[0], position[1]);
+		    tokenMatrix[position[0]][position[1]] = token;
+		    tokens.add(token);
+		    boxMatrix[position[0]][position[1]].setToken(token);
+		    if(!(token instanceof NormalToken)) {
+		    	setPuntuacion(playerName, 100);
+	        }
+		} catch (GomokuException e) {
+			Log.record(e);
+			JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+		}
+
     }
     
     int[] lastPositionToken;
@@ -279,7 +291,7 @@ public class Gomoku implements Serializable{
      * @throws GomokuException 
      * @throws java.lang.reflect.InvocationTargetExceptions
      */
-    public Token addToken(String tokenType, String playerName, int[] position) throws GomokuException{
+    public Token addToken(String tokenType, String playerName, int[] position){
     	ok = true;
     	Token token = null;
         try{
@@ -293,7 +305,6 @@ public class Gomoku implements Serializable{
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
         	ok = false;
-        	throw new GomokuException(GomokuException.TOKEN_INVALID);
         }
         return token;
         
@@ -342,9 +353,8 @@ public class Gomoku implements Serializable{
      * @return winner's name of the game
 	 * @throws GomokuException 
      */
-	public String getWinner() {
+	public String getWinner() throws GomokuException {
 		ok = true;
-        String result = "";
         boolean gomokuFinished = verifier.getGomokuFinished();
         if(gameMode == "quicktime" && gomokuFinished) {
         	if(players.get(turn).validateTime() != false) {
@@ -363,10 +373,11 @@ public class Gomoku implements Serializable{
         }
         else if(!gomokuFinished && cellsMissing == 0){
         	stopGame();
-            return result + "Empate";
+            return "Empate";
         }
-        stopGame();
-        return result;
+        else {
+        	throw new GomokuException(GomokuException.GOMOKU_HAS_NO_WINNER_YET);
+        }
     }
 	
     /**
@@ -493,16 +504,8 @@ public class Gomoku implements Serializable{
      */
     public void setColor(String jugador, Color color) throws GomokuException{
     	ok = true;
-        try {
-	    	Player player = loadPlayer(jugador);
-	        player.setColor(color);
-        }
-        catch(GomokuException e) {
-        	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-        	Log.record(e);
-        	ok = false;
-        	throw new GomokuException(GomokuException.PLAYER_NOT_FOUND);
-        }
+	    Player player = loadPlayer(jugador);
+	    player.setColor(color);
     }
 
     /**
@@ -590,7 +593,7 @@ public class Gomoku implements Serializable{
      * @param token is the token to delete
      * @throws GomokuException
      */
-    private void deleteToken(Token token) throws GomokuException {
+    private void deleteToken(Token token){
     	ok = true;
         int[] position = token.getPosition();
         this.tokenMatrix[position[0]][position[1]] = null;
@@ -605,7 +608,6 @@ public class Gomoku implements Serializable{
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
         	ok = false;
-        	throw new GomokuException(GomokuException.PLAYER_NOT_FOUND);
 		}
     }
     
@@ -613,7 +615,7 @@ public class Gomoku implements Serializable{
      * Updates (verifies if deletion should be done) the tokens 
      * @throws GomokuException
      */
-    private void updateTokens() throws GomokuException{
+    private void updateTokens(){
         Iterator<Token> iterador = tokens.iterator();
         while (iterador.hasNext()) {
             Token t = iterador.next();
@@ -703,7 +705,7 @@ public class Gomoku implements Serializable{
     	Random random = new Random();
     	ArrayList<String> boxes = new ArrayList<>();
     	int quantityOfBoxes = dimension * dimension;
-    	if(gameMode.equals("normal")) {
+    	if(!gameMode.equals("quicktime")) {
     		for(int i = 0; i < quantityOfBoxes - boxesPercentage; i++) {
     			boxes.add(typeOfBoxes.get(0));
     		}
@@ -774,7 +776,6 @@ public class Gomoku implements Serializable{
 		catch(GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
-        	throw new GomokuException(GomokuException.TOKEN_INVALID);
 		}
     	
     }
@@ -800,7 +801,6 @@ public class Gomoku implements Serializable{
 		} catch (GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
-        	throw new GomokuException(GomokuException.TOKEN_INVALID);
 		}
     }
     
@@ -810,13 +810,13 @@ public class Gomoku implements Serializable{
      * @return the token to use in the next turn
      * @throws GomokuException
      */
-	public String getTokenType() throws GomokuException{
+	public String getTokenType(){
 		try {
 			return loadPlayer(turn).getTokenToUse();
 		} catch (GomokuException e) {
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
-        	throw new GomokuException(GomokuException.PLAYER_NOT_FOUND);
+        	return null;
 		}
 	}
 	

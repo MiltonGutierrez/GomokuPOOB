@@ -50,11 +50,10 @@ public class PvpNormal extends JPanel{
      * @return the panel for pvpNormal
      * @throws GomokuException
      */
-    public static PvpNormal getPvpNormal() throws GomokuException {
+    public static PvpNormal getPvpNormal(){
         if (pvpNormal == null) {
             pvpNormal = new PvpNormal();
             pvpNormal.prepareElementsGameBoardPVP();
-            
         }
         return pvpNormal;
     }
@@ -63,7 +62,7 @@ public class PvpNormal extends JPanel{
      * Prepares the elements of the board
      * @throws GomokuException 
      *  */
-    public void prepareElementsGameBoardPVP() throws GomokuException {
+    public void prepareElementsGameBoardPVP(){
         gameOptions = new JPanel();
         boardGame = new JPanel();
         this.setLayout(new BorderLayout());
@@ -81,7 +80,7 @@ public class PvpNormal extends JPanel{
      * Prepares the elements of the game options
      * @throws GomokuException 
      *  */
-    public void prepareElementsGameOptionsPVP() throws GomokuException {
+    public void prepareElementsGameOptionsPVP(){
         gameOptions.setSize(this.getWidth() / 3, this.getHeight());
         gameOptions.setBackground(new Color(224,62,82));
         gameOptions.setLayout(new BorderLayout());
@@ -130,7 +129,6 @@ public class PvpNormal extends JPanel{
             game.add(Gomoku.getGomoku().getBox(fila, columna));
           }
         }
-        
         return game;
     }
     
@@ -146,34 +144,15 @@ public class PvpNormal extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e){
                 if(Gomoku.getGomoku().validPlay(fila, columna)){
-                	try {
-						Gomoku.getGomoku().play(fila, columna);
-					} catch (GomokuException e1) {
-						Log.record(e1);
-					}
+					Gomoku.getGomoku().play(fila, columna);
                 	deleteTokensOnBoard(Gomoku.getGomoku().getLastPositionTokens());
-                    try {
-						refreshInformationPanel();
-						refreshTime();
-					} catch (GomokuException e1) {
-						Log.record(e1);
-					}
-                    try {
-						GomokuGUI.validateWinCondition();
-					} catch (HeadlessException | GomokuException e1) {
-						Log.record(e1);
-					}
+					refreshInformationPanel();
+					refreshTime();
+					GomokuGUI.validateWinCondition();
                 }
                 else{
-                	try {
-						GomokuGUI.validateWinCondition();
-					} catch (HeadlessException e1) {
-						Log.record(e1);
-					} catch (GomokuException e1) {
-						Log.record(e1);
-					}
+					GomokuGUI.validateWinCondition();
                     JOptionPane.showMessageDialog(null, "Movimiento Invalido", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-                    
                 }
             }
         }); 
@@ -220,7 +199,7 @@ public class PvpNormal extends JPanel{
      * Refresh the information panel
      * @throws GomokuException
      */
-    public void refreshInformationPanel() throws GomokuException{
+    public void refreshInformationPanel(){
         gameOptions.removeAll();
         informationPanel.removeAll();
         gameOptions.remove(informationPanel);

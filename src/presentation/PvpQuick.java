@@ -25,7 +25,7 @@ public class PvpQuick extends PvpNormal {
 	 * @return pvpQuick Panel
 	 * @throws GomokuException
 	 */
-    public static PvpQuick getPvpQuick() throws GomokuException {
+    public static PvpQuick getPvpQuick(){
         if (pvpQuick == null) {
             pvpQuick = new PvpQuick();
             pvpQuick.prepareElementsGameBoardPVP();

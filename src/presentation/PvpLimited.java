@@ -27,7 +27,7 @@ public class PvpLimited extends PvpNormal{
 	 * @return is the panel for PvpLimited
 	 * @throws GomokuException
 	 */
-	public static PvpLimited getPvpLimited() throws GomokuException {
+	public static PvpLimited getPvpLimited(){
         if (pvpLimited == null) {
             pvpLimited = new PvpLimited();
             pvpLimited.prepareElementsGameBoardPVP();
@@ -134,7 +134,7 @@ public class PvpLimited extends PvpNormal{
      * Actions for the finish button
      */
     @Override
-    public void finishOption() throws GomokuException{
+    public void finishOption(){
     	this.removeAll();
         GomokuGUI.finishButtonLimited();
         pvpLimited = null;
