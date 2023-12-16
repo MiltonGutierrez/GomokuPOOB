@@ -54,7 +54,6 @@ class GomokuTest {
 		assertNotEquals(board.loadPlayer("Miltown").getTokenToUse(), null);
 		assertNotEquals(board.getTypesOfTokens(), null);
 		assertEquals(board.getTurn(), "Mutsia");
-		
 	}
 	
 	@Test
@@ -120,8 +119,8 @@ class GomokuTest {
 		board.createBox("Normal", new int[] {0,0});
 		assertTrue(board.ok());
 		
-		
 	}
+	
 	@Test
 	void shouldCreateGoldenBox() {
 		board.createBox("Golden", new int[] {0,0});
