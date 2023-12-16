@@ -593,7 +593,7 @@ public class Gomoku implements Serializable{
      * @param token is the token to delete
      * @throws GomokuException
      */
-    private void deleteToken(Token token){
+    public void deleteToken(Token token){
     	ok = true;
         int[] position = token.getPosition();
         this.tokenMatrix[position[0]][position[1]] = null;
