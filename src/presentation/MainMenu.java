@@ -169,16 +169,26 @@ public class MainMenu extends JPanel {
     /**
      * Changes the size of the Gomoku's board
      */
-    public void changeSizeOption(){
-    	int dimension = 0;
-        try{
-            dimension = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de filas"));
-            Gomoku.getGomoku().setDimension(dimension);
-        }catch(Exception e){
-            Log.record(e);
+    public void changeSizeOption() {
+        int dimension = 0;
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                String input = JOptionPane.showInputDialog("Ingrese el numero de filas");
+                if (input == null) {
+                    return;
+                }
+                dimension = Integer.parseInt(input);
+                Gomoku.getGomoku().setDimension(dimension);
+                validInput = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                Log.record(e);
+            }
         }
-        
-        if(dimension < 10){
+
+        if (dimension < 10) {
             dimension = 10;
             Gomoku.getGomoku().setDimension(dimension);
         }

@@ -106,18 +106,30 @@ public class GameModes extends JPanel{
      * Sets the percentage of special boxes
      */
     public void setSpecialBoxesPercentage() {
-    	boolean flag = false;
-    	while(!flag) {
-        	try{
-        		int boxPercentage = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el porcentage de casillas especiales"));
+        boolean flag = false;
+        while (!flag) {
+            try {
+                String input = JOptionPane.showInputDialog("Ingrese el porcentaje de casillas especiales");
+
+                if (input == null) {
+                    continue; 
+                }
+                int boxPercentage = Integer.parseInt(input);
+                if(boxPercentage < 0) {
+                	boxPercentage = 0;
+                }else if(boxPercentage >100) {
+                	boxPercentage = 100;
+                }
                 Gomoku.getGomoku().setBoxPercentage(boxPercentage);
                 flag = true;
-            }catch(Exception e){
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
                 Log.record(e);
             }
-    	}
-
+        }
     }
+
     
     /**
      * Sets the percentage of special tokens
@@ -126,10 +138,21 @@ public class GameModes extends JPanel{
     	boolean flag = false;
     	while(!flag) {
         	try{
-        		int tokenPercentage = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el porcentage de tokens especiales"));
-                Gomoku.getGomoku().setTokenPercentage(tokenPercentage);
+        		String input = JOptionPane.showInputDialog("Ingrese el porcentage de tokens especiales");
+        		if (input == null) {
+                    continue; 
+                }
+        		int tokenPercentage = Integer.parseInt(input);
+        		if(tokenPercentage < 0) {
+        			tokenPercentage = 0;
+                }else if(tokenPercentage >100) {
+                	tokenPercentage = 100;
+                }
+        		Gomoku.getGomoku().setTokenPercentage(tokenPercentage);
                 flag = true;
-            }catch(Exception e){
+        	} catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
                 Log.record(e);
             }
     	}
