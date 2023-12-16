@@ -203,10 +203,7 @@ public class Human implements Player {
 	@Override
 	public void addTokenToUse(String tokenType) {
 		this.tokensToUse.add(0, tokenType);
-	
 	}
-	
-	
 	
 	/**
 	 * Adds the score

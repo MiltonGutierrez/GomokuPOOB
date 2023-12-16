@@ -159,15 +159,6 @@ public class PvpNormal extends JPanel{
         }
     }
     
-    private JButton setButtonBackground(JButton boton, int xPos, int yPos){
-        if(Gomoku.getGomoku().getToken(xPos, yPos).getIdentifier() == 'H'){
-            boton.setText("H");
-        }
-        else if(Gomoku.getGomoku().getToken(xPos, yPos).getIdentifier() == 'T'){
-            boton.setText("T");
-        }
-        return boton;
-    }
     
     /**
      * 
