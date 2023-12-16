@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Gomoku implements Serializable{
     public static Gomoku board = null;
-    private static int dimension;
+    private int dimension;
     private HashMap<String, Player> players;
     private ArrayList<Token> tokens = new ArrayList<>();
     private ArrayList<Box> boxes = new ArrayList<>();

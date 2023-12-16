@@ -58,24 +58,23 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldAddTokenCreate() {
-		board.setNameP1("Mutsia");
-		board.setNameP2("Miltown");
-		board.setOpponent("pvp");
-		board.setGameMode("normal");
-		board.createRivals();
+	void shouldAddTokenCreateNormal() {
 		assertTrue(board.addToken("Normal", "Mutsia", new int[] {0,0}) instanceof NormalToken);
 		assertTrue(board.ok());
-		assertTrue(board.addToken("Temporal", "Mutsia", new int[] {0,1}) instanceof TemporalToken);
-		assertTrue(board.ok());
+	}
+	@Test
+	void shouldAddTokenCreateHeavy() {
 		assertTrue(board.addToken("Heavy", "Mutsia", new int[] {0,3}) instanceof HeavyToken);
 		assertTrue(board.ok());
-
-
+	}
+	@Test
+	void shouldAddTokenCreateTemporal() {
+		assertTrue(board.addToken("Temporal", "Mutsia", new int[] {0,1}) instanceof TemporalToken);
+		assertTrue(board.ok());
 	}
 	
 	@Test
-	void shouldAddTokenSet() {
+	void shouldAddTokenSetNormal() {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -86,49 +85,57 @@ class GomokuTest {
 		assertTrue(board.ok());
 		board.addToken("Mutsia", t, new int[] {0,0});
 		assertTrue(board.ok());
-		Token t2 = board.addToken("Heavy", "Mutsia", new int[] {0,1});
-		assertTrue(board.ok());
-		board.addToken("Mutsia", t2, new int[] {0,1});
-		assertTrue(board.ok());
+	}
+	
+	@Test
+	void shouldAddTokenSetTemporal() {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+	    board.startGame();
 		Token t3 = board.addToken("Temporal", "Mutsia", new int[] {0,3});
 		assertTrue(board.ok());
 		board.addToken("Mutsia", t3, new int[] {0,3});
 		assertTrue(board.ok());
 	}
-	/*
+	
 	@Test
-	void shouldValidPlay() {
+	void shouldAddTokenSetHeavy() {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
 		board.setGameMode("normal");
 		board.createRivals();
-		board.startGame();
-		assertTrue(board.validPlay(0, 0));
+	    board.startGame();
+		Token t2 = board.addToken("Heavy", "Mutsia", new int[] {0,1});
+		assertTrue(board.ok());
+		board.addToken("Mutsia", t2, new int[] {0,1});
+		assertTrue(board.ok());
 	}
 	
 	@Test
-	void shouldCalculateLastPositions() {
-		board.setNameP1("Mutsia");
-		board.setNameP2("Miltown");
-		board.setOpponent("pvp");
-		board.setGameMode("normal");
-		board.createRivals();
-		board.startGame();
-		board.addToken("Normal", board.getTurn(),new int[] {0, 1});
-		board.getToken(0, 1).setIdentifier('D');
-		board.calculateLastPositionTokens();
-		assertEquals(board.getLastPositionTokens().size(), 1);
-	}
-	
-	@Test
-	void shouldCreateBoxes() {
+	void shouldCreateNormalBox() {
 		board.createBox("Normal", new int[] {0,0});
 		assertTrue(board.ok());
+		
+		
+	}
+	@Test
+	void shouldCreateGoldenBox() {
 		board.createBox("Golden", new int[] {0,0});
 		assertTrue(board.ok());
+	}
+	
+	@Test
+	void shouldCreateTeleportingBox() {
 		board.createBox("Teleporting", new int[] {0,0});
 		assertTrue(board.ok());
+	}
+	
+	@Test
+	void shouldCreateExplosiveBox() {
 		board.createBox("Explosive", new int[] {0,0});
 		assertTrue(board.ok());
 	}
@@ -148,16 +155,31 @@ class GomokuTest {
 		}
 	}
 	
-	void shouldExplosiveBoxBeExplosive() {
-		board.setDimension(5);
+	@Test
+	void shouldValidPlay() {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
 		board.setGameMode("normal");
 		board.createRivals();
 		board.startGame();
-		
-	}*/
+		assertTrue(board.validPlay(0, 0));
+	}
+	
+	@Test
+	void shouldCalculateLastPositions() {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+		board.startGame();
+		Token t = board.addToken("Normal", board.getTurn(),new int[] {0, 1});
+		board.addToken("Mutsia", t, new int[] {0,1});
+		board.getToken(0, 1).setIdentifier('D');
+		board.calculateLastPositionTokens();
+		assertEquals(board.getLastPositionTokens().size(), 1);
+	}
 }
 
 

@@ -13,9 +13,9 @@ import java.awt.event.*;
  * @author milton.gutierrez-oscar.lesmes
  */
 public class GomokuGUI extends JFrame{
-    private static int dimension = 15;
+    /*private int dimension = 15;
     private static String p1Name;
-    private static String p2Name;
+    private static String p2Name;*/
     private int heightScreen;
     private int widthScreen;
     private static JPanel principal;
@@ -91,22 +91,6 @@ public class GomokuGUI extends JFrame{
         principal.add(panel, BorderLayout.CENTER);
     }
     
-    public static String returnP1(){
-    		System.out.println(Gomoku.getGomoku().getP1());
-        return Gomoku.getGomoku().getP1();
-    }
-
-    public static String returnP2(){
-        return Gomoku.getGomoku().getP2();
-    }
-
-    public static void setNewDimension(int dimension_){
-        dimension = dimension_;
-    }
-
-    public static int returnDimension(){
-        return dimension;
-    }
 
     public static void normalGameSelected() throws GomokuException{
     	MainMenu.getMainMenu().setInvisible();
@@ -191,6 +175,7 @@ public class GomokuGUI extends JFrame{
      * Ask the name of the players
      */
     public void askForName(){
+    	String p1Name;
         do {
             p1Name = JOptionPane.showInputDialog("Inserta el nombre del Jugador 1", "");
             if (p1Name == null || p1Name.isEmpty()) {

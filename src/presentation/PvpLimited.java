@@ -59,7 +59,7 @@ public class PvpLimited extends PvpNormal{
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(0, 10, 0, 0);
         Font arial = new Font("italic", 1, 14);
-        JLabel fichasDisponiblesP1 = new JLabel("Fichas Restantes " + GomokuGUI.returnP1());
+        JLabel fichasDisponiblesP1 = new JLabel("Fichas Restantes " + Gomoku.getGomoku().getP1());
         fichasDisponiblesP1.setFont(arial);
         tokensLeft.add(fichasDisponiblesP1, gbc);
         gbc.gridy = 1;
@@ -82,7 +82,7 @@ public class PvpLimited extends PvpNormal{
         tokensLeft.add(Box.createVerticalStrut(5), gbc);
     
         gbc.gridy = 6;
-        JLabel fichasDisponiblesP2 = new JLabel("Fichas Restantes " + GomokuGUI.returnP2());
+        JLabel fichasDisponiblesP2 = new JLabel("Fichas Restantes " + Gomoku.getGomoku().getP1());
         fichasDisponiblesP2.setFont(arial);
         tokensLeft.add(fichasDisponiblesP2, gbc);
     
