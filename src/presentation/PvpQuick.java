@@ -19,6 +19,11 @@ public class PvpQuick extends PvpNormal {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Creates a pvpQuick panel if null and if isn't null returns it
+	 * @return pvpQuick Panel
+	 * @throws GomokuException
+	 */
     public static PvpQuick getPvpQuick() throws GomokuException {
         if (pvpQuick == null) {
             pvpQuick = new PvpQuick();
@@ -31,6 +36,7 @@ public class PvpQuick extends PvpNormal {
 	private JPanel gameWrapper;
 	private JPanel tiempoRestanteP1 = new RelojPanelSub(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP1(), "timerM"), Gomoku.getGomoku().getTimeP1("timeM"));
 	private JPanel tiempoRestanteP2 = new RelojPanelSub(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP2(), "timerM"), Gomoku.getGomoku().getTimeP2("timeM"));
+	
 	/**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
@@ -73,7 +79,9 @@ public class PvpQuick extends PvpNormal {
         informationPanel.add(tiempoP2, gbc);
         return informationPanel;
     }
-	
+	/**
+	 * Prepare the elements of the board
+	 */
     @Override
     public void prepareElementsGame() {
         boardGame.setLayout(new BorderLayout());
@@ -92,6 +100,10 @@ public class PvpQuick extends PvpNormal {
         boardGame.repaint();
     }
 	
+    /**
+     * Create the time information
+     * @return the panel which contains the information fo the time
+     */
     public JPanel createBoardTokenInformation() {
         timeLeft = new JPanel();
         timeLeft.setLayout(new GridBagLayout());
@@ -143,11 +155,17 @@ public class PvpQuick extends PvpNormal {
         pvpQuick = null;
     }
     
+    /**
+     * Makes the panel visible
+     */
     protected void setVisible() {
     	this.setVisible(true);
     	pvpQuick.repaint();
     }
     
+    /**
+     * Makes the panel invisible
+     */
     protected void setInvisible() {
     	this.setVisible(false);
     	pvpQuick.repaint();

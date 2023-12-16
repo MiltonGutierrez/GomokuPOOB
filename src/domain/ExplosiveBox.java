@@ -2,16 +2,18 @@ package domain;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 public class ExplosiveBox extends Box{
-	
 	private Color colorWithToken = new Color(255,0,0);
 	
 	/**
-	 * 
+	 * Constructor for ExplosiveBox
 	 */
     public ExplosiveBox(int[] position) {
         super(position);
     }
     
+    /**
+     * Set the token into the explosive box
+     */
     @Override
     public void setToken(Token token) {
         this.token = token;
@@ -19,6 +21,9 @@ public class ExplosiveBox extends Box{
         updateAppearance(); 
     }
     
+    /**
+     * Behavior of the explosive box
+     */
     @Override
 	protected void act(){
     	super.setBackground(super.token.getColor());
@@ -27,6 +32,10 @@ public class ExplosiveBox extends Box{
         deleteContigousTokens(Gomoku.getGomoku().getBoxMatrix());
     }
     
+    /**
+     * Deletes the tokens around the box
+     * @param matrix are the boxes of gomoku
+     */
     public void deleteContigousTokens(Box[][] matrix) {
     	int filas = matrix.length;
     	int columnas = matrix[0].length;
@@ -44,7 +53,9 @@ public class ExplosiveBox extends Box{
     	}
     }
     
-    
+    /**
+     * Delete a token
+     */
     @Override
     public void deleteToken() {
 		if(this.token != null) {
@@ -56,7 +67,10 @@ public class ExplosiveBox extends Box{
 		}
 
     }
-
+    
+    /**
+     * Behavior when clicked
+     */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

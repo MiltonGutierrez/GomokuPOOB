@@ -17,7 +17,12 @@ public class RelojPanelSub extends JPanel {
     private JLabel tiempoLabel;
     private Timer timer;
     private TimePassed timePassed;
-
+    
+    /**
+     * Constructor for relojPanelSub
+     * @param timer is the timer
+     * @param timePassed is the time elapsed
+     */
     public RelojPanelSub(Timer timer, TimePassed timePassed) {
         this.timer = timer;
         this.timePassed = timePassed;
@@ -32,7 +37,10 @@ public class RelojPanelSub extends JPanel {
             }
         });
     }
-
+    
+    /**
+     * Updates the time
+     */
     private void actualizarTiempo() {
         // Decrementar la variable de segundos solo si no está en pausa
         if (timePassed.getTime() > 0) {
@@ -54,7 +62,10 @@ public class RelojPanelSub extends JPanel {
         }
         
     }
-
+    
+    /**
+     * Resets the panel
+     */
     public void reiniciarPanel() {
         // Reiniciar la variable de segundos
         timePassed.setTime(0);

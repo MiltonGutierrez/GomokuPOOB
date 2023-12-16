@@ -11,15 +11,23 @@ import domain.Log;
 
 public class GameModes extends JPanel{
     private static GameModes gameModes = null;
+    private JButton normal;
+    private JButton quickTime;
+    private JButton limitedTokens;
+    
 
     /**
-     * Creates an instansce of Gomoku
+     * Creates an instansce of GameMode
      */
     private GameModes() {
         this.setOpaque(true);
         this.setVisible(true);
     }
-
+    
+    /**
+     * Returns the panel and creates it if null
+     * @return GameModes panel
+     */
     public static GameModes getGameModes() {
         if (gameModes == null) {
             gameModes = new GameModes();
@@ -29,21 +37,27 @@ public class GameModes extends JPanel{
         return gameModes;
     }
 
+    /**
+     * Makes invisible the panel
+     */
     public void setInvisible(){
         this.setVisible(false);
         gameModes.repaint();
     }
-
+    
+    /**
+     * Makes visible the panel
+     */
     public void setVisible(){
         this.setVisible(true);
         gameModes.repaint();
     }
 
 
-    private JButton normal;
-    private JButton quickTime;
-    private JButton limitedTokens;
     
+    /**
+     * Prepares all the elements of the board
+     */
     public void prepareElements(){
         gameModes.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Establece BoxLayout como layout del panel
     
@@ -77,12 +91,20 @@ public class GameModes extends JPanel{
         gameModes.add(limitedTokens);
     }
     
+    /**
+     * Sets the configuration of the buttons
+     * @param button is the button to set
+     * @param size is the size of the button
+     */
     private void setButtonAttributes(JButton button, Dimension size) {
         button.setPreferredSize(size);
         button.setMaximumSize(size);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
     
+    /**
+     * Sets the percentage of special boxes
+     */
     public void setSpecialBoxesPercentage() {
     	boolean flag = false;
     	while(!flag) {
@@ -97,6 +119,9 @@ public class GameModes extends JPanel{
 
     }
     
+    /**
+     * Sets the percentage of special tokens
+     */
     public void setSpecialTokensPercentage() {
     	boolean flag = false;
     	while(!flag) {
@@ -110,6 +135,9 @@ public class GameModes extends JPanel{
     	}
     }
     
+    /**
+     * Prepares the listeners of the buttons
+     */
     private void prepareActions(){
         normal.addActionListener(new ActionListener() {
             @Override

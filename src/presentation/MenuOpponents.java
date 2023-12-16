@@ -14,11 +14,22 @@ public class MenuOpponents extends JPanel{
     private static MenuOpponents menuOpponents = null;
     private String p1Name;
     private String p2Name;
-
+    private JButton personaVPersona;
+    private JButton personaVMaquina;
+    
+    /**
+     * Constructor for menu opponents panel
+     * @throws InvocationTargetException
+     */
     private MenuOpponents() throws InvocationTargetException{
         this.setBackground(new Color(113, 197, 232));
     }
-
+    
+    /**
+     * Returns the panel and creates one if null
+     * @return panel for menuOpponents 
+     * @throws InvocationTargetException
+     */
     public static MenuOpponents getMenuOpponents() throws InvocationTargetException {
         if (menuOpponents == null) {
             menuOpponents = new MenuOpponents();
@@ -27,11 +38,11 @@ public class MenuOpponents extends JPanel{
         }
         return menuOpponents;
     }
-
-    private JButton personaVPersona;
-    private JButton personaVMaquina;
     
-
+    /**
+     * Prepares the panel with his buttons
+     * @throws InvocationTargetException
+     */
     private void preparePanel() throws InvocationTargetException{
         menuOpponents.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Establece BoxLayout como layout del panel
     
@@ -63,13 +74,21 @@ public class MenuOpponents extends JPanel{
         setButtonAttributes(personaVMaquina, buttonSize);
         menuOpponents.add(personaVMaquina);
     }   
-
+    
+    /**
+     * Sets the configuration for the buttons
+     * @param button is the button to configure
+     * @param size is the size of the button
+     */
     private void setButtonAttributes(JButton button, Dimension size) {
         button.setPreferredSize(size);
         button.setMaximumSize(size);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
-
+    
+    /**
+     * Prepare the listeners for the buttons
+     */
     private void prepareActions(){
         personaVPersona.addActionListener(new ActionListener() {
             @Override
@@ -113,12 +132,18 @@ public class MenuOpponents extends JPanel{
             } while(p2Name == null || p2Name.isEmpty() || p2Name.equals(p1Name));
         Gomoku.getGomoku().setNameP2(p2Name);
     }
-
+    
+    /**
+     * Makes the panel invisible
+     */
     public void setInvisible(){
         this.setVisible(false);
         menuOpponents.repaint();
     }
-
+    
+    /**
+     * Makes the panel visible
+     */
     public void setVisible(){
         this.setVisible(true);
         menuOpponents.repaint();

@@ -9,11 +9,21 @@ import domain.GomokuException;
 
 public class PvpLimited extends PvpNormal{
 	private static PvpLimited pvpLimited = null;
-
+	private JPanel tokensLeft;
+	private JPanel gameWrapper;
+	
+	/**
+	 * Constructor for panel PvpLimited
+	 */
 	private PvpLimited() {
 		this.setOpaque(true);
 	}
 	
+	/**
+	 * Returns the panel and creates one if null
+	 * @return is the panel for PvpLimited
+	 * @throws GomokuException
+	 */
 	public static PvpLimited getPvpLimited() throws GomokuException {
         if (pvpLimited == null) {
             pvpLimited = new PvpLimited();
@@ -21,11 +31,9 @@ public class PvpLimited extends PvpNormal{
         }
         return pvpLimited;
     }
-	private JPanel tokensLeft;
-	private JPanel gameWrapper;
+	
 	/**
      * Prepares the elements of the board
-     *  
      */
 	@Override
     public void prepareElementsGame() {
@@ -49,6 +57,10 @@ public class PvpLimited extends PvpNormal{
         boardGame.repaint();
     }
 	
+	/**
+	 * Creates the information for the tokens left for each player
+	 * @return a panel with the information of the tokens
+	 */
 	public JPanel createBoardTokenInformation() {
         tokensLeft = new JPanel();
         tokensLeft.setLayout(new GridBagLayout());
@@ -104,6 +116,9 @@ public class PvpLimited extends PvpNormal{
         return tokensLeft;
     }
 	
+	/**
+	 * Refresh the time for each player
+	 */
 	@Override
     public void refreshTime(){
     	tokensLeft.removeAll();
@@ -126,11 +141,17 @@ public class PvpLimited extends PvpNormal{
         pvpLimited = null;
     }
 	
+    /**
+     * Makes the panel visible
+     */
 	protected void setVisible() {
     	this.setVisible(true);
     	pvpLimited.repaint();
     }
     
+	/**
+	 * Makes invisible the panel
+	 */
     protected void setInvisible() {
     	this.setVisible(false);
     	pvpLimited.repaint();

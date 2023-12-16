@@ -13,7 +13,12 @@ public class RelojPanelSum extends JPanel {
     private JLabel tiempoLabel;
     private Timer timer;
     private TimePassed timePassed;
-
+    
+    /**
+     * Is the constructor for RelojPanelSum
+     * @param timer is the timer
+     * @param timePassed is the time elapsed
+     */
     public RelojPanelSum(Timer timer, TimePassed timePassed) {
         this.timer = timer;
         this.timePassed = timePassed;
@@ -28,7 +33,10 @@ public class RelojPanelSum extends JPanel {
             }
         });
     }
-
+    
+    /**
+     * Updates the time
+     */
     private void actualizarTiempo() {
         // Incrementar la variable de segundos
     	timePassed.sumTime(1);
@@ -42,7 +50,10 @@ public class RelojPanelSum extends JPanel {
         // Actualizar el texto del JLabel
         tiempoLabel.setText(tiempoFormateado);
     }
-
+    
+    /**
+     * Resets the panel
+     */
     public void reiniciarPanel() {
         // Reiniciar la variable de segundos
         timePassed.setTime(0);

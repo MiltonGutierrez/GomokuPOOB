@@ -7,16 +7,26 @@ import javax.management.BadStringOperationException;
 
 public class NormalBox extends Box{
 	
+	/**
+	 * Constructor for NormalBox
+	 * @param position is the position of the box
+	 */
 	public NormalBox(int[] position) {
 		super(position);
 	}
-
+	
+	/**
+	 * Is the behavior of the box
+	 */
 	@Override
 	protected void act() {
 		super.setBackground(super.token.getColor());
 		this.setTextInBox("" + token.getIdentifier());
 	}
 	
+	/**
+	 * Deletes a token
+	 */
     @Override
     public void deleteToken() {
 		if(this.token != null) {
@@ -27,7 +37,10 @@ public class NormalBox extends Box{
 	    	updateAppearance();
 		}
     }
-
+    
+    /**
+     * is the behavior when clicked
+     */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

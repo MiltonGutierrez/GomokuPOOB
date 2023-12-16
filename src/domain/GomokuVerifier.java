@@ -13,27 +13,29 @@ public class GomokuVerifier implements Serializable {
 	
 	private Gomoku gomoku;
 	private boolean gomokuFinished;
+	
 	/**
-	 * 
-	 * @param gomoku
+	 * Constructor for GomokuVerifier
+	 * @param gomoku is the board
 	 */
 	public GomokuVerifier(Gomoku gomoku) {
 		this.gomoku = gomoku;
 		this.gomokuFinished = false;
 	}
+	
     /**
-     * 
-     * @param xPos
-     * @param yPos
-     * @return
+     * Validates if a play is valid
+     * @param xPos x coordinate of the play
+     * @param yPos y coordinate of the play
+     * @return true or false 
      */
     public boolean validPlay(int xPos, int yPos){
         return gomoku.getTokenMatrix()[xPos][yPos] == null && !gomokuFinished;
     }
     
 	/**
-	 * 
-	 * @return
+	 * Returns the status of gomoku
+	 * @return the status of the game
 	 */
 	public boolean getGomokuFinished() {
 		return gomokuFinished;
@@ -41,11 +43,11 @@ public class GomokuVerifier implements Serializable {
 	
 
     /**
-     * 
-     * @param xPos
-     * @param yPos
-     * @param dimension
-     * @param matrix
+     * Verifies if there is a winner in the game
+     * @param xPos x coordinate to validate
+     * @param yPos y coordinate to validate
+     * @param dimension is the dimension of the board
+     * @param matrix are the tokens to validate
      */
     public void  winner(int xPos, int yPos, int dimension, Token[][] matrix){
         int[] calculations = calculationsForWinnerValidations(xPos, yPos, dimension);
@@ -59,10 +61,10 @@ public class GomokuVerifier implements Serializable {
     }
     
     /**
-     * 
-     * @param xPos
-     * @param yPos
-     * @return
+     * Makes the calculations to see if there is a winner
+     * @param xPos x coordinate to validate
+     * @param yPos y coordinate to validate
+     * @return List of coordinates
      */
     public int[] calculationsForWinnerValidations(int xPos, int yPos, int dimension){
         int restaXpos = xPos - 4;
@@ -85,11 +87,11 @@ public class GomokuVerifier implements Serializable {
     }
 
     /**
-     * 
-     * @param restaYpos
-     * @param sumaYpos
-     * @param xPos
-     * @param matrix
+     * Validates the row
+     * @param restaYpos substract the positions in y
+     * @param sumaYpos adds the y position
+     * @param xPos x coordinate to validate
+     * @param matrix are the tokens to validate
      */
     public void winnerValidationOnTheXCoordinate(int restaYpos, int sumaYpos, int xPos,  Token[][] matrix){
         int cont = 0;
@@ -113,11 +115,11 @@ public class GomokuVerifier implements Serializable {
     }
 
     /**
-     * 
-     * @param restaXpos
-     * @param sumaXpos
-     * @param yPos
-     * @param matrix
+     * Validates the column
+     * @param restaXpos substract the x coordinate
+     * @param sumaXpos adds the x coordinate
+     * @param yPos y coordinate
+     * @param matrix are the tokens to validate
      */
     public void winnerValidationOnTheYCoordinate(int restaXpos, int sumaXpos, int yPos, Token[][] matrix){
         int cont = 0;
@@ -142,11 +144,11 @@ public class GomokuVerifier implements Serializable {
     }
 
     /**
-     * 
-     * @param xPos
-     * @param yPos
-     * @param dimension
-     * @param matrix
+     * Validate the first diagonal
+     * @param xPos x coordinate to validate
+     * @param yPos y coordinate to validate
+     * @param dimension is the dimension of the board
+     * @param matrix are the tokens to validate
      */
     public void winnerValidationOnTheDiagonal1(int xPos, int yPos, int dimension, Token[][] matrix){
             if(!gomokuFinished){
@@ -174,11 +176,11 @@ public class GomokuVerifier implements Serializable {
     }
     
     /**
-     * 
-     * @param xPos
-     * @param yPos
-     * @param dimension
-     * @param matrix
+     * Validates the second diagonal
+     * @param xPos x coordinate to validate
+     * @param yPos y coordinate to validate
+     * @param dimension is the dimension of the board
+     * @param matrix are the tokens of the board
      */
     public void winnerValidationOnTheDiagonal2(int xPos, int yPos, int dimension, Token[][] matrix){
         if(!gomokuFinished){
@@ -211,9 +213,9 @@ public class GomokuVerifier implements Serializable {
     
     /**
      * Returns the values to validate if there's a winner on the diagonal1
-     * @param xPos
-     * @param yPos
-     * @return
+     * @param xPos x coordinate
+     * @param yPos y coordinate
+     * @return the position of that number
      */
     public int[] getStartingNumberDiagonalWinner1(int xPos, int yPos){
         int cont = 0;
@@ -227,10 +229,10 @@ public class GomokuVerifier implements Serializable {
 
     /**
      * Returns the values to validate if there's a winner on the diagonal1
-     * @param xPos
-     * @param yPos
-     * @param dimension
-     * @return
+     * @param xPos x coordinate
+     * @param yPos y coordinate
+     * @param dimension is the dimension of the board
+     * @return the last number of the diagonal
      */
     public static int getLastNumberDiagonalWinner1(int xPos, int yPos, int dimension){
         int cont = 0;
@@ -244,10 +246,10 @@ public class GomokuVerifier implements Serializable {
     
     /**
      * Returns the values to validate if there's a winner on the diagonal2
-     * @param xPos
-     * @param yPos
-     * @param dimension
-     * @return
+     * @param xPos x coordinate
+     * @param yPos y coordinate
+     * @param dimension is the dimension of the board
+     * @return the first number of the diagonal
      */
     public int[] getStartingNumberDiagonalWinner2(int xPos, int yPos, int dimension){
         int cont = 0;
@@ -265,10 +267,10 @@ public class GomokuVerifier implements Serializable {
 
     /**
      * Returns the values to validate if there's a winner on the diagonal2
-     * @param xPos
-     * @param yPos
-     * @param dimension
-     * @return
+     * @param xPos x coordinate
+     * @param yPos y coordinate
+     * @param dimension is the dimension of the board
+     * @return The last number on the diagonal
      */
     public int[] getLastNumberDiagonalWinner2(int xPos, int yPos, int dimension){
         int cont = 0;
@@ -283,6 +285,9 @@ public class GomokuVerifier implements Serializable {
         return new int[]{xPos, yPos};
     }
     
+    /**
+     * Validates the time of the game
+     */
     public void timeValidation() {
     	HashMap<String, Player> players = gomoku.getPlayers();
     	for(Player p: players.values()) {

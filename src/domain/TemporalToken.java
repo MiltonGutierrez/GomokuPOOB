@@ -2,10 +2,11 @@ package domain;
 import java.awt.Color;
 public class TemporalToken extends Token{
     /**
-     * 
-     * @param color
-     * @param position
-     * @param player
+     * Constructor for TemporalToken
+     * @param color is the color of the token
+     * @param position is the position of the token
+     * @param player is the player who owns the token
+     * @param gomoku is the board
      */
     public TemporalToken(Color color, int[] position, Player player, Gomoku gomoku){
         super(color, position, player, gomoku);

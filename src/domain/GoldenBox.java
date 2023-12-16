@@ -22,7 +22,7 @@ public class GoldenBox extends Box{
 	}
 	
 	/**
-	 * 
+	 * Sets the token in the box
 	 */
 	@Override
 	public void setToken(Token token) {
@@ -30,6 +30,9 @@ public class GoldenBox extends Box{
 		act();
 	}
 	
+	/**
+	 * Is the behavior of the box
+	 */
 	@Override
 	protected void act() {
 		super.setBackgroundColor(super.token.getColor());
@@ -44,7 +47,10 @@ public class GoldenBox extends Box{
 		}
 		
 	}
-
+	
+	/**
+	 * Deletes a token
+	 */
 	@Override
 	public void deleteToken() {
 		if(this.token != null) {
@@ -56,6 +62,9 @@ public class GoldenBox extends Box{
 		}
 	}
 
+	/**
+	 * Behavior of the box when clicked
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

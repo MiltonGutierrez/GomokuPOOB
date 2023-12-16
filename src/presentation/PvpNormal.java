@@ -17,16 +17,39 @@ public class PvpNormal extends JPanel{
    
 	protected JPanel gameOptions;
     protected JPanel boardGame;
-
     private static PvpNormal pvpNormal = null;
+    protected JButton saveGomoku;
+    protected JButton resetGomoku;
+    protected JButton finishGomoku;
+    protected JPanel game;
+    protected JPanel information;
+    private JFileChooser save;
+    protected JPanel optionsPanel;
+    protected JPanel informationPanel;
+    protected JLabel turno;
+    protected JLabel nombreP1;
+    protected JLabel nombreP2;
+    protected JLabel colorP1;
+    protected JLabel colorP2;
+    protected JLabel puntuacionJugador1;
+    protected JLabel puntuacionJugador2;
+    protected JPanel tiempoP1 = new RelojPanelSum(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP1(), "timerT"), Gomoku.getGomoku().getTimeP1("timeT"));
+    protected JPanel tiempoP2 = new RelojPanelSum(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP2(), "timerT"), Gomoku.getGomoku().getTimeP2("timeT"));
+    private ImageIcon logo;
+    protected JPanel logoPanel;
 
     /**
-     * Creates an instance of Gomoku
+     * Creates an instance of PvpNormal panel
      */
     public PvpNormal() {
         this.setOpaque(true);
     }
 
+    /**
+     * Returns the panel for pvpNormal and creates one if null
+     * @return the panel for pvpNormal
+     * @throws GomokuException
+     */
     public static PvpNormal getPvpNormal() throws GomokuException {
         if (pvpNormal == null) {
             pvpNormal = new PvpNormal();
@@ -53,10 +76,7 @@ public class PvpNormal extends JPanel{
         prepareActionsBoardGame();
         
     }
-
-    protected JButton saveGomoku;
-    protected JButton resetGomoku;
-    protected JButton finishGomoku;
+    
     /**
      * Prepares the elements of the game options
      * @throws GomokuException 
@@ -76,9 +96,7 @@ public class PvpNormal extends JPanel{
         gameOptions.add(logoPanel, BorderLayout.CENTER);
       
     }
-
-    protected JPanel game;
-    protected JPanel information;
+    
     /**
      * Prepares the elements of the game
      * 
@@ -100,7 +118,7 @@ public class PvpNormal extends JPanel{
 
     /*
      * Creates the board of Gomoku
-     *  */
+     */
     public JPanel createBoardGame(){
         game = new JPanel();
         game.setBackground(Color.WHITE);
@@ -115,11 +133,12 @@ public class PvpNormal extends JPanel{
         
         return game;
     }
+    
     /**
      * Creates the board
-     * @param fila
-     * @param columna
-     * @param color
+     * @param fila is the row to create
+     * @param columna is the column to create
+     * @param color is the color of the button
      */
     private void setBoton(int fila, int columna, domain.Box boton) {
     	boton.setPreferredSize(new Dimension(30, 30));
@@ -145,7 +164,11 @@ public class PvpNormal extends JPanel{
         }); 
         return ;
     }
-      
+    
+    /**
+     * Deletes the selected tokens
+     * @param positions are the positions to delete
+     */
     private void deleteTokensOnBoard(ArrayList<int[]> positions){
         for(int[] position: positions){
             int buttonPosition = getComponentNumber(Gomoku.getGomoku().getDimension(), position[0], position[1]);
@@ -161,20 +184,27 @@ public class PvpNormal extends JPanel{
     
     
     /**
-     * 
-     * @param dimension
-     * @param x
-     * @param y
-     * @return
+     * Returns the component number
+     * @param dimension is the dimension of the board
+     * @param x row
+     * @param y column
+     * @return component number
      */
     public int getComponentNumber(int dimension, int x, int y) {
         return  x * dimension + y + 1;
     }
-
+    
+    /**
+     * Refresh the time of the board
+     */
     public void refreshTime(){
         boardGame.validate();
         boardGame.repaint();
     }
+    /**
+     * Refresh the information panel
+     * @throws GomokuException
+     */
     public void refreshInformationPanel() throws GomokuException{
         gameOptions.removeAll();
         informationPanel.removeAll();
@@ -191,7 +221,7 @@ public class PvpNormal extends JPanel{
     /**
      * Prepares the actions of the board game
      *  
-     * */
+     */
     public void prepareActionsBoardGame(){
         
         saveGomoku.addActionListener(new ActionListener() {
@@ -222,12 +252,12 @@ public class PvpNormal extends JPanel{
             }
         });
     }
-    private JFileChooser save;
+    
 
     /**
      * Shows the user a menu to save a file.
      * @throws GomokuException 
-     * */
+     */
     public void saveOption() throws GomokuException{
         Gomoku.getGomoku().save(fileToSave());
     }
@@ -254,7 +284,6 @@ public class PvpNormal extends JPanel{
         pvpNormal = null;
     }
     
-    protected JPanel optionsPanel;
     /**
      * Prepares the elements of the panel with option buttons
      */
@@ -276,17 +305,7 @@ public class PvpNormal extends JPanel{
         optionsPanel.add(finishGomoku, gbc);
         return optionsPanel;
     }
-
-    protected JPanel informationPanel;
-    protected JLabel turno;
-    protected JLabel nombreP1;
-    protected JLabel nombreP2;
-    protected JLabel colorP1;
-    protected JLabel colorP2;
-    protected JLabel puntuacionJugador1;
-    protected JLabel puntuacionJugador2;
-    protected JPanel tiempoP1 = new RelojPanelSum(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP1(), "timerT"), Gomoku.getGomoku().getTimeP1("timeT"));
-    protected JPanel tiempoP2 = new RelojPanelSum(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP2(), "timerT"), Gomoku.getGomoku().getTimeP2("timeT"));
+    
     /**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
@@ -337,17 +356,23 @@ public class PvpNormal extends JPanel{
         informationPanel.add(tiempoP2, gbc);
         return informationPanel;
     }
+    
+    /**
+     * Formats the hexadecimal color to a color rgb
+     * @param hex is the color
+     * @return Color 
+     */
     public static Color hexToColor(String hex) {
         int r = Integer.parseInt(hex.substring(1, 3), 16);
         int g = Integer.parseInt(hex.substring(3, 5), 16);
         int b = Integer.parseInt(hex.substring(5, 7), 16);
         return new Color(r, g, b);
     }
-    private ImageIcon logo;
-    protected JPanel logoPanel;
+    
+    
     /**
      * Prepares the elements of the panel with labels with the logo of the game
-     *  */
+     */
     public JPanel createLogoPanelGameOptions() {
         JLabel logoLabel = new JLabel();
         logoLabel.setBounds(10, 80, 150, 150);
@@ -362,11 +387,17 @@ public class PvpNormal extends JPanel{
         return logoPanel;
     }
     
+    /**
+     * Makes the panel visible
+     */
     protected void setVisible() {
     	this.setVisible(true);
     	pvpNormal.repaint();
     }
     
+    /**
+     * Makes the panel invisible
+     */
     protected void setInvisible() {
     	this.setVisible(false);
     	pvpNormal.repaint();
@@ -374,7 +405,7 @@ public class PvpNormal extends JPanel{
     
     /**
      * Shows the user a menu to save a file.
-     * */
+     */
     public File fileToSave() {
         File file = null;
         save = new JFileChooser();

@@ -20,13 +20,12 @@ public class Human implements Player {
     private Gomoku gomoku;
     private HashMap<String, TimePassed> times = new HashMap<>();
     private HashMap<String, Timer> timers = new HashMap<>();
-    
-    //nuevo
     private int score;
     
     /**
      * Creates an instance of Human.
-     * @param name
+     * @param name is the name of the player
+     * @param gomoku is the game
      */
     public Human(String name, Gomoku gomoku){
         this.name = name;
@@ -53,6 +52,9 @@ public class Human implements Player {
 		timers.put("timerM", timerMissing);
     }
     
+    /**
+     * Returns the timer of the player
+     */
     public javax.swing.Timer getTimer(String timer) {
     	return timers.get(timer);
     }
@@ -128,8 +130,8 @@ public class Human implements Player {
     
     /**
      * Deletes the token in the tokenMatrix and the arrayList tokens
-     * @param xPos
-     * @param yPos
+     * @param xPos x position to delete
+     * @param yPos y position to delete
      */
     public void deleteToken(int xPos, int yPos){
     	this.tokens.remove(this.tokenMatrix[xPos][yPos]);
@@ -139,7 +141,7 @@ public class Human implements Player {
 
 	/**
 	 * Sets the arraylist containing string that determine the tokens the player's going to use.
-	 * @param tokens
+	 * @param tokens are the tokens of the player
 	 */
 	public void setTokensToUse(ArrayList<String> tokens) {
 		tokensToUse = tokens;
@@ -166,7 +168,7 @@ public class Human implements Player {
 	
 	/**
 	 * Returns the arrayList containing the strings that represent the tokens subclasses names the player's going to use.
-	 * @return
+	 * @return the arraylist which contains the tokens to use
 	 */
 	public ArrayList<String> getTokensToUse(){
 		return this.tokensToUse;
@@ -188,18 +190,24 @@ public class Human implements Player {
 		return times.get("timeM").getTime() <= 0;
 	}
 	
-	/**W
+	/**
 	 * Returns the tokens left to use by the player.
 	 */
 	public int getTokensLeft() {
 		return this.tokensToUse.size();
 	}
-
+	
+	/**
+	 * Returns the time that has passed between turns
+	 */
 	public TimePassed getTime(String time) {
-
 		return this.times.get(time);
 	}
-
+	
+	/**
+	 * Adds a token to the player
+	 * @param tokenType is the type of token to add
+	 */
 	@Override
 	public void addTokenToUse(String tokenType) {
 		this.tokensToUse.add(0, tokenType);
@@ -207,6 +215,7 @@ public class Human implements Player {
 	
 	/**
 	 * Adds the score
+	 * @Score is the score to add or substract to the player
 	 */
 	public void setPuntuacion(int score_) {
 		int sumar = score_;
@@ -214,7 +223,7 @@ public class Human implements Player {
 	}
 	
 	/**
-	 * returns the current score of the player
+	 * Returns the current score of the player
 	 */
 	public int getPuntuacion() {
 		return score;

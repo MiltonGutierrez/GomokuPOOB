@@ -12,7 +12,6 @@ import domain.Log;
 
 
 public class MainMenu extends JPanel {
-    private JFileChooser load;
     private JButton newOptionButton;
     private JButton changeSizeButton;
     private JButton loadOptionButton;
@@ -27,7 +26,10 @@ public class MainMenu extends JPanel {
         this.setVisible(true);
     }
 
-
+    /**
+     * Returns the main menu and creates if null
+     * @return the panel with the options for the main menu
+     */
     public static MainMenu getMainMenu() {
         if (mainMenu == null) {
             mainMenu = new MainMenu();
@@ -38,7 +40,9 @@ public class MainMenu extends JPanel {
     }
 
     
-
+    /**
+     * Prepare the elements of the panel
+     */
     private void prepareElements() {
 
         mainMenu.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Establece BoxLayout como layout del panel
@@ -78,12 +82,20 @@ public class MainMenu extends JPanel {
         mainMenu.add(exitButton);
     }
     
+    /**
+     * Sets the configuration for the buttons
+     * @param button is the button to set
+     * @param size is the size for the button
+     */
     private void setButtonAttributes(JButton button, Dimension size) {
         button.setPreferredSize(size);
         button.setMaximumSize(size);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
     
+    /**
+     * Prepares the listeners for the buttons
+     */
     private void prepareActions() {
         newOptionButton.addActionListener(new ActionListener() {
             @Override
@@ -125,18 +137,28 @@ public class MainMenu extends JPanel {
         });
     }
 
-    
+    /**
+     * Is the option to activate the new game panel
+     * @throws InvocationTargetException
+     * @throws GomokuException
+     */
     public void newOption() throws InvocationTargetException, GomokuException{
         Gomoku.getGomoku();
         Gomoku.getGomoku().setDimension(15);
         GomokuGUI.newGame();
     }
-
+    
+    /**
+     * Makes invisible the panel
+     */
     public void setInvisible(){
         this.setVisible(false);
         mainMenu.repaint();
     }
-
+    
+    /**
+     * Makes invisible the panel
+     */
     public void setVisible(){
         this.setVisible(true);
         mainMenu.repaint();

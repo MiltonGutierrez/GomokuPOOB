@@ -12,6 +12,7 @@ import java.util.logging.Level;
 public class Log implements Serializable{
     public static String nombre="Log file";
     
+    
     public static void record(Exception e){
         try{
             Logger logger=Logger.getLogger(nombre);

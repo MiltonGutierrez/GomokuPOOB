@@ -6,17 +6,16 @@ public abstract class Token implements Serializable{
     protected int[] position;
     protected Player player;
     protected int value;
-    //Nuevos metodos.
     protected Gomoku gomoku;
     protected char identifier;
     protected int ticksOnBoard;
     
     /**
      * Basic constructor of token used by its sub-clases
-     * @param color
-     * @param position
-     * @param player
-     * @param gomoku
+     * @param color is the color of the token
+     * @param position is the position of the token
+     * @param player is the player who owns this token
+     * @param gomoku is the game
      */
     public Token(Color color, int[] position, Player player, Gomoku gomoku){
         this.color = color;
@@ -28,7 +27,7 @@ public abstract class Token implements Serializable{
 
     /**
      * Returns the array containing the position of the token.
-     * @return position
+     * @return position is the position of the token
      */
     public int[] getPosition(){
         return position;
@@ -36,17 +35,15 @@ public abstract class Token implements Serializable{
 
     /**
      * Returns the value of the token.
-     * @return value
+     * @return value is the value of the token
      */
     public int getValue(){
         return value;
     }
 
-    //nuevos metodos
-    
     /**
      * Returns the char identfier of the token
-     * @return identifier
+     * @return identifier is the first letter of the type of token
      */
     public char getIdentifier(){
         return identifier;
@@ -54,18 +51,30 @@ public abstract class Token implements Serializable{
     
     /**
      * Returns the name of the player the token belongs to.
-     * @return
+     * @return the name of the owner of the token
      */
     public String getNameOfPlayer(){
         return player.getName();
     }
-
+    
+    /**
+     * Returns the color of the token
+     * @return is the color of the token
+     */
     public Color getColor(){
         return color;
     }
-    
+
+    /**
+     * Updates the ticks of the token when is necessary
+     */
     public abstract void updateTicks();
     
+    
+    /**
+     * Sets the first letter of the token
+     * @param i is the first letter of the token
+     */
     public void setIdentifier(char i) {
     	this.identifier = i;
     }

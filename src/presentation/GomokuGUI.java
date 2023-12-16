@@ -13,28 +13,18 @@ import java.awt.event.*;
  * @author milton.gutierrez-oscar.lesmes
  */
 public class GomokuGUI extends JFrame{
-    /*private int dimension = 15;
-    private static String p1Name;
-    private static String p2Name;*/
     private int heightScreen;
     private int widthScreen;
     private static JPanel principal;
     
+    /**
+     * Constructor for GomokuGUI
+     */
     public GomokuGUI(){
         super("Gomoku");
         exit();
         prepareElements();
     }
-    
-    /**
-     * Validates if there is a winner
-     */
-    public static void validateWinCondition(){
-        if(Gomoku.getGomoku().getGomokuFinished()){ 
-            JOptionPane.showMessageDialog(null, "Juego Terminado\n" + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
     
     /**
      * Prepares the elements of the presentation, centers the frame and sets the specified size
@@ -47,19 +37,28 @@ public class GomokuGUI extends JFrame{
         preparePrincipalPanel();
         prepareElementsMenu();
     }
-
     
-
+    /**
+     * Prepares the background panel
+     */
     public void preparePrincipalPanel(){
         principal = new Background(heightScreen, widthScreen);
         this.add(principal, BorderLayout.CENTER);
     }   
     
+    /**
+     * Prepares the main menu
+     */
     public static void prepareElementsMenu() {
         JPanel optionsPanel = generalPanel(MainMenu.getMainMenu());
         principal.add(optionsPanel, BorderLayout.CENTER);
     }
-
+    
+    /**
+     * Sets a panel to paste new panels to avoid problems
+     * @param panelToPaste is the panel to paste
+     * @return panel to add to principal
+     */
     public static JPanel generalPanel(JPanel panelToPaste){
         JPanel optionsPanel = new JPanel();
         optionsPanel.setOpaque(false);
@@ -75,14 +74,22 @@ public class GomokuGUI extends JFrame{
         optionsPanel.setVisible(true);
         return optionsPanel;
     }
-
+    
+    /**
+     * Creates the panel of the new game
+     * @throws InvocationTargetException
+     */
     public static void newGame() throws InvocationTargetException{
         MainMenu.getMainMenu().setInvisible();
         JPanel panel = generalPanel(MenuOpponents.getMenuOpponents());
         MenuOpponents.getMenuOpponents().setVisible();
         principal.add(panel, BorderLayout.CENTER);
     }  
-
+    
+    /**
+     * Prepares the gameMode panel
+     * @throws InvocationTargetException
+     */
     public static void gameModes() throws InvocationTargetException{
     	MenuOpponents.getMenuOpponents().setInvisible();
         principal.remove(MenuOpponents.getMenuOpponents());
@@ -91,7 +98,10 @@ public class GomokuGUI extends JFrame{
         principal.add(panel, BorderLayout.CENTER);
     }
     
-
+    /**
+     * Activates the panel for the normal game
+     * @throws GomokuException
+     */
     public static void normalGameSelected() throws GomokuException{
     	MainMenu.getMainMenu().setInvisible();
     	GameModes.getGameModes().setInvisible();
@@ -101,7 +111,10 @@ public class GomokuGUI extends JFrame{
         principal.add(panel, BorderLayout.CENTER);
     }
 
-
+    /**
+     * Changes the color of the players
+     * @throws GomokuException
+     */
     public static void changeColor() throws GomokuException{
         HashMap<String, Player> players = Gomoku.getGomoku().getPlayers();
         Set<String> playersNames = players.keySet();
@@ -141,7 +154,11 @@ public class GomokuGUI extends JFrame{
         }
         
     }
-
+    
+    /**
+     * Asks for the type of machine to create
+     * @throws InvocationTargetException
+     */
     public void askForTypeOfMachine() throws InvocationTargetException{
         JRadioButton agressive = new JRadioButton("Agresiva");
         JRadioButton expert = new JRadioButton("Experta");
@@ -207,7 +224,7 @@ public class GomokuGUI extends JFrame{
 
     /**
      * Sets the action to exit the JFrame
-     * */
+     */
     public void exit(){
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         WindowListener w = new WindowAdapter(){
@@ -222,7 +239,7 @@ public class GomokuGUI extends JFrame{
 
     /**
      * Asks if the user wants to close the JFrame
-     *  */
+     */
     public void confirmExit(){
         int answer = JOptionPane.showConfirmDialog(null, "¿Desea cerrar la ventana?", "Cerrar ventana", JOptionPane.YES_NO_OPTION);
             if (answer == JOptionPane.YES_OPTION) {
@@ -243,7 +260,10 @@ public class GomokuGUI extends JFrame{
         principal.add(panel, BorderLayout.CENTER);
     }
     
-    
+    /**
+     * Activates the panel for limited mode
+     * @throws GomokuException
+     */
     public static void limitedGameSelected() throws GomokuException {
     	MainMenu.getMainMenu().setInvisible();
     	GameModes.getGameModes().setInvisible();
@@ -252,6 +272,10 @@ public class GomokuGUI extends JFrame{
         principal.add(panel, BorderLayout.CENTER);
     }
 
+    /**
+     * Finish the normal game
+     * @throws GomokuException
+     */
     public static void finishButtonNormal() throws GomokuException {
     	PvpNormal.getPvpNormal().setInvisible();
     	principal.remove(PvpNormal.getPvpNormal());
@@ -260,6 +284,10 @@ public class GomokuGUI extends JFrame{
     	
     }
     
+    /**
+     * Finish the quickgame
+     * @throws GomokuException
+     */
     public static void finishButtonQuick() throws GomokuException {
     	PvpQuick.getPvpQuick().setInvisible();
     	principal.remove(PvpQuick.getPvpQuick());
@@ -267,11 +295,24 @@ public class GomokuGUI extends JFrame{
     	MainMenu.getMainMenu().setVisible();
     }
     
+    /**
+     * Finish the limited game
+     * @throws GomokuException
+     */
     public static void finishButtonLimited() throws GomokuException {
     	PvpLimited.getPvpLimited().setInvisible();
     	principal.remove(PvpLimited.getPvpLimited());
     	Gomoku.getGomoku().nullAll();
     	MainMenu.getMainMenu().setVisible();
+    }
+    
+    /**
+     * Validates if there is a winner
+     */
+    public static void validateWinCondition(){
+        if(Gomoku.getGomoku().getGomokuFinished()){ 
+            JOptionPane.showMessageDialog(null, "Juego Terminado\n" + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     /**
@@ -284,6 +325,10 @@ public class GomokuGUI extends JFrame{
     	return Gomoku.getGomoku().getPuntuacion(name);
     }
     
+    /**
+     * Validates the current panel when a game is open
+     * @throws GomokuException
+     */
     public static void validatePanel() throws GomokuException {
         String gameMode_ = Gomoku.getGomoku().getGameMode();
         System.out.println(gameMode_);
@@ -298,7 +343,6 @@ public class GomokuGUI extends JFrame{
             limitedGameSelected();
         }
     }
-    
     
     //////////////////////////////////////////////////////////////////////////
     /**
