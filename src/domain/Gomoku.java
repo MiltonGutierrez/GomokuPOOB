@@ -334,7 +334,7 @@ public class Gomoku implements Serializable{
             Log.record(e);
             ok = false;
         }
-		return box;
+		return box; //hola
     	
     }
 	/**
