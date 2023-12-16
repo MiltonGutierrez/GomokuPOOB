@@ -294,6 +294,7 @@ public class Gomoku implements Serializable{
             return null;
         }
         return token;
+        
     }
     
     
