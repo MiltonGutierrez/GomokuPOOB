@@ -1040,7 +1040,10 @@ public class Gomoku implements Serializable{
     	
     }
     
-    ///////////////
+    /**
+     * Returns the last position of the token
+     * @return the position of the last token
+     */
     public int[] returnLastPositionToken() {
     	return lastPositionToken;
     }
