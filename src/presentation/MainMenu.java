@@ -12,7 +12,6 @@ import domain.Log;
 
 
 public class MainMenu extends JPanel {
-    private int dimension = 15;
     private JFileChooser load;
     private JButton newOptionButton;
     private JButton changeSizeButton;
@@ -129,7 +128,7 @@ public class MainMenu extends JPanel {
     
     public void newOption() throws InvocationTargetException, GomokuException{
         Gomoku.getGomoku();
-        Gomoku.getGomoku().setDimension(dimension);
+        Gomoku.getGomoku().setDimension(15);
         GomokuGUI.newGame();
     }
 
@@ -148,16 +147,17 @@ public class MainMenu extends JPanel {
      * Changes the size of the Gomoku's board
      */
     public void changeSizeOption(){
+    	int dimension = 0;
         try{
             dimension = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de filas"));
-            GomokuGUI.setNewDimension(dimension);
+            Gomoku.getGomoku().setDimension(dimension);
         }catch(Exception e){
             Log.record(e);
         }
         
         if(dimension < 10){
             dimension = 10;
-            GomokuGUI.setNewDimension(dimension);
+            Gomoku.getGomoku().setDimension(dimension);
         }
     }
     

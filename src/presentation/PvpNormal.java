@@ -104,10 +104,10 @@ public class PvpNormal extends JPanel{
     public JPanel createBoardGame(){
         game = new JPanel();
         game.setBackground(Color.WHITE);
-        game.setLayout(new GridLayout(GomokuGUI.returnDimension(), GomokuGUI.returnDimension()));
+        game.setLayout(new GridLayout(Gomoku.getGomoku().getDimension(), Gomoku.getGomoku().getDimension()));
         game.setPreferredSize(new Dimension(400, 400));
-        for (int fila = 0; fila < GomokuGUI.returnDimension(); fila++) {
-          for (int columna = 0; columna < GomokuGUI.returnDimension(); columna++) {
+        for (int fila = 0; fila < Gomoku.getGomoku().getDimension(); fila++) {
+          for (int columna = 0; columna < Gomoku.getGomoku().getDimension(); columna++) {
             setBoton(fila, columna, Gomoku.getGomoku().getBox(fila, columna));
             game.add(Gomoku.getGomoku().getBox(fila, columna));
           }
@@ -294,8 +294,8 @@ public class PvpNormal extends JPanel{
     protected JLabel colorP2;
     protected JLabel puntuacionJugador1;
     protected JLabel puntuacionJugador2;
-    protected JPanel tiempoP1 = new RelojPanelSum(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1(), "timerT"), Gomoku.getGomoku().getTimeP1("timeT"));
-    protected JPanel tiempoP2 = new RelojPanelSum(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2(), "timerT"), Gomoku.getGomoku().getTimeP2("timeT"));
+    protected JPanel tiempoP1 = new RelojPanelSum(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP1(), "timerT"), Gomoku.getGomoku().getTimeP1("timeT"));
+    protected JPanel tiempoP2 = new RelojPanelSum(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP2(), "timerT"), Gomoku.getGomoku().getTimeP2("timeT"));
     /**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
@@ -305,17 +305,17 @@ public class PvpNormal extends JPanel{
         informationPanel = new JPanel(new GridBagLayout());
         Font arial = new Font("italic", 1, 18);
         turno = new JLabel("Siguiente en jugar: " + Gomoku.getGomoku().getTurn());
-        nombreP1 = new JLabel("P1: " + GomokuGUI.returnP1());
-        nombreP2 = new JLabel("P2: " + GomokuGUI.returnP2());
-        colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP1()));
-        colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP2()));
-        puntuacionJugador1 = new JLabel("Score P1: " + GomokuGUI.getPuntuacion(GomokuGUI.returnP1()));
-        puntuacionJugador2 = new JLabel("Score P2: " + GomokuGUI.getPuntuacion(GomokuGUI.returnP2()));
+        nombreP1 = new JLabel("P1: " + Gomoku.getGomoku().getP1());
+        nombreP2 = new JLabel("P2: " + Gomoku.getGomoku().getP2());
+        colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP1()));
+        colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP2()));
+        puntuacionJugador1 = new JLabel("Score P1: " + GomokuGUI.getPuntuacion(Gomoku.getGomoku().getP1()));
+        puntuacionJugador2 = new JLabel("Score P2: " + GomokuGUI.getPuntuacion(Gomoku.getGomoku().getP2()));
         turno.setFont(arial);
         nombreP1.setFont(arial);
         nombreP2.setFont(arial);
-        colorP1.setForeground(hexToColor(Gomoku.getGomoku().getColor(GomokuGUI.returnP1())));
-        colorP2.setForeground(hexToColor(Gomoku.getGomoku().getColor(GomokuGUI.returnP2())));
+        colorP1.setForeground(hexToColor(Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP1())));
+        colorP2.setForeground(hexToColor(Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP2())));
         tiempoP1.setFont(arial);
         tiempoP2.setFont(arial);
         puntuacionJugador1.setFont(arial);

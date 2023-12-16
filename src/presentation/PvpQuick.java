@@ -29,8 +29,8 @@ public class PvpQuick extends PvpNormal {
     private JPanel timeLeft;
 	private JPanel timeInformation;
 	private JPanel gameWrapper;
-	private JPanel tiempoRestanteP1 = new RelojPanelSub(Gomoku.getGomoku().getTimer(GomokuGUI.returnP1(), "timerM"), Gomoku.getGomoku().getTimeP1("timeM"));
-	private JPanel tiempoRestanteP2 = new RelojPanelSub(Gomoku.getGomoku().getTimer(GomokuGUI.returnP2(), "timerM"), Gomoku.getGomoku().getTimeP2("timeM"));
+	private JPanel tiempoRestanteP1 = new RelojPanelSub(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP1(), "timerM"), Gomoku.getGomoku().getTimeP1("timeM"));
+	private JPanel tiempoRestanteP2 = new RelojPanelSub(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP2(), "timerM"), Gomoku.getGomoku().getTimeP2("timeM"));
 	/**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
@@ -40,15 +40,15 @@ public class PvpQuick extends PvpNormal {
         informationPanel = new JPanel(new GridBagLayout());
         Font arial = new Font("italic", 1, 18);
         turno = new JLabel("Siguiente en jugar: " + Gomoku.getGomoku().getTurn());
-        nombreP1 = new JLabel("P1: " + GomokuGUI.returnP1());
-        nombreP2 = new JLabel("P2: " + GomokuGUI.returnP2());
-        colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP1()));
-        colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(GomokuGUI.returnP2()));
+        nombreP1 = new JLabel("P1: " + Gomoku.getGomoku().getP1());
+        nombreP2 = new JLabel("P2: " + Gomoku.getGomoku().getP2());
+        colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP1()));
+        colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP2()));
         turno.setFont(arial);
         nombreP1.setFont(arial);
         nombreP2.setFont(arial);
-        colorP1.setForeground(hexToColor(Gomoku.getGomoku().getColor(GomokuGUI.returnP1())));
-        colorP2.setForeground(hexToColor(Gomoku.getGomoku().getColor(GomokuGUI.returnP2())));
+        colorP1.setForeground(hexToColor(Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP1())));
+        colorP2.setForeground(hexToColor(Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP2())));
         tiempoP1.setFont(arial);
         tiempoP2.setFont(arial);
         informationPanel.setBackground(new Color(224,62,82));
@@ -106,7 +106,7 @@ public class PvpQuick extends PvpNormal {
         Font arial = new Font("italic", 1, 14);
 
         // Time left
-        JLabel timeLeftP1 = new JLabel("Tiempo restante: " + GomokuGUI.returnP1());
+        JLabel timeLeftP1 = new JLabel("Tiempo restante: " + Gomoku.getGomoku().getP1());
         timeLeftP1.setFont(arial);
         timeLeft.add(timeLeftP1, gbc);
 
@@ -122,7 +122,7 @@ public class PvpQuick extends PvpNormal {
         gbc.gridy = 3;
 
         // Time left
-        JLabel timeLeftP2 = new JLabel("Tiempo restante: " + GomokuGUI.returnP2());
+        JLabel timeLeftP2 = new JLabel("Tiempo restante: " + Gomoku.getGomoku().getP2());
         timeLeftP2.setFont(arial);
         timeLeft.add(timeLeftP2, gbc);
 

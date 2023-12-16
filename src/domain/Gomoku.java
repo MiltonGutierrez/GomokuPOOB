@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Gomoku implements Serializable{
     public static Gomoku board = null;
-    private static int dimension;
+    private int dimension;
     private HashMap<String, Player> players;
     private ArrayList<Token> tokens = new ArrayList<>();
     private ArrayList<Box> boxes = new ArrayList<>();
@@ -23,9 +23,7 @@ public class Gomoku implements Serializable{
     private String nameP2 = "machine";
     private String turn;
     private String machineType;
-    private Integer timeLimit;
     private int cellsMissing;
-    private int ticks = 0;
 
     //Nuevos atributos
     private ArrayList<String> typeOfTokens = new ArrayList<>();
@@ -129,9 +127,8 @@ public class Gomoku implements Serializable{
 
     /**
      * Play the game
-     * @param placeToX
-     * @param placeToY
-     * @param tokenType
+     * @param xPos
+     * @param yPos
      * @throws InvocationTargetException
      * @throws GomokuException 
      */
@@ -543,7 +540,6 @@ public class Gomoku implements Serializable{
      * @param time is the time to split in quickmode 
      */
     public void setTime(Integer time){
-        this.timeLimit = time;
         Integer timeForPlayers = (time / 2);
         for(Player p: players.values()) {
         	p.setTime(timeForPlayers);
