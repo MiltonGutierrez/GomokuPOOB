@@ -16,6 +16,8 @@ class GomokuTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		board.resetAll();
+		
 	}
 
 	@Test
@@ -32,8 +34,9 @@ class GomokuTest {
 	@Test
 	void shouldCreateRivals2() throws GomokuException {
 		board.setNameP1("Mutsia");
+		board.setNameP2("machine");
 		board.setOpponent("pve");
-		board.setMachineType("Expert");
+		board.setMachineType("Agressive");
 		board.createRivals();
 		assertTrue(board.loadPlayer("Mutsia") instanceof Human);
 		assertTrue(board.loadPlayer("machine") instanceof Machine);
@@ -197,7 +200,7 @@ class GomokuTest {
 	    board.play(0,1);
 	    board.play(1,0);
 	    board.play(1,1);
-	    board.play(0, 0);
+	    board.play(0,0);
 	    
 	}
 	

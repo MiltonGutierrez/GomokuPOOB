@@ -45,11 +45,8 @@ public class PvpLimited extends PvpNormal{
         boardGame.setBackground(new Color(113, 197, 232,128));
     
         game = createBoardGame();
-        try {
-			tokensLeft = createBoardTokenInformation();
-		} catch (GomokuException e) {
-			Log.record(e);
-		}
+		tokensLeft = createBoardTokenInformation();
+
         // Create a panel to hold the game component in the center
         gameWrapper = new JPanel();
         gameWrapper.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 30));
@@ -69,7 +66,7 @@ public class PvpLimited extends PvpNormal{
 	 * @return a panel with the information of the tokens
 	 * @throws GomokuException 
 	 */
-	public JPanel createBoardTokenInformation() throws GomokuException {
+	public JPanel createBoardTokenInformation(){
         tokensLeft = new JPanel();
         tokensLeft.setLayout(new GridBagLayout());
         tokensLeft.setBackground(new Color(166, 220, 242));
@@ -85,10 +82,15 @@ public class PvpLimited extends PvpNormal{
         gbc.gridy = 1;
         tokensLeft.add(Box.createVerticalStrut(5), gbc);
         gbc.gridy = 2;
-        JLabel normalTokenLeftP1 = new JLabel("Piedras restantes " + Gomoku.getGomoku().getTokensLeft(Gomoku.getGomoku().getP1()));
-        normalTokenLeftP1.setFont(arial);
-        tokensLeft.add(normalTokenLeftP1, gbc);
-        
+        JLabel normalTokenLeftP1;
+		try {
+			normalTokenLeftP1 = new JLabel("Piedras restantes " + Gomoku.getGomoku().getTokensLeft(Gomoku.getGomoku().getP1()));
+	        normalTokenLeftP1.setFont(arial);
+	        tokensLeft.add(normalTokenLeftP1, gbc);
+		} catch (GomokuException e) {
+			Log.record(e);
+			JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+		}
         gbc.gridy = 5;
         tokensLeft.add(Box.createVerticalStrut(5), gbc);
     
@@ -100,9 +102,16 @@ public class PvpLimited extends PvpNormal{
         gbc.gridy = 7;
         tokensLeft.add(Box.createVerticalStrut(5), gbc);
         gbc.gridy = 8;
-        JLabel normalTokenLeftP2 = new JLabel("Piedras restantes " + Gomoku.getGomoku().getTokensLeft(Gomoku.getGomoku().getP2()));
-        normalTokenLeftP2.setFont(arial);
-        tokensLeft.add(normalTokenLeftP2, gbc);
+        JLabel normalTokenLeftP2;
+		try {
+			normalTokenLeftP2 = new JLabel("Piedras restantes " + Gomoku.getGomoku().getTokensLeft(Gomoku.getGomoku().getP2()));
+	        normalTokenLeftP2.setFont(arial);
+	        tokensLeft.add(normalTokenLeftP2, gbc);
+		} catch (GomokuException e) {
+			Log.record(e);
+			JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+		}
+
         
         return tokensLeft;
     }
@@ -114,11 +123,7 @@ public class PvpLimited extends PvpNormal{
     public void refreshTime(){
     	tokensLeft.removeAll();
         gameWrapper.remove(tokensLeft);
-        try {
-			tokensLeft = createBoardTokenInformation();
-		} catch (GomokuException e) {
-			Log.record(e);
-		}
+		tokensLeft = createBoardTokenInformation();
         gameWrapper.add(tokensLeft);
         boardGame.validate();
         boardGame.repaint();

@@ -28,4 +28,6 @@ public abstract class Machine implements Player{
     public void setToken(Token token){
         tokens.add(token);
     }
+    
+    
 }

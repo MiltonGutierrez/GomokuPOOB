@@ -17,7 +17,6 @@ public class Human implements Player {
     private ArrayList<Token> tokens = new ArrayList<>();
     private Token[][] tokenMatrix;
     private ArrayList<String> tokensToUse = new ArrayList<>();
-    private Gomoku gomoku;
     private HashMap<String, TimePassed> times = new HashMap<>();
     private HashMap<String, Timer> timers = new HashMap<>();
     private int score;
@@ -29,7 +28,6 @@ public class Human implements Player {
      */
     public Human(String name, Gomoku gomoku){
         this.name = name;
-        this.gomoku = gomoku;
         times.put("timeT", new TimePassed(0));
         times.put("timeM", new TimePassed(0));
         Timer timerTotal = new Timer(1000, new ActionListener() {
@@ -159,7 +157,7 @@ public class Human implements Player {
 		}
 		else if(gameMode.equals("normal") || gameMode.equals("quicktime") && tokensToUse.size() == 0) {
 			try {
-				gomoku.createTokensToUse(this.name);
+				Gomoku.getGomoku().createTokensToUse(this.name);
 			} catch (GomokuException e) {
 				Log.record(e);
 			} // evitamos que se quede sin fichas.
@@ -246,9 +244,11 @@ public class Human implements Player {
 	 */
 	public void resetAll() {
 		this.score = 0;
-		this.timers= null;
+		for(TimePassed t: times.values()) {
+			t.setTime(0);
+		}
 	}
-//
+	
 	@Override
 	public void getTurn() {
 	}

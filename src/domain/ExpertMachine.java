@@ -165,8 +165,10 @@ public class ExpertMachine extends Machine{
 
 	@Override
 	public void resetAll() {
-		// TODO Auto-generated method stub
-		
+		this.score = 0;
+		for(TimePassed t: times.values()) {
+			t.setTime(0);
+		}
 	}
 
 

@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import domain.Gomoku;
 import domain.GomokuException;
+import domain.Log;
 
 public class PvpQuick extends PvpNormal {
 
@@ -40,22 +41,27 @@ public class PvpQuick extends PvpNormal {
 	/**
      * Prepares the elements of the panel with labels with important information of the game
      * @return informationPanel
-	 * @throws GomokuException 
      */
 	@Override
-    public JPanel createInformationPanelGameOptions() throws GomokuException{
+    public JPanel createInformationPanelGameOptions(){
         informationPanel = new JPanel(new GridBagLayout());
         Font arial = new Font("italic", 1, 18);
         turno = new JLabel("Siguiente en jugar: " + Gomoku.getGomoku().getTurn());
         nombreP1 = new JLabel("P1: " + Gomoku.getGomoku().getP1());
         nombreP2 = new JLabel("P2: " + Gomoku.getGomoku().getP2());
-        colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP1()));
-        colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP2()));
+        try {
+			colorP1 = new JLabel("ColorP1: " + Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP1()));
+			colorP2 = new JLabel("ColorP2: " + Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP2()));
+			colorP1.setForeground(hexToColor(Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP1())));
+	        colorP2.setForeground(hexToColor(Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP2())));
+		} catch (GomokuException e) {
+			Log.record(e);
+		}
+        
         turno.setFont(arial);
         nombreP1.setFont(arial);
         nombreP2.setFont(arial);
-        colorP1.setForeground(hexToColor(Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP1())));
-        colorP2.setForeground(hexToColor(Gomoku.getGomoku().getColor(Gomoku.getGomoku().getP2())));
+        
         tiempoP1.setFont(arial);
         tiempoP2.setFont(arial);
         informationPanel.setBackground(new Color(224,62,82));

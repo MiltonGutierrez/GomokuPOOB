@@ -264,10 +264,12 @@ public class FearfulMachine extends Machine {
 
 	@Override
 	public void resetAll() {
-		// TODO Auto-generated method stub
-		
+		this.score = 0;
+		for(TimePassed t: times.values()) {
+			t.setTime(0);
+		}
 	}
-
+	
 	@Override
 	/**
      * Sets the token in the respective lists and matrixes
