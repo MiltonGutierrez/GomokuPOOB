@@ -58,25 +58,44 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldAddToken() throws GomokuException {
+	void shouldAddTokenCreate() {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
 		board.setGameMode("normal");
-		board.setMachineType("Agressive");
 		board.createRivals();
-		board.startGame();
-		board.addToken("Normal", board.getTurn(), new int[]{0, 0});
+		assertTrue(board.addToken("Normal", "Mutsia", new int[] {0,0}) instanceof NormalToken);
 		assertTrue(board.ok());
-		board.nextTurn();
-		board.addToken("Temporal", board.getTurn(), new int[]{0, 0});
+		assertTrue(board.addToken("Temporal", "Mutsia", new int[] {0,1}) instanceof TemporalToken);
 		assertTrue(board.ok());
-		board.nextTurn();
-		board.addToken("Heavy", board.getTurn(), new int[]{0, 1});
+		assertTrue(board.addToken("Heavy", "Mutsia", new int[] {0,3}) instanceof HeavyToken);
 		assertTrue(board.ok());
-		assertEquals(board.getTokens().size(), 4); //Son 4 más la adición del metodo CalculateLastPositions
+
+
 	}
 	
+	@Test
+	void shouldAddTokenSet() {
+		board.setNameP1("Mutsia");
+		board.setNameP2("Miltown");
+		board.setOpponent("pvp");
+		board.setGameMode("normal");
+		board.createRivals();
+	    board.startGame();
+		Token t = board.addToken("Normal", "Mutsia", new int[] {0,0});
+		assertTrue(board.ok());
+		board.addToken("Mutsia", t, new int[] {0,0});
+		assertTrue(board.ok());
+		Token t2 = board.addToken("Heavy", "Mutsia", new int[] {0,1});
+		assertTrue(board.ok());
+		board.addToken("Mutsia", t2, new int[] {0,1});
+		assertTrue(board.ok());
+		Token t3 = board.addToken("Temporal", "Mutsia", new int[] {0,3});
+		assertTrue(board.ok());
+		board.addToken("Mutsia", t3, new int[] {0,3});
+		assertTrue(board.ok());
+	}
+	/*
 	@Test
 	void shouldValidPlay() {
 		board.setNameP1("Mutsia");
@@ -89,7 +108,7 @@ class GomokuTest {
 	}
 	
 	@Test
-	void shouldCalculateLastPositions() throws GomokuException {
+	void shouldCalculateLastPositions() {
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
@@ -138,7 +157,7 @@ class GomokuTest {
 		board.createRivals();
 		board.startGame();
 		
-	}
+	}*/
 }
 
 

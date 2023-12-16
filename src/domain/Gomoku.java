@@ -141,10 +141,11 @@ public class Gomoku implements Serializable{
             lastPositionTokens = null;
             String playerName = getTurn();
             updateTicks();
+            int[] position = {xPos, yPos};
+            Token t = addToken(getTokenType(), playerName, position);
+            this.addToken(playerName, t, position);
             updateTokens();
-            addToken(getTokenType(), playerName, new int[]{xPos, yPos});
             calculateLastPositionTokens();
-            updateTokens();
             stopPlayerTimer(playerName);
             winner(xPos, yPos, dimension, loadPlayer(playerName).returnTokenMatrix());
             if(!verifier.getGomokuFinished()){
@@ -255,32 +256,49 @@ public class Gomoku implements Serializable{
     
 
     /**
+     * Sets the token to the specified player and matrixes
+     * @param playerName
+     * @param token
+     * @param position
+     */
+    public void addToken(String playerName, Token token, int[] position) {
+    	ok = true;
+    	Player player;
+		try {
+			player = loadPlayer(playerName);
+			player.setToken(token, position[0], position[1]);
+	        tokenMatrix[position[0]][position[1]] = token;
+	        tokens.add(token);
+	        boxMatrix[position[0]][position[1]].setToken(token);
+		} catch (GomokuException e) {
+			ok = false;
+			Log.record(e);
+		}
+
+    }
+    /**
      * Creates a new instance of Machine
      * @param type
-     * @throws GomokuException 
-     * @throws java.lang.reflect.InvocationTargetException
+     * @throws java.lang.reflect.InvocationTargetExceptions
      */
-    public void addToken(String tokenType, String playerName, int[] position) throws GomokuException{
+    public Token addToken(String tokenType, String playerName, int[] position){
     	ok = true;
+    	Token token = null;
         try{
             Class<?> tokenChilds = Class.forName("domain."+tokenType+"Token");
             Constructor<?> constructorTokenChilds = tokenChilds.getConstructor(Color.class, int[].class, Player.class, Gomoku.class);
             Player player = players.get(playerName);
-            Token token = (Token) constructorTokenChilds.newInstance(player.getColor(), position, player, Gomoku.getGomoku());
+            token = (Token) constructorTokenChilds.newInstance(player.getColor(), position, player, Gomoku.getGomoku());
             lastColor = player.getColor();
-            player.setToken(token, position[0], position[1], tokenType);
-            tokenMatrix[position[0]][position[1]] = token;
-            tokens.add(token);
-            boxMatrix[position[0]][position[1]].setToken(token);
-            if(!(token instanceof NormalToken)) {
-            	setPuntuacion(playerName, 100);
-            }
         } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e){
         	JOptionPane.showMessageDialog(null, e, "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         	Log.record(e);
         	ok = true;
+            return null;
         }
+        return token;
     }
+    
     
     /**
      * Creates a new instance of Machine
@@ -686,7 +704,6 @@ public class Gomoku implements Serializable{
     	Random random = new Random();
     	ArrayList<String> boxes = new ArrayList<>();
     	int quantityOfBoxes = dimension * dimension;
-    	System.out.println("create " + boxesPercentage);
     	if(gameMode.equals("normal")) {
     		for(int i = 0; i < quantityOfBoxes - boxesPercentage; i++) {
     			boxes.add(typeOfBoxes.get(0));
