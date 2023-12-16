@@ -240,6 +240,15 @@ public class Human implements Player {
 	public int tokensLeft() {
 		return tokensToUse.size();
 	}
-
+	
+	/**
+	 * Resets all
+	 */
+	public void resetAll() {
+		this.score = 0;
+		this.timers= null;
+	}
+	
+	
 
 }

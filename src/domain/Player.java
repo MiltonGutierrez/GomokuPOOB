@@ -28,4 +28,5 @@ public interface Player extends Serializable{
 	void setPuntuacion(int score_);
 	int getPuntuacion();
 	int tokensLeft();
+	void resetAll();
 }

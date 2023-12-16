@@ -24,8 +24,6 @@ public class Gomoku implements Serializable{
     private String turn;
     private String machineType;
     private int cellsMissing;
-
-    //Nuevos atributos
     private ArrayList<String> typeOfTokens = new ArrayList<>();
     private ArrayList<String> typeOfBoxes = new ArrayList<>();
     private ArrayList<String> boxesToUse = new ArrayList<>();
@@ -1023,6 +1021,16 @@ public class Gomoku implements Serializable{
 			Log.record(e);
 			throw new GomokuException(GomokuException.PLAYER_NOT_FOUND);
 		}
+    }
+    
+    /**
+     * Restores the values
+     */
+    public void resetAll() {
+    	for (Player p: players.values()) {
+    		p.resetAll();
+    	}
+    	
     }
     
     

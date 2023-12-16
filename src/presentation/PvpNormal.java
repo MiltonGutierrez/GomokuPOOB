@@ -282,12 +282,8 @@ public class PvpNormal extends JPanel{
      * Actions for the reset button
      */
     public void resetOption(){
-        this.remove(boardGame);
-        this.remove(gameOptions);
-        //board.setTurno();
-        //board.restoreGame();
-        //prepareElementsBoard();
-        //refresh();
+        Gomoku.getGomoku().resetAll();
+        this.repaint();
     }
 
     /*
