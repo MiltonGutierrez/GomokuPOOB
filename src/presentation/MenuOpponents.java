@@ -183,7 +183,7 @@ public class MenuOpponents extends JPanel{
     public void askForTypeOfMachine() throws InvocationTargetException, GomokuException{
         JRadioButton agressive = new JRadioButton("Agresiva");
         JRadioButton expert = new JRadioButton("Experta");
-        JRadioButton fearful = new JRadioButton("fearful");
+        JRadioButton fearful = new JRadioButton("Miedosa");
         ButtonGroup sizeGroup = new ButtonGroup();
         sizeGroup.add(agressive);
         sizeGroup.add(expert);
@@ -202,7 +202,8 @@ public class MenuOpponents extends JPanel{
         if (agressive.isSelected()) {
             Gomoku.getGomoku().setMachineType("Agressive");
         } else if (expert.isSelected()) {
-            Gomoku.getGomoku().setMachineType("Expert");
+        	JOptionPane.showMessageDialog(null, "Escoge otra maquina porfavor");
+            askForTypeOfMachine();
         } else if (fearful.isSelected()) {
             Gomoku.getGomoku().setMachineType("Fearful");
         }
