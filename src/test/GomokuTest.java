@@ -173,7 +173,7 @@ class GomokuTest {
 		board.setGameMode("normal");
 		board.createRivals();
 		board.startGame();
-		Token t = board.addToken("Normal", board.getTurn(),new int[] {0, 1});
+		Token t = board.addToken("Normal", board.getTurn(),new int[] {0, 1}); //
 		board.addToken("Mutsia", t, new int[] {0,1});
 		board.getToken(0, 1).setIdentifier('D');
 		board.calculateLastPositionTokens();

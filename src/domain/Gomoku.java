@@ -271,7 +271,7 @@ public class Gomoku implements Serializable{
 	        tokens.add(token);
 	        boxMatrix[position[0]][position[1]].setToken(token);
 	        if(!(token instanceof NormalToken)) {
-            	setPuntuacion(playerName, 100);
+            	setPuntuacion(playerName, 100); //
             }
 		} catch (GomokuException e) {
 			ok = false;
