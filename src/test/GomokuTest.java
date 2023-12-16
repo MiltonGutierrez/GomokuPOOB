@@ -194,6 +194,11 @@ class GomokuTest {
 	    board.startGame();
 	    Box b = board.createBox("Explosive", new int[] {0,0});
 	    board.getBoxMatrix()[0][0] = b;
+	    board.play(0,1);
+	    board.play(1,0);
+	    board.play(1,1);
+	    board.play(0, 0);
+	    
 	}
 	
 	@Test
