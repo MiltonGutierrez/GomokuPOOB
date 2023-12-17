@@ -285,7 +285,6 @@ class GomokuTest {
 		board.setGameMode("limited");
 		board.startGame();
 		int tokensLeft = board.loadPlayer("machine").getTokensLeft();
-		System.out.println(tokensLeft);
 		board.play(1, 1);
 		System.out.println(board.loadPlayer("machine").getTokensLeft());
 		assertTrue(board.loadPlayer("machine").getTokensLeft() == tokensLeft);
