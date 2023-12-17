@@ -96,7 +96,6 @@ public class PvpQuick extends PvpNormal {
         boardGame.setBackground(new Color(113, 197, 232,128));
         game = createBoardGame();
         timeInformation = createBoardTokenInformation();
-        // Create a panel to hold the game component in the center
         gameWrapper = new JPanel();
         gameWrapper.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 30));
         gameWrapper.setBackground(new Color(113, 197, 232,128));

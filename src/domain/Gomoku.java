@@ -1016,5 +1016,12 @@ public class Gomoku implements Serializable{
     public int[] returnLastPositionToken() {
     	return lastPositionToken;
     }
-  
+    
+    /**
+     * Returns the cells missing to complete the board
+     * @return the number of cells remaining to complete the board
+     */
+    public int getCellsMissing() {
+    	return cellsMissing;
+    }
 }

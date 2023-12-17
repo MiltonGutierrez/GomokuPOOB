@@ -49,6 +49,7 @@ public class TeleportingBox extends Box{
 			}
             flag = true;
         }
+        
 	}
 	
 	/**

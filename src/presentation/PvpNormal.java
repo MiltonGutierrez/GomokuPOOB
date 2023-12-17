@@ -37,6 +37,7 @@ public class PvpNormal extends JPanel{
     protected JPanel tiempoP2 = new RelojPanelSum(Gomoku.getGomoku().getTimer(Gomoku.getGomoku().getP2(), "timerT"), Gomoku.getGomoku().getTimeP2("timeT"));
     private ImageIcon logo;
     protected JPanel logoPanel;
+    protected JPanel gameWrapper;
 
     /**
      * Creates an instance of PvpNormal panel
@@ -106,7 +107,7 @@ public class PvpNormal extends JPanel{
         boardGame.setBackground(new Color(113, 197, 232,128));
         game = createBoardGame();
         // Create a panel to hold the game component in the center
-        JPanel gameWrapper = new JPanel();
+        gameWrapper = new JPanel();
         gameWrapper.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 30));
         gameWrapper.setBackground(new Color(113, 197, 232,128));
         gameWrapper.add(game);
@@ -264,6 +265,7 @@ public class PvpNormal extends JPanel{
         try {
 			Gomoku.getGomoku().resetAll();
 			refreshInformationPanel();
+			refreshBoard();
 		} catch (GomokuException e) {
 			Log.record(e);
 		}
@@ -426,6 +428,16 @@ public class PvpNormal extends JPanel{
         return file;
     }
     
+    /**
+     * Refresh the board when reset
+     */
+    public void refreshBoard() {
+    	game.removeAll();
+    	boardGame.removeAll();
+    	prepareElementsGame();
+        this.revalidate();
+        this.repaint();
+    }
     
     
 
