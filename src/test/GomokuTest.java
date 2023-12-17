@@ -492,6 +492,7 @@ class GomokuTest {
 	
 	@Test
 	void shouldNotAddScore1() throws GomokuException {
+		board.resetAll();
 		board.setNameP1("Mutsia");
 		board.setNameP2("Miltown");
 		board.setOpponent("pvp");
