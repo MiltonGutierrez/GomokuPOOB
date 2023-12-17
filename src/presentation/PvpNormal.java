@@ -5,6 +5,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.awt.*;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -144,6 +148,7 @@ public class PvpNormal extends JPanel{
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+            	addSound1();
                 if(Gomoku.getGomoku().validPlay(fila, columna)){
 					Gomoku.getGomoku().play(fila, columna);
                 	deleteTokensOnBoard(Gomoku.getGomoku().getLastPositionTokens());
@@ -222,6 +227,7 @@ public class PvpNormal extends JPanel{
         saveGomoku.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+            	addSound();
                 try {
 					saveOption();
 				} catch (GomokuException e1) {
@@ -233,12 +239,14 @@ public class PvpNormal extends JPanel{
         resetGomoku.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+            	addSound();
                 resetOption(); 
             }
         });
         finishGomoku.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+            	addSound();
                 try {
 					finishOption();
 				} catch (GomokuException e1) {
@@ -438,6 +446,46 @@ public class PvpNormal extends JPanel{
         this.revalidate();
         this.repaint();
     }
+    
+    /**
+     * Adds a sound for the button
+     * @param boton
+     */
+    public void addSound() {
+        try {
+            URL soundUrl = getClass().getResource("/presentation/resources/boton.wav");
+            if (soundUrl == null) {
+                throw new RuntimeException("No se pudo encontrar el archivo de sonido: boton.wav");
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            Log.record(e);
+        }
+    }
+    
+    /**
+     * Adds a sound for the button
+     * @param boton
+     */
+    public void addSound1() {
+        try {
+            URL soundUrl = getClass().getResource("/presentation/resources/piedra.wav");
+            if (soundUrl == null) {
+                throw new RuntimeException("No se pudo encontrar el archivo de sonido: piedra.wav");
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            Log.record(e);
+        }
+    }
+    
+    
     
     
 

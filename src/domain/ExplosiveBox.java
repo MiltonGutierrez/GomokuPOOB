@@ -1,6 +1,11 @@
 package domain;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.net.URL;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 public class ExplosiveBox extends Box{
 	private Color colorWithToken = new Color(255,0,0);
 	
@@ -68,14 +73,18 @@ public class ExplosiveBox extends Box{
 
     }
     
+    
+    
+    
     /**
      * Behavior when clicked
      */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
       
 

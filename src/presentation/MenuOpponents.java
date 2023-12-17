@@ -3,7 +3,11 @@ package presentation;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.*;
+import java.net.URL;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 import domain.Gomoku;
@@ -93,6 +97,7 @@ public class MenuOpponents extends JPanel{
         personaVPersona.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+            	addSound();
             	Gomoku.getGomoku().setOpponent("pvp");
                 askForNames();
                 GomokuGUI.gameModes();
@@ -106,6 +111,7 @@ public class MenuOpponents extends JPanel{
         personaVMaquina.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+            	addSound();
             	Gomoku.getGomoku().setOpponent("pve");
             	askForNames();
                 GomokuGUI.gameModes();
@@ -192,6 +198,25 @@ public class MenuOpponents extends JPanel{
             askForTypeOfMachine();
         } else if (fearful.isSelected()) {
             Gomoku.getGomoku().setMachineType("Fearful");
+        }
+    }
+    
+    /**
+     * Adds a sound for the button
+     * @param boton
+     */
+    public void addSound() {
+        try {
+            URL soundUrl = getClass().getResource("/presentation/resources/boton.wav");
+            if (soundUrl == null) {
+                throw new RuntimeException("No se pudo encontrar el archivo de sonido: boton.wav");
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            Log.record(e);
         }
     }
 }

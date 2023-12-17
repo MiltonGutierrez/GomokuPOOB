@@ -1,5 +1,6 @@
 package presentation;
-
+import java.net.URL;
+import javax.sound.sampled.*;
 import java.awt.event.*;
 import java.lang.reflect.InvocationTargetException;
 import java.awt.*;
@@ -166,6 +167,7 @@ public class GameModes extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e){
                 try {
+                	addSound();
                     GomokuGUI.changeColor();
                     setSpecialBoxesPercentage();
                     setSpecialTokensPercentage();
@@ -181,6 +183,7 @@ public class GameModes extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e){
             	try {
+            		addSound();
             		GomokuGUI.askForTime();
 					GomokuGUI.changeColor();
                     setSpecialTokensPercentage();
@@ -198,6 +201,7 @@ public class GameModes extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e){
             	try {
+            		addSound();
 					GomokuGUI.changeColor();
 					Gomoku.getGomoku().setGameMode("limited");
 					setSpecialBoxesPercentage();
@@ -209,5 +213,26 @@ public class GameModes extends JPanel{
 				}
             }});
     }
+    
+    /**
+     * Adds a sound for the button
+     * @param boton
+     */
+    public void addSound() {
+        try {
+            URL soundUrl = getClass().getResource("/presentation/resources/boton.wav");
+            if (soundUrl == null) {
+                throw new RuntimeException("No se pudo encontrar el archivo de sonido: boton.wav");
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            Log.record(e);
+        }
+    }
+    
+    
     
 }   

@@ -1,5 +1,6 @@
 package presentation;
-
+import java.net.URL;
+import javax.sound.sampled.*;
 import domain.*;
 import java.util.*;
 import javax.swing.*;
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 /**
  * Class of GomokuGUI
@@ -22,6 +24,7 @@ public class GomokuGUI extends JFrame{
      */
     public GomokuGUI(){
         super("Gomoku");
+        addSoundGame();
         exit();
         prepareElements();
     }
@@ -294,6 +297,7 @@ public class GomokuGUI extends JFrame{
     public static void validateWinCondition(){
         if(Gomoku.getGomoku().getGomokuFinished()){ 
         	try {
+        		addSoundWinner();
         		JOptionPane.showMessageDialog(null, "Juego Terminado\nGANADOR: " + Gomoku.getGomoku().getWinner(), "Información", JOptionPane.INFORMATION_MESSAGE);
         	}
         	catch(GomokuException e) {
@@ -319,18 +323,54 @@ public class GomokuGUI extends JFrame{
      */
     public static void validatePanel(){
         String gameMode_ = Gomoku.getGomoku().getGameMode();
-        System.out.println(gameMode_);
         if ("normal".equals(gameMode_)) {
-            System.out.println("Estoy colocando el modo normal");
             normalGameSelected();
         } else if ("quicktime".equals(gameMode_)) {
-            System.out.println("Estoy colocando el modo quick");
             quickTimeGameSelected();
         } else if ("limited".equals(gameMode_)) {
-            System.out.println("Estoy colocando el modo limited");
             limitedGameSelected();
         }
     }
+    
+    /**
+     * Adds a sound for the game
+     * 
+     */
+    public void addSoundGame() {
+        try {
+            URL soundUrl = getClass().getResource("/presentation/resources/menu.wav");
+            if (soundUrl == null) {
+                throw new RuntimeException("No se pudo encontrar el archivo de sonido: menu.wav");
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
+        } catch (Exception e) {
+            Log.record(e);
+        }
+    }
+    
+    /**
+     * Adds a sound for the game
+     */
+    public static void addSoundWinner() {
+        try {
+            URL soundUrl = GomokuGUI.class.getResource("/presentation/resources/ganador.wav");
+            if (soundUrl == null) {
+                throw new RuntimeException("No se pudo encontrar el archivo de sonido: ganador.wav");
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            Log.record(e);
+        }
+    }
+    
+   
     
     //////////////////////////////////////////////////////////////////////////
     /**

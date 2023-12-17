@@ -3,7 +3,12 @@ package presentation;
 import java.awt.event.*;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.awt.*;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 import domain.Gomoku;
@@ -100,6 +105,7 @@ public class MainMenu extends JPanel {
         newOptionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	addSound();
                 try {
                     newOption();
                     
@@ -114,6 +120,7 @@ public class MainMenu extends JPanel {
         changeSizeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	addSound();
                 changeSizeOption();
             }
         });
@@ -121,6 +128,7 @@ public class MainMenu extends JPanel {
         loadOptionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	addSound();
                 try {
 					loadOption();
 				} catch (GomokuException e1) {
@@ -130,8 +138,10 @@ public class MainMenu extends JPanel {
         });
     
         exitButton.addActionListener(new ActionListener() {
+        	
             @Override
             public void actionPerformed(ActionEvent e) {
+            	addSound();
                 confirmExit();
             }
         });
@@ -221,5 +231,23 @@ public class MainMenu extends JPanel {
                 System.exit(0);
             }
     }
-
+    
+    /**
+     * Adds a sound for the button
+     * @param boton
+     */
+    public void addSound() {
+        try {
+            URL soundUrl = getClass().getResource("/presentation/resources/boton.wav");
+            if (soundUrl == null) {
+                throw new RuntimeException("No se pudo encontrar el archivo de sonido: boton.wav");
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            Log.record(e);
+        }
+    }
 }
