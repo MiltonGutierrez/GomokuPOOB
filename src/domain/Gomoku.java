@@ -33,6 +33,7 @@ public class Gomoku implements Serializable{
     private ArrayList<int[]> lastPositionTokens; //Calculates the token positions to change in the gui.
     private Color lastColor;
     private boolean ok;
+    private int[] lastPositionToken;
     
     /**
      * Creates an instansce of Gomoku
@@ -260,9 +261,9 @@ public class Gomoku implements Serializable{
 
     /**
      * Sets the token to the specified player and matrixes
-     * @param playerName
-     * @param token
-     * @param position
+     * @param playerName is the name of the player
+     * @param token is the token to add
+     * @param position is the position
      * @throws GomokuException 
      */
     public void addToken(String playerName, Token token, int[] position){
@@ -284,10 +285,10 @@ public class Gomoku implements Serializable{
 
     }
     
-    int[] lastPositionToken;
+    
     /**
      * Creates a new instance of Machine
-     * @param type
+     * @param type is the position of the token
      * @throws GomokuException 
      * @throws java.lang.reflect.InvocationTargetExceptions
      */
@@ -313,8 +314,8 @@ public class Gomoku implements Serializable{
     
     /**
      * Creates a new instance of Machine
-     * @param type
-     * @return machine is the new instansce
+     * @param type is the type of machine to create
+     * @return machine is the new instance
      * @throws GomokuException 
      * @throws java.lang.reflect.InvocationTargetException
      */
@@ -333,6 +334,13 @@ public class Gomoku implements Serializable{
         return machine;
     }
     
+    /**
+     * Creates a new instance of a box
+     * @param type is the type of the box
+     * @param position are the coordinates of the boxes
+     * @return the new instance
+     * @throws GomokuException
+     */
     public Box createBox(String type, int[] position) throws GomokuException {
     	ok = true;
     	Box box = null;
@@ -406,7 +414,6 @@ public class Gomoku implements Serializable{
      * @param dimension size of the Gomoku's board
      */
     public void setDimension(int dimension_){
-    	
         dimension = dimension_;
     }
     
@@ -569,6 +576,7 @@ public class Gomoku implements Serializable{
         }
         this.lastPositionTokens = positionOfTokens;
     }
+    
     /**
      * Returns the position of the last placed token.
      * @return lastPositionTOken
@@ -639,7 +647,7 @@ public class Gomoku implements Serializable{
     
     /**
      * Set's the special token percentage appearance
-     * @param percentage
+     * @param percentage is the percentage of special tokens
      */
     public void setTokenPercentage(int percentage) {
     	if(percentage <= 0) {
@@ -653,7 +661,7 @@ public class Gomoku implements Serializable{
     
     /**
      * Set's the boxes token percentage appearance
-     * @param percentage
+     * @param percentage is the percentage of special boxes
      */
     public void setBoxPercentage(int percentage) {
     	if(percentage <= 0) {
@@ -674,6 +682,7 @@ public class Gomoku implements Serializable{
 		ok = true;
 		return tokenMatrix;
 	}
+	
 	/**
 	 * Adds the type of boxes used in gomoku
 	 */
@@ -686,15 +695,19 @@ public class Gomoku implements Serializable{
     
     /**
      * Returns the box position at (xPos, yPos) in the boxMatrix
-     * @param xPos
-     * @param yPos
-     * @return
+     * @param xPos x coordinate
+     * @param yPos y coordinate
+     * @return the current box 
      */
     public Box getBox(int xPos, int yPos) {
     	return this.boxMatrix[xPos][yPos];
     	
     }
     
+    /**
+     * Returns the matrix of boxes
+     * @return matrix box
+     */
     public Box[][] getBoxMatrix(){
     	return this.boxMatrix;
     }
@@ -734,7 +747,7 @@ public class Gomoku implements Serializable{
     
     /**
      * Returns the typeOfTokens array
-     * @return
+     * @return the type of tokens
      */
     public ArrayList<String> getTypeOfTokens(){
     	return this.typeOfTokens;
@@ -900,9 +913,9 @@ public class Gomoku implements Serializable{
 
 	/**
 	 * Returns the timer 
-	 * @param playerName
-	 * @param typeOfTimer
-	 * @return
+	 * @param playerName is the timer of the player
+	 * @param typeOfTimer is the type of the player
+	 * @return timer of the player
 	 * @throws GomokuException 
 	 */
 	public javax.swing.Timer getTimer(String playerName, String typeOfTimer){
